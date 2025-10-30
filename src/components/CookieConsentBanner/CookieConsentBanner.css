@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap");
+
+body {
+  font-size: 100%;
+  font: inherit;
+  line-height: 1.4;
+  font-family: sans-serif;
+  background: #fff;
+  color: #222;
+}
+
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+div {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 1em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: #fff;
+  color: #555;
+  font-family: Montserrat, sans-serif;
+}
+
+html {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+html {
+  font-family: sans-serif;
+  color: #222;
+}
+
+:root {
+  --primary-color: #2e2c45;
+  --accent-color: #ffb400;
+  --text-color: #000;
+  --heading-color: #000;
+  --border-color: #ddd;
+  --heading-weight: 700;
+}
+
+.global-consent-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 99999990 !important;
+  background: #eee;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.global-consent-banner__container {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.global-consent-banner__text {
+  flex: 1 1 auto;
+}
+
+.global-consent-banner__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 100%;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+p {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-family: Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.2em;
+  color: #333;
+  margin: 0 0 15px 0;
+}
+
+p {
+  color: #555;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.global-consent-banner__text p {
+  margin-bottom: 0px !important;
+  color: #3d3d3d;
+  font-size: 14px;
+  padding-bottom: 10px;
+}
+
+a {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #00e;
+}
+
+a {
+  color: #7d7d7d;
+  text-decoration: none;
+}
+
+.global-consent-banner__btn {
+  background: #63b963;
+  color: white !important;
+  padding: 8px;
+  flex: 0 1 200px;
+  border-radius: 5px;
+  text-align: center;
+  margin-right: 5px;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #06e;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+a:hover {
+  color: #555;
+  text-decoration: none;
+  outline: 0;
+}
+
+.global-consent-banner__btn:hover {
+  background: #75c175;
+  transition: all ease-in-out 0.3s;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a,
+a:visited {
+  color: #7d7d7d;
+  text-decoration: none;
+}
+
+.global-consent-banner__text p a {
+  color: #48a148;
+  text-decoration: underline;
+}
+
+a:hover,
+a:visited:hover {
+  color: #555;
+  text-decoration: none;
+  outline: 0;
+}

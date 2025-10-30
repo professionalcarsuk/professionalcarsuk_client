@@ -1,0 +1,362 @@
+﻿.row-block.car-carousel {
+  padding: 60px 0;
+  background: #f8f9fa;
+}
+
+.wrapper {
+  display: block;
+  padding: 0 10px;
+  width: auto;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1120px;
+  clear: both;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1600px;
+}
+
+.car-carousel .container {
+  overflow: visible !important;
+  padding: 0;
+}
+
+#hmpg-picks-carousel {
+  position: relative;
+  height: auto;
+  width: 100%;
+}
+
+.clear-fix::after,
+.clear-fix::before {
+  content: " ";
+  display: table;
+}
+
+.clear-fix::after {
+  clear: both;
+}
+
+.row-block__heading {
+  display: block;
+  font-size: 32px;
+  font-weight: 300 !important;
+  color: #171717;
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: Montserrat, sans-serif;
+}
+
+.center {
+  text-align: center;
+}
+
+.touchcarousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.clear-fix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.grab-cursor {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.touchcarousel .touchcarousel-wrapper {
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+}
+
+#hmpg-picks-carousel .touchcarousel-wrapper {
+  padding: 0;
+  width: 100%;
+  overflow: visible;
+}
+
+.container .arrow-holder {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: block;
+  cursor: pointer;
+  z-index: 30;
+  text-decoration: none;
+  outline: 0;
+  border: none;
+}
+
+.container .arrow-holder.left {
+  left: -50px;
+}
+
+.container .arrow-holder.right {
+  right: -50px;
+}
+
+.container .arrow-icon {
+  width: 100%;
+  height: 100%;
+  background: 0 0;
+  color: rgba(0, 0, 0, 0.25);
+  opacity: 1;
+  border-radius: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ClickIcons;
+  font-style: normal;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none !important;
+  text-decoration: none;
+  outline: 0;
+  border: none;
+  font-size: 55px;
+}
+
+/* If ClickIcons font loads, the ::before rules below will render the icon glyphs; the .arrow-fallback keeps a visible fallback */
+
+.container .arrow-icon.left::before {
+  content: "\ea53";
+  display: block;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  font-family: ClickIcons;
+}
+
+.container .arrow-holder:hover .arrow-icon {
+  color: #555;
+}
+
+.container .arrow-icon.right::before {
+  content: "\ea54";
+  display: block;
+  text-align: center;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  font-family: ClickIcons;
+}
+
+.right {
+  text-align: right;
+}
+
+.touchcarousel .touchcarousel-container {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  white-space: nowrap;
+  font-size: 0;
+  line-height: 0;
+  display: flex;
+  width: fit-content;
+  align-items: flex-start;
+}
+
+#hmpg-picks-carousel .touchcarousel-item {
+  -ms-flex-grow: 0;
+  -webkit-box-flex: 0;
+  -ms-flex-positive: 0;
+  flex-grow: 0;
+  -ms-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -ms-flex-basis: 320px;
+  -ms-flex-preferred-size: 320px;
+  flex-basis: 320px;
+  width: 320px;
+  margin-right: 20px;
+  position: relative;
+  text-align: center;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  background: #fff;
+  border: 1px solid #ededed;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 3px 3px #eaeff7;
+  box-shadow: 0 3px 3px #eaeff7;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.home-carousel-image {
+  width: 100%;
+  -webkit-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  display: block;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.carousel-text {
+  text-align: left;
+}
+
+.carousel-info__price-block {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  min-height: 60px;
+}
+
+.carousel-info__price {
+  position: relative;
+  -ms-flex-grow: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  -ms-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-justify-content: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -ms-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background: #171717;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.price {
+  font-size: 16px;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  line-height: 16px;
+  font-weight: 700;
+}
+
+.carousel-info__finance {
+  position: relative;
+  -ms-flex-grow: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -ms-flex-shrink: 1;
+  -ms-flex-negative: 1;
+  flex-shrink: 1;
+  -ms-flex-basis: 50%;
+  -ms-flex-preferred-size: 50%;
+  flex-basis: 50%;
+  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-justify-content: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -ms-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background: #3d3d3d;
+  color: #fff;
+  padding: 10px;
+  font-size: 12px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.finance-available .label {
+  color: #7d7d7d;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.finance-available .monthly {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  line-height: 1;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.monthly span {
+  font-size: 10px;
+}
+
+.carousel-info__title {
+  display: block;
+  margin: 15px 15px 10px 15px;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #555;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.carousel-info__variant {
+  display: block;
+  margin: 0 15px 15px 15px;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: #555;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.tc-paging-container {
+  display: none;
+}

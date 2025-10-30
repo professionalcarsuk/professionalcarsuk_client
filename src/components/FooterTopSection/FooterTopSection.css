@@ -1,0 +1,198 @@
+﻿.wrapper {
+  display: block;
+  padding: 0 10px;
+  width: auto;
+}
+
+.wrapper {
+  padding: 0 20px;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1120px;
+  clear: both;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1600px;
+}
+
+.footer__top .wrapper {
+  padding: 0;
+}
+
+.footer__top {
+  background: #292929;
+  padding: 40px 0 20px 0;
+}
+
+.footer__used-vehicles--cars {
+  margin: 40px 20px 20px 20px;
+  box-sizing: border-box;
+}
+.footer__used-vehicles--vans {
+  margin: 0px 20px 20px 20px;
+  box-sizing: border-box;
+}
+
+ul {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  list-style-image: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer__used-list {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+.footer__title {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #fff;
+  padding: 0 0 10px 0;
+  margin: 0 0 10px 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  clear: both;
+}
+
+li {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  color: #555;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.footer__used-list li {
+  margin: 0 0 10px 0;
+  list-style: none;
+  -webkit-flex: 0 0 calc(100% / 6);
+  -ms-flex: 0 0 calc(100% / 6);
+  flex: 0 0 calc(100% / 6);
+  float: left;
+  width: calc(100% / 6);
+}
+
+a {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #00e;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a,
+a:visited {
+  color: #7d7d7d;
+  text-decoration: none;
+}
+
+.footer__used-list a,
+.footer__used-list a:visited {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #999;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+a:hover {
+  color: #06e;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+a:hover,
+a:visited:hover {
+  color: #555;
+  text-decoration: none;
+  outline: 0;
+}
+
+.footer__used-list a:hover,
+.footer__used-list a:visited:hover {
+  color: #fff;
+}
+
+a {
+  color: #7d7d7d;
+  text-decoration: none;
+}
+
+.footer__used-list a,
+.footer__used-list a:visited {
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.2;
+  color: #999;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+a:hover {
+  color: #555;
+  text-decoration: none;
+  outline: 0;
+}
+
+span {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}

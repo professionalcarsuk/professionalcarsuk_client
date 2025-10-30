@@ -1,0 +1,11 @@
+export { default as Home } from "./Home";
+export { default as Login } from "./Login";
+export { default as About } from "./About/About";
+export { default as Warranty } from "./Warranty/Warranty";
+export { default as Contact } from "./Contact/Contact";
+export { default as Careers } from "./Careers/Careers";
+export { default as SellCar } from "./SellCar/SellCar";
+export { default as PartExchange } from "./PartExchange/PartExchange";
+export { default as Customization } from "./Customization/Customization";
+export { default as Complaints } from "./Complaints/Complaints";
+export * from "./vehicles";

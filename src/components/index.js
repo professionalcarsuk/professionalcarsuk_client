@@ -1,0 +1,12 @@
+export { default as Sidebar } from "./Sidebar";
+export { default as Navbar } from "./Navbar/Navbar";
+export { default as Hero } from "./Hero/Hero";
+export { default as FeaturedVehicles } from "./FeaturedVehicles/FeaturedVehicles";
+export { default as PurchaseSection } from "./PurchaseSection/PurchaseSection";
+export { default as PartnersSection } from "./PartnersSection/PartnersSection";
+export { default as WarrantySection } from "./WarrantySection/WarrantySection";
+export { default as FixedBannerBottom } from "./FixedBannerBottom/FixedBannerBottom";
+export { default as TypesSection } from "./TypesSection/TypesSection";
+export { default as FooterTopSection } from "./FooterTopSection/FooterTopSection";
+export { default as CookieConsentBanner } from "./CookieConsentBanner/CookieConsentBanner";
+export { default as DataStorageTest } from "./DataStorageTest/DataStorageTest";

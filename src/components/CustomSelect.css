@@ -1,0 +1,139 @@
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-select {
+  height: 36px;
+  padding: 0 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.custom-select:hover:not(.disabled) {
+  border-color: #bbb;
+}
+
+.custom-select.open {
+  border-color: #999;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.custom-select.disabled {
+  background-color: #f5f5f5;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.custom-select__value {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Arial, sans-serif;
+}
+
+.custom-select__arrow {
+  font-family: ClickIcons;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  color: #666;
+  margin-left: 8px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+.custom-select__arrow::before {
+  content: "\ea47";
+}
+
+.custom-select.open .custom-select__arrow {
+  transform: rotate(180deg);
+}
+
+.custom-select__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.custom-select__option {
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.2s ease;
+}
+
+.custom-select__option:last-child {
+  border-bottom: none;
+}
+
+.custom-select__option:hover {
+  background-color: #f8f9fa;
+}
+
+.custom-select__option.selected {
+  background-color: #e6f3ff;
+  color: #0066cc;
+  font-weight: 600;
+}
+
+/* Dark theme for RefineSearchDrawer */
+.results-layout__search .custom-select {
+  background: #424242;
+  border-color: #424242;
+  color: #fff;
+}
+
+.results-layout__search .custom-select:hover:not(.disabled) {
+  border-color: #686868;
+}
+
+.results-layout__search .custom-select__dropdown {
+  background: #424242;
+  border-color: #686868;
+}
+
+.results-layout__search .custom-select__option {
+  color: #fff;
+  border-bottom-color: #555;
+}
+
+.results-layout__search .custom-select__option:hover {
+  background-color: #555;
+}
+
+.results-layout__search .custom-select__arrow {
+  color: #fff;
+}

@@ -1,0 +1,452 @@
+/* VehicleDetail Accordion Styles */
+
+.detail-information details {
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.detail-information details summary {
+  position: relative;
+  width: 100%;
+  padding: 0;
+  color: #171717;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+
+.detail-information details summary {
+  outline: 0;
+}
+
+.detail-information details summary::after {
+  content: "\eac7";
+  font-family: ClickIcons;
+  color: #8e8e8e;
+  position: absolute;
+  line-height: 0;
+  margin-top: 1rem;
+  right: 0;
+  -webkit-transform-origin: center;
+  -ms-transform-origin: center;
+  transform-origin: center;
+  font-size: 0.8rem;
+  -webkit-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+}
+
+.detail-information details[open] summary::after {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+.detail-information .detail-accordion__content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: 15px 0;
+  gap: 40px;
+}
+
+.detail-information details summary span {
+  color: #555;
+}
+
+.detail-information .detail-accordion .vehicle-image {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 420px;
+  flex: 1 1 420px;
+  margin-bottom: 20px;
+  opacity: 0;
+  -webkit-animation: open 1s;
+  animation: open 1s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.detail-information .detail-accordion .vehicle-stats {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 220px;
+  flex: 1 1 220px;
+  margin-bottom: 20px;
+}
+
+.detail-information .detail-accordion .accordion-group {
+  position: relative;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(50% - 20px);
+  flex: 0 0 calc(50% - 20px);
+  width: calc(50% - 20px);
+  margin-bottom: 20px;
+  opacity: 0;
+  -webkit-animation: open 1s;
+  animation: open 1s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.detail-information .detail-accordion .accordion-group:nth-child(2) {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+.detail-information .detail-accordion .accordion-group:nth-child(3) {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.detail-information .detail-accordion .accordion-group:nth-child(4) {
+  -webkit-animation-delay: 1.5s;
+  animation-delay: 1.5s;
+}
+
+.detail-information .detail-accordion .accordion-group--full-width {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(100% - 40px);
+  flex: 0 0 calc(100% - 40px);
+  width: calc(100% - 40px);
+}
+
+.detail-information .detail-accordion ul li {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 12px 0;
+  line-height: 1.2;
+  border-bottom: 1px solid #ddd;
+  opacity: 0;
+  -webkit-animation: open 1s;
+  animation: open 1s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.detail-information .detail-accordion ul li:nth-child(2) {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(3) {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(4) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(5) {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(6) {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(7) {
+  -webkit-animation-delay: 0.7s;
+  animation-delay: 0.7s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(8) {
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(9) {
+  -webkit-animation-delay: 0.9s;
+  animation-delay: 0.9s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(10) {
+  -webkit-animation-delay: 1s;
+  animation-delay: 1s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(11) {
+  -webkit-animation-delay: 1.1s;
+  animation-delay: 1.1s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(12) {
+  -webkit-animation-delay: 1.2s;
+  animation-delay: 1.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(13) {
+  -webkit-animation-delay: 1.3s;
+  animation-delay: 1.3s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(14) {
+  -webkit-animation-delay: 1.4s;
+  animation-delay: 1.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(15) {
+  -webkit-animation-delay: 1.5s;
+  animation-delay: 1.5s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(16) {
+  -webkit-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(17) {
+  -webkit-animation-delay: 1.7s;
+  animation-delay: 1.7s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(18) {
+  -webkit-animation-delay: 1.8s;
+  animation-delay: 1.8s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(19) {
+  -webkit-animation-delay: 1.9s;
+  animation-delay: 1.9s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(20) {
+  -webkit-animation-delay: 2s;
+  animation-delay: 2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(21) {
+  -webkit-animation-delay: 2.2s;
+  animation-delay: 2.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(22) {
+  -webkit-animation-delay: 2.4s;
+  animation-delay: 2.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(23) {
+  -webkit-animation-delay: 2.6s;
+  animation-delay: 2.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(24) {
+  -webkit-animation-delay: 2.8s;
+  animation-delay: 2.8s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(25) {
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(26) {
+  -webkit-animation-delay: 3.2s;
+  animation-delay: 3.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(27) {
+  -webkit-animation-delay: 3.4s;
+  animation-delay: 3.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(28) {
+  -webkit-animation-delay: 3.6s;
+  animation-delay: 3.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(29) {
+  -webkit-animation-delay: 3.8s;
+  animation-delay: 3.8s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(30) {
+  -webkit-animation-delay: 4s;
+  animation-delay: 4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(31) {
+  -webkit-animation-delay: 4.2s;
+  animation-delay: 4.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(32) {
+  -webkit-animation-delay: 4.4s;
+  animation-delay: 4.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(33) {
+  -webkit-animation-delay: 4.6s;
+  animation-delay: 4.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(34) {
+  -webkit-animation-delay: 4.8s;
+  animation-delay: 4.8s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(35) {
+  -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(36) {
+  -webkit-animation-delay: 5.2s;
+  animation-delay: 5.2s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(37) {
+  -webkit-animation-delay: 5.4s;
+  animation-delay: 5.4s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(38) {
+  -webkit-animation-delay: 5.6s;
+  animation-delay: 5.6s;
+}
+
+.detail-information .detail-accordion ul li:nth-child(39) {
+  -webkit-animation-delay: 5.8s;
+  animation-delay: 5.8s;
+}
+
+.detail-information .detail-accordion ul li:last-child {
+  border-bottom: 0;
+}
+
+.detail-information .detail-accordion__heading {
+  display: block;
+  margin-bottom: 15px;
+  color: #555;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.detail-information .detail-accordion .accordion-group--full-width ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  /* gap: 40px; */
+}
+
+.detail-information .detail-accordion .accordion-group--full-width ul li {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(50% - 20px);
+  flex: 0 0 calc(50% - 20px);
+  width: calc(50% - 20px);
+}
+
+.detail-information .detail-accordion .vehicle-stat-list__label {
+  font-weight: 300;
+}
+
+.detail-information .detail-accordion .vehicle-stat-list__stat {
+  font-weight: 700;
+}
+
+.detail-information .detail-accordion .list-label {
+  font-weight: 300;
+}
+
+.detail-information .detail-accordion .list-stat {
+  font-weight: 700;
+}
+
+.detail-disclaimer {
+  margin-top: 40px;
+}
+
+.center {
+  text-align: center;
+}
+
+@keyframes open {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .detail-information .detail-accordion .accordion-group {
+    flex: 0 0 calc(100% - 20px);
+    width: calc(100% - 20px);
+  }
+
+  .detail-information .detail-accordion__content {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detail-information .detail-accordion .accordion-group--full-width ul li {
+    flex: 0 0 calc(100% - 10px);
+    width: calc(100% - 10px);
+  }
+
+  .detail-information .detail-accordion__content {
+    gap: 15px;
+    padding: 10px 0;
+  }
+
+  .detail-information .detail-accordion .accordion-group {
+    margin-bottom: 15px;
+  }
+
+  .detail-information .detail-accordion .vehicle-image,
+  .detail-information .detail-accordion .vehicle-stats {
+    flex: 1 1 100%;
+    margin-bottom: 15px;
+  }
+
+  .detail-information .detail-accordion .accordion-group--full-width ul {
+    gap: 10px;
+  }
+
+  .detail-information .detail-accordion .accordion-group--full-width ul li {
+    margin-bottom: 10px;
+  }
+
+  .detail-information details summary {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+    box-sizing: border-box;
+  }
+
+  .detail-information details summary::after {
+    right: 10px;
+    margin-top: 0.5rem;
+  }
+}

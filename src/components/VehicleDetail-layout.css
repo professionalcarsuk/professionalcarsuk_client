@@ -1,0 +1,330 @@
+/* VehicleDetail Layout Styles */
+
+.detail-header {
+  position: relative;
+  padding: 80px 0 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.detail-main {
+  position: relative;
+  padding: 40px 0 0;
+  background: #fff;
+}
+
+.detail-section {
+  padding: 80px 20px;
+}
+
+.detail-section--description {
+  position: relative;
+}
+
+.detail-section--vehicle-information {
+  position: relative;
+  background: #f5f5f5;
+}
+
+.detail-section--finance {
+  position: relative;
+  background: #fff;
+}
+
+.detail-header__image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.detail-header__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-header__image:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(23, 23, 23, 0.7);
+}
+
+.detail-header__breadcrumb {
+  display: none !important;
+}
+
+.wrapper {
+  display: block;
+  padding: 0 10px;
+  width: auto;
+}
+
+.wrapper {
+  padding: 0 20px;
+}
+
+.detail-main .wrapper {
+  overflow: visible;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1120px;
+  clear: both;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1600px;
+}
+
+.detail-main .container {
+  overflow: visible;
+}
+
+.detail-header__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.detail-main__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 40px;
+}
+
+.detail-header__title {
+  position: relative;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 55px 0;
+}
+
+.detail-header__ctas {
+  -webkit-box-flex: 0;
+  /* -ms-flex: 0 0 250px; */
+  /* flex: 0 0 250px; */
+}
+
+.detail-main__gallery {
+  -webkit-box-flex: 2;
+  -ms-flex: 2 2 60%;
+  flex: 2 2 60%;
+  width: 60%;
+  overflow: hidden;
+}
+
+.detail-main__info {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 40%;
+  flex: 1 1 40%;
+  width: 40%;
+}
+
+.detail-description__content {
+  position: relative;
+  height: 100%;
+  max-height: 120px;
+  overflow: hidden;
+  -webkit-transition: all 2s ease-in-out;
+  -o-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
+}
+
+.detail-description__content:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 32px;
+  width: 100%;
+  background: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    from(white),
+    to(rgba(255, 255, 255, 0))
+  );
+  background: -o-linear-gradient(bottom, #fff, rgba(255, 255, 255, 0));
+  background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0));
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.row-block__heading {
+  display: block;
+  margin-bottom: 40px;
+  color: #171717;
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+  font-weight: 300 !important;
+  text-align: start;
+}
+
+.container .row {
+  margin: 0;
+  display: block;
+  width: 100%;
+  clear: both;
+}
+
+.twelvecol {
+  width: 100%;
+  float: left;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.pad-10 {
+  padding: 10px 10px 10px 10px;
+}
+
+.container .container {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  overflow: visible;
+  display: block;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 979px) {
+  .detail-main__wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .detail-main__gallery {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .detail-main__info {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .detail-header__wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .detail-header__title {
+    padding: 30px 0;
+  }
+
+  .detail-header__ctas {
+    flex: none;
+    width: 100%;
+  }
+
+  .detail-cta {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .detail-cta li {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .detail-cta li:last-child {
+    margin-right: 0;
+  }
+  .wrapper {
+    padding: 0 10px !important;
+  }
+}
+
+/* Additional Responsive Adjustments */
+@media (min-width: 1200px) {
+  .wrapper {
+    padding: 0 40px !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .detail-main__wrapper {
+    gap: 20px;
+  }
+
+  .detail-section {
+    padding: 60px 15px;
+  }
+
+  .row-block__heading {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 0 15px !important;
+  }
+
+  .detail-section {
+    padding: 40px 10px;
+  }
+
+  .row-block__heading {
+    font-size: 24px;
+  }
+
+  .detail-description__content {
+    max-height: 100px;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media handheld, only screen and (max-width: 739px) {
+  .detail-header__title {
+    padding: 20px 0;
+    margin-right: 20px;
+  }
+}
+
+/* Make elements with .mobile-hidden visible on small screens (override global rules) */
+@media (max-width: 979px) {
+  /* Ensure list item and its button are visible and full width on mobile */
+  .detail-cta li.mobile-hidden,
+  .detail-cta li.mobile-hidden .btn,
+  .detail-cta li.mobile-hidden .btn--ghost {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+  }
+
+  /* Remove right margin so buttons span full width nicely */
+  .detail-cta li.mobile-hidden {
+    margin-right: 0 !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* If there are multiple CTAs, keep spacing consistent */
+  .detail-cta li:not(.mobile-hidden) {
+    margin-right: 0 !important;
+  }
+}

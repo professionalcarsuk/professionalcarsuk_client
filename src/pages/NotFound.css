@@ -1,0 +1,46 @@
+/* NotFound Page Styles */
+.page-hdr--404 {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-found-content {
+  background: #171717;
+  padding: 60px 0;
+  color: #fff;
+}
+
+.not-found-content .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-hdr--404 {
+    min-height: 50vh;
+    padding: 40px 20px;
+  }
+
+  .not-found-content {
+    padding: 40px 0;
+  }
+
+  .not-found-content .container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-hdr--404 h1 {
+    font-size: 3rem !important;
+  }
+
+  .page-hdr--404 h2 {
+    font-size: 1.5rem !important;
+  }
+}

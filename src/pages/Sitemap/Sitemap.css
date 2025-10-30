@@ -1,0 +1,42 @@
+/* Sitemap specific styles */
+.sitemap__pages {
+  text-align: left;
+}
+
+.sitemap__brands {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 43px auto;
+  gap: 20px;
+}
+
+.sitemap__brands h2 {
+  grid-column: 1 / 4;
+  margin-bottom: 15px;
+}
+
+.sitemap__brands ul {
+  grid-row: 2;
+}
+
+.sitemap__pages ul li,
+.sitemap__brands ul li {
+  padding: 2px;
+}
+
+.sitemap__brands ul li ul {
+  margin-left: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sitemap__brands {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .sitemap__brands h2 {
+    grid-column: 1;
+  }
+}

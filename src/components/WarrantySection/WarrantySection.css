@@ -1,0 +1,111 @@
+﻿.row-block--finance {
+  padding: 100px 0 !important;
+}
+
+.row-block--finance .wrapper {
+  padding: 0;
+}
+
+.row-block--finance .container {
+  padding: 0;
+}
+
+.finance-panels {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -15px;
+}
+
+.finance-panels .text-panel {
+  margin: 15px;
+  background-color: rgba(23, 23, 23, 0.5);
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.finance-panels .text-panel__heading {
+  color: white;
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: 0.15em;
+  /* text-align: center; */
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.finance-panels .text-panel__text {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: auto;
+}
+
+.finance-panels .text-panel__text p {
+  color: #f5f5f5;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.4;
+  margin: 0;
+  text-align: center;
+}
+
+.finance-panels .text-panel__link {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  display: flex;
+  align-items: flex-end;
+  margin: 15px 0 0 0;
+}
+
+.finance-panels .text-panel__link .btn {
+  background: #171717;
+  color: #fff !important;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  line-height: 36px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: none;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  transition: 0.2s all linear;
+  padding: 0 15px;
+  margin: 0;
+  display: inline-block;
+}
+
+.finance-panels .text-panel__link .btn:hover {
+  background: #7d7d7d;
+  color: #fff !important;
+  border: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .row-block--finance {
+    padding: 60px 0 !important;
+  }
+  .finance-panels {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .finance-panels .text-panel {
+    padding: 20px;
+  }
+
+  .finance-panels .text-panel__heading {
+    font-size: 24px;
+  }
+
+  .finance-panels .text-panel__text p {
+    font-size: 16px;
+  }
+}

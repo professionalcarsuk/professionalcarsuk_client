@@ -1,0 +1,116 @@
+﻿.row-block.html6 {
+  padding: 40px 0;
+  background: #f5f5f5;
+  position: relative;
+  z-index: 1;
+}
+
+.wrapper {
+  display: block;
+  padding: 0 10px;
+  width: auto;
+}
+
+.container {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  max-width: 1120px;
+  clear: both;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1600px;
+}
+
+.row {
+  margin: 0 -10px;
+}
+
+.pad-10 {
+  padding: 0 10px;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.partner-brands {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.partner-brands__heading-div {
+  margin-bottom: 30px;
+}
+
+.partner-brands__heading {
+  font-family: Montserrat, sans-serif;
+  font-size: 26px;
+  font-weight: 300;
+  color: #000;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.partner-brands__logos {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.fourcol {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.fourcol.last {
+  margin-right: 0;
+}
+
+.responsive-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .partner-brands__logos {
+    flex-wrap: wrap;
+  }
+
+  .fourcol {
+    flex: 0 0 48%;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .fourcol.last {
+    margin-right: 0;
+  }
+
+  .partner-brands__heading {
+    font-size: 22px;
+  }
+
+  .responsive-img {
+    max-height: 60px;
+  }
+}

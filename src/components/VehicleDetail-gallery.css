@@ -1,0 +1,525 @@
+/* VehicleDetail Gallery Styles */
+
+.royalSlider {
+  width: 600px;
+  height: 350px;
+  position: relative;
+  direction: ltr;
+}
+
+#gallery-2 {
+  width: 100%;
+  height: auto;
+}
+
+#gallery-2 {
+  width: 100%;
+}
+
+.rsOverflow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  -webkit-tap-highlight-color: transparent;
+  cursor: auto !important;
+}
+
+.rsWebkit3d .rsOverflow {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.rsDefault .rsOverflow {
+  background: 0 0;
+}
+
+#gallery-2 .rsOverflow {
+  background: #fff;
+}
+
+.rsNav {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.rsNav {
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.rsThumbs {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  z-index: 22;
+}
+
+.rsThumbs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rsWebkit3d .rsThumbs {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.rsDefault .rsThumbs {
+  background: 0 0;
+}
+
+.rsDefault.rsWithThumbsHor {
+  width: 100%;
+  height: 72px;
+}
+
+#gallery-2 .rsThumbs {
+  margin: 10px 0 0 0;
+}
+
+#gallery-2 .rsThumbsHor {
+  height: 69px;
+}
+
+.rsContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.rsWebkit3d .rsContainer {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.rsFade.rsWebkit3d .rsContainer {
+  -webkit-transform: none;
+}
+
+.rsArrow {
+  cursor: pointer;
+}
+
+.rsArrow {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.rsHidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}
+
+.rsDefault .rsArrow {
+  height: 100%;
+  width: 44px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 21;
+}
+
+.rsDefault.rsHor .rsArrowLeft {
+  left: 0;
+  top: 0;
+}
+
+.rsDefault.rsHor .rsArrowRight {
+  right: 0;
+  top: 0;
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsContainer {
+  position: relative;
+  height: 100%;
+}
+
+.rsThumbsArrow {
+  cursor: pointer;
+}
+
+.rsThumbsArrow {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.rsDefault .rsThumbsArrow {
+  height: 100%;
+  width: 20px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 21;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.rsDefault .rsThumbsArrowDisabled {
+  display: none !important;
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft {
+  left: 0;
+  top: 0;
+}
+
+.rsDefault .rsThumbsArrow:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight {
+  right: 0;
+  top: 0;
+}
+
+.rsSlide {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.rsWebkit3d .rsSlide {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.rsDefault .rsSlide {
+  background: 0 0;
+}
+
+.rsFade.rsWebkit3d .rsSlide {
+  -webkit-transform: none;
+}
+
+.rsWebkit3d img {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+.rsFade.rsWebkit3d img {
+  -webkit-transform: none;
+}
+
+.rsDefault .rsTmb {
+  display: block;
+}
+
+.rsDefault .rsThumb {
+  float: left;
+  overflow: hidden;
+  width: 96px;
+  height: 72px;
+}
+
+#gallery-2 .rsThumb {
+  width: 96px;
+  height: 69px;
+  margin: 0 10px 0 0;
+  background: #f5f5f5;
+}
+
+.rsDefault .rsThumb.rsNavSelected {
+  background: #2087e3;
+}
+
+#gallery-2 .rsThumb.rsNavSelected {
+  background: #171717;
+}
+
+.rsDefault .rsThumbsArrowIcn {
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-top: -8px;
+  margin-left: -8px;
+  position: absolute;
+  cursor: pointer;
+  background: url(./images/rs-default.1749717714.png);
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft .rsThumbsArrowIcn {
+  background-position: -128px -32px;
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight .rsThumbsArrowIcn {
+  background-position: -128px -48px;
+}
+
+.rsDefault .rsThumb img {
+  width: 100%;
+  height: 100%;
+}
+
+#gallery-2 .rsThumb img {
+  width: 100% !important;
+  height: 100% !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.rsDefault .rsThumb.rsNavSelected img {
+  opacity: 0.3;
+}
+
+.rsDefault .rsArrowIcn {
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  left: 50%;
+  margin-top: -16px;
+  margin-left: -16px;
+  position: absolute;
+  cursor: pointer;
+  background: url(./images/rs-default.1749717714.png);
+  background-color: rgba(0, 0, 0, 0.75);
+  border-radius: 2px;
+}
+
+.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  background-position: -64px -32px;
+}
+
+.rsDefault .rsArrowIcn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  background-position: -64px -64px;
+}
+
+.responsive-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Simple Slider Styles */
+.simple-slider {
+  width: 100%;
+  position: relative;
+}
+
+.slider-main-image {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.main-vehicle-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border: none;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.3s ease;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.slider-arrow:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.slider-arrow-left {
+  left: 0;
+}
+
+.slider-arrow-right {
+  right: 0;
+}
+
+.slider-thumbnails {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 5px 0;
+}
+
+.thumbnail {
+  flex-shrink: 0;
+  width: 96px;
+  height: 72px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  background: #f5f5f5;
+}
+
+.thumbnail.active {
+  border-color: #171717;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbnail.active img {
+  opacity: 0.7;
+}
+
+/* RoyalSlider Thumbnail Navigation Styles */
+.rsThumbsArrow {
+  position: absolute;
+  /* top: 0; */
+  width: 24px;
+  height: 72px;
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 21;
+  transition: background 0.3s ease;
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.rsThumbsArrow:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.rsThumbsArrowLeft {
+  left: 0px;
+}
+
+.rsThumbsArrowRight {
+  right: 0px;
+}
+
+.rsThumbsContainer {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  margin: 0;
+  padding: 5px 0;
+}
+
+.rsThumbsContainer::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+.rsNavItem.rsThumb {
+  flex-shrink: 0;
+  width: 96px;
+  height: 72px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  background: #f5f5f5;
+}
+
+.rsNavItem.rsThumb.active {
+  border-color: #171717;
+}
+
+.rsNavItem.rsThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rsNavItem.rsThumb.active img {
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .slider-main-image {
+    height: 250px;
+  }
+
+  .thumbnail,
+  .rsNavItem.rsThumb {
+    width: 64px;
+    height: 48px;
+  }
+
+  .rsThumbsArrow {
+    width: 20px;
+    height: 48px;
+    font-size: 10px;
+  }
+
+  .rsThumbsContainer {
+    gap: 5px;
+  }
+
+  #gallery-2 .rsThumb {
+    width: 64px;
+    height: 48px;
+    margin: 0 5px 0 0;
+  }
+
+  .slider-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+}
+
+/* Mobile image adjustments */
+@media handheld, only screen and (max-width: 739px) {
+  .slider-main-image {
+    height: auto;
+    /* min-height: 300px; */
+    max-height: 400px;
+  }
+
+  .main-vehicle-image {
+    transition-duration: 0ms;
+    transition-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+}
+
+/* Thumbnail styling */
+#gallery-2 .rsThumb {
+  width: 96px;
+  height: 69px;
+  margin: 0 10px 0 0;
+  background: #f5f5f5;
+}
+
+/* Mobile thumbnail adjustments */
+@media handheld, only screen and (max-width: 739px) {
+  #gallery-2 .rsThumb {
+    margin: 0 5px 0 0;
+  }
+}

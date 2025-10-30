@@ -1,0 +1,336 @@
+/* Global Styles - Shared across all pages and components */
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap");
+
+/* Font Faces */
+@font-face {
+  font-family: ClickIcons;
+  font-display: swap;
+  src: url("/fonts/ClickIcons.eot");
+  src: url("/fonts/ClickIcons.eot?#iefix") format("eot"),
+    url("/fonts/ClickIcons.woff2") format("woff2"),
+    url("/fonts/ClickIcons.woff") format("woff"),
+    url("/fonts/ClickIcons.ttf") format("truetype"),
+    url("/fonts/ClickIcons.svg#ClickIcons") format("svg");
+}
+
+@font-face {
+  font-family: UKNumberPlate;
+  font-display: swap;
+  src: url("../assets/fonts/UKNumberPlate-webfont.eot");
+  src: url("../assets/fonts/UKNumberPlate-webfont.eot?#iefix") format("eot"),
+    url("../assets/fonts/UKNumberPlate-webfont.woff2") format("woff2"),
+    url("../assets/fonts/UKNumberPlate-webfont.woff") format("woff"),
+    url("../assets/fonts/UKNumberPlate-webfont.ttf") format("truetype"),
+    url("../assets/fonts/UKNumberPlate-webfont.svg#uknumberplateregular")
+      format("svg");
+}
+
+/* CSS Reset & Base Styles */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: sans-serif;
+  color: #222;
+}
+
+body {
+  font-size: 1em;
+  line-height: 1.4;
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background: #fff;
+  color: #555;
+  font-family: Montserrat, sans-serif;
+}
+
+div {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+/* Common Utility Classes */
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+/* Grid System Classes */
+.eightcol {
+  width: 66.6666666667%;
+  float: left;
+  margin-right: -100%;
+  margin-left: 0;
+  background: transparent;
+}
+
+.fourcol {
+  width: 33.3333333333%;
+  float: left;
+  margin-right: -100%;
+  margin-left: 0;
+  background: transparent;
+}
+
+.twelvecol {
+  width: 100%;
+  float: left;
+  margin-right: -100%;
+  margin-left: 0;
+  background: transparent;
+}
+
+.last {
+  margin-right: 0 !important;
+  clear: right;
+}
+
+.center {
+  text-align: center;
+}
+
+/* Image Styles */
+img {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  -ms-interpolation-mode: bicubic;
+  vertical-align: middle;
+}
+
+.responsive-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Responsive Classes */
+.mobile-hidden {
+  display: block !important;
+}
+
+.desktop-hidden {
+  display: none !important;
+}
+
+.tablet-hidden {
+  display: block !important;
+}
+
+/* Button Styles */
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 0;
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button.black {
+  background-color: #000;
+  color: #fff;
+}
+
+.button.black:hover {
+  background-color: #333;
+}
+
+/* Form Styles */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+/* Link Styles */
+a {
+  color: #007cba;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #005a87;
+}
+
+/* List Styles */
+.list-ticks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 10px;
+  font-size: 14px;
+}
+
+.list-ticks li {
+  position: relative;
+  padding: 0 0 0 30px;
+  margin: 0 0 5px 0;
+}
+
+.list-ticks li:before {
+  content: "\ea43";
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: ClickIcons;
+  line-height: 1;
+  font-size: 20px;
+  color: #7d7d7d;
+}
+
+/* Icon Classes */
+.icon {
+  font-family: ClickIcons;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lazy Loading Background */
+.lazy-background {
+  background: url(/images/placeholder.svg) center center no-repeat !important;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .desktop-hidden {
+    display: block !important;
+  }
+
+  .eightcol {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .fourcol {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .tablet-hidden {
+    display: none !important;
+  }
+}
+
+/* CSS Custom Properties (Variables) */
+:root {
+  --primary-color: #2e2c45;
+  --accent-color: #ffb400;
+  --text-color: #000;
+  --heading-color: #000;
+  --border-color: #ddd;
+  --heading-weight: 700;
+  --favourites-background-color-hover: var(--accent-color);
+  --space-3: 12px;
+  --space-4: 16px;
+  --search-listing-border: var(--border-color);
+  --search-listing-space: var(--space-4);
+  --search-listing-space-mobile: var(--space-3);
+  --search-listing-subheading-color: var(--text-color);
+  --search-listing-text-color: var(--text-color);
+  --search-listing-spec-border: var(--border-color);
+  --search-listing-spec-color: var(--text-color);
+  --search-listing-price-color: black;
+  --search-listing-finance-color: var(--search-listing-price-color);
+  --search-listing-finance-color-hover: var(--accent-color);
+  --search-listing-was-price-bg: var(--accent-color);
+  --search-listing-was-price-color: var(--text-color);
+  --search-listing-button-bg: var(--accent-color);
+  --search-listing-button-color: white;
+  --search-listing-button-bg-hover: var(--primary-color);
+  --search-listing-button-color-hover: white;
+  --search-listing-reserve-button-color: var(--search-listing-button-color);
+  --search-listing-details-button-color: var(--search-listing-button-color);
+  --search-listing-engage-button-color: var(--accent-color);
+  --search-listing-engage-button-border: var(--accent-color);
+  --search-listing-engage-button-bg-hover: var(
+    --search-listing-button-bg-hover
+  );
+  --search-listing-engage-button-color-hover: var(
+    --search-listing-button-color-hover
+  );
+  --search-listing-engage-button-border-hover: var(
+    --search-listing-button-bg-hover
+  );
+  --search-listing-favourites-bg-hover: var(--accent-color);
+  --search-listing-favourites-bg-selected: var(--accent-color);
+  --search-facets-border: var(--border-color);
+  --search-group-border: var(--border-color);
+  --search-group-heading-color: var(--heading-color);
+  --search-group-indicator-bg: var(--accent-color);
+  --search-group-arrow: var(--accent-color);
+  --search-group-label-color: var(--text-color);
+  --search-group-label-color-hover: var(--accent-color);
+  --search-group-showmore: var(--accent-color);
+  --search-group-showmore-hover: var(--text-color);
+  --input-dropdown-border: var(--border-color);
+  --input-dropdown-arrow-color: var(--accent-color);
+  --input-dropdown-arrow-icon: "\ea47";
+  --input-dropdown-label-color: var(--text-color);
+  --input-dropdown-label-color-hover: var(--accent-color);
+  --search-top-offset: 80px;
+  --search-top-offset-laptop: 80px;
+  --search-top-offset-tablet: 60px;
+  --search-top-offset-mobile: 50px;
+  --search-bottom-offset: var(--search-top-offset);
+  --search-bottom-offset-laptop: var(--search-top-offset-laptop);
+  --search-bottom-offset-tablet: var(--search-top-offset-tablet);
+  --search-bottom-offset-mobile: var(--search-top-offset-mobile);
+  --search-typeahead-input-color: var(--text-color);
+  --search-typeahead-input-border: var(--border-color);
+  --search-typeahead-input-focus: var(--accent-color);
+  --search-controls-border: var(--border-color);
+  --search-list-controls-border: var(--border-color);
+}
