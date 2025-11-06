@@ -240,7 +240,7 @@ const Navbar = () => {
               </a>
               <div className="mobile-logo">
                 <a
-                  href="https://car-listing-frontend-peach.vercel.app"
+                  href="https://professionalcarsuk-client.vercel.app"
                   title="Professional Cars Limited"
                   className="hdr-logo"
                 >
@@ -266,7 +266,7 @@ const Navbar = () => {
             <div className="header">
               <div className="header__logo">
                 <a
-                  href="https://car-listing-frontend-peach.vercel.app"
+                  href="https://professionalcarsuk-client.vercel.app"
                   title="Professional Cars Limited"
                   className="hdr-logo"
                 >
