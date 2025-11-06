@@ -224,7 +224,7 @@ const FeaturedVehicles = () => {
                   // finance / price from
                   const financeVal =
                     v.financeMonthly || v.formData?.priceFromFinance || v.formData?.priceFrom;
-                  const finance = financeVal ? `£${financeVal}` : '';
+                  const finance = financeVal ? `£${Number(financeVal).toLocaleString()}` : '';
                   // images may be array of objects or strings
                   let image = '/images/placeholder.jpg';
                   if (v.images && v.images.length) {

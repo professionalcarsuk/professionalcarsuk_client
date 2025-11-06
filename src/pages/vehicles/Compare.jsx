@@ -61,12 +61,17 @@ const Compare = () => {
 
   const formatPrice = (price) => {
     if (price === 0 || !price) return 'Contact for price';
-    return `£${price.toLocaleString()}`;
+    const numPrice = typeof price === 'string' ? parseFloat(price.replace(/,/g, '')) : price;
+    return `£${numPrice.toLocaleString()}`;
   };
 
   const formatFinance = (financeMonthly) => {
     if (!financeMonthly || financeMonthly === 0) return null;
-    return `£${financeMonthly}`;
+    const numFinance =
+      typeof financeMonthly === 'string'
+        ? parseFloat(financeMonthly.replace(/,/g, ''))
+        : financeMonthly;
+    return `£${numFinance.toLocaleString()}`;
   };
 
   const getVehicleTitle = (vehicle) => {

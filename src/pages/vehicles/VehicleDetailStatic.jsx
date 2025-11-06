@@ -627,7 +627,12 @@ const VehicleDetail = () => {
                   <div className="detail-sidebar__prices">
                     {vehicle.price && (
                       <div className="detail-sidebar__price detail-sidebar__price--total">
-                        <em className="figure">£{vehicle.price.toLocaleString()}</em>
+                        <em className="figure">
+                          £
+                          {typeof vehicle.price === 'string'
+                            ? parseFloat(vehicle.price.replace(/,/g, '')).toLocaleString()
+                            : vehicle.price.toLocaleString()}
+                        </em>
                       </div>
                     )}
                     {vehicle.financeMonthly && (
@@ -636,7 +641,12 @@ const VehicleDetail = () => {
                           {' '}
                           From{' '}
                           <em className="figure">
-                            £{vehicle.financeMonthly}
+                            £
+                            {typeof vehicle.financeMonthly === 'string'
+                              ? parseFloat(
+                                  vehicle.financeMonthly.replace(/,/g, '')
+                                ).toLocaleString()
+                              : vehicle.financeMonthly.toLocaleString()}
                             <span>p/m.</span>
                           </em>
                         </div>
