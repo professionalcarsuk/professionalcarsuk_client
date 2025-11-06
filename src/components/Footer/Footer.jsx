@@ -12,34 +12,34 @@ const Footer = ({ noMargin = false }) => {
               <div className="footer__title">Get In Touch</div>
               <address className="footer__address">
                 <span className="footer__addressline footer__addressline--name">
-                  S James Prestige Limited
+                  Professional Cars Limited
                 </span>
                 <span className="footer__addressline footer__addressline--line-1">
-                  Wakeley Works
+                  Rear Yard 2
                 </span>
                 <span className="footer__addressline footer__addressline--line-2">
-                  Bourne Road
+                  College Road Business Park
                 </span>
                 <span className="footer__addressline footer__addressline--town">
-                  Essendine
+                  Aston Clinton, Aylesbury
                 </span>
                 <span className="footer__addressline footer__addressline--county">
-                  Rutland
+                  Buckinghamshire
                 </span>
                 <span className="footer__addressline footer__addressline--postcode">
-                  PE9 4LT
+                  HP22 5EZ
                 </span>
               </address>
               <ul className="footer__numbers">
                 <li className="footer__telephone">
                   <i className="fa fa-phone" aria-hidden="true"></i>
-                  <a href="tel:01780435024">01780 435024</a>
+                  <a href="tel:07788929755">07788929755</a>
                 </li>
                 <li className="footer__email">
                   <i className="fa fa-envelope-o" aria-hidden="true"></i>
                   <a
-                    href="mailto:enquiries@sjamesprestige.com"
-                    title="Email S James Prestige Limited"
+                    href="mailto:info@professionalcars.co.uk"
+                    title="Email Professional Cars Limited"
                   >
                     Email us
                   </a>
@@ -48,7 +48,7 @@ const Footer = ({ noMargin = false }) => {
               <ul className="footer__social">
                 <li>
                   <a
-                    href="https://www.facebook.com/S-James-Prestige-Finance-1554962181444200/?ref=page_internal"
+                    href="https://www.facebook.com/"
                     title="Like us on Facebook"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -68,7 +68,7 @@ const Footer = ({ noMargin = false }) => {
                 </li>
                 <li>
                   <a
-                    href="https://www.instagram.com/sjamesprestige/?hl=en"
+                    href="https://www.instagram.com/?hl=en"
                     title="Follow us on Instagram"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -189,12 +189,11 @@ const Footer = ({ noMargin = false }) => {
             <div className="footer__widget footer__widget--legal">
               <div className="footer__title">Company Info</div>
               <ul className="footer__legal-list">
-                <li>Company No. 08921181</li>
-                <li>FCA No. 655032</li>
+                <li>Company No. 08763622</li>                
               </ul>
               <div className="footer__fca-para">
                 <div id="fca-disclaimer">
-                  S James Prestige Limited are a credit broker and not a lender.
+                  Professional Cars Limited are a credit broker and not a lender.
                   We are Authorised and Regulated by the Financial Conduct
                   Authority. FCA No: Finance is Subject to status. Other offers
                   may be available but cannot be used in conjunction with this
@@ -219,10 +218,9 @@ const Footer = ({ noMargin = false }) => {
                   lender under your credit agreement. We have the right to
                   decline third party lenders. <br />
                   <br />
-                  Registered in England &amp; Wales: 08921181 <br />
-                  Registered Office: Address: Meadow Park Industrial Estate
-                  Bourne Road, Essendine, Stamford, England, PE9 4LT <br />
-                  Data Protection No: ZA285887
+                  Registered in England &amp; Wales: 08763622 <br />
+                  Registered Office: Address: Rear Yard 2 College Road North Business Park, College Road North, Aylesbury, England, HP22 5EZ <br />
+                   
                 </div>
               </div>
             </div>
@@ -258,7 +256,7 @@ const Footer = ({ noMargin = false }) => {
                     Sitemap
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <a
                     href="/pdfs/IDD.pdf"
                     target="_blank"
@@ -275,7 +273,7 @@ const Footer = ({ noMargin = false }) => {
                   >
                     SAF Certificate
                   </a>
-                </li>
+                </li> */}
                 <li className="footer__list-links--copyright">© 2025</li>
               </ul>
               <div className="footer__powered-by">
@@ -292,7 +290,7 @@ const Footer = ({ noMargin = false }) => {
                   </a>
                 </div> */}
                 <div className="footer__click-logo">
-                  <a
+                  {/* <a
                     rel="external nofollow noopener noreferrer"
                     target="_blank"
                     href="https://www.clickdealer.co.uk/"
@@ -305,7 +303,7 @@ const Footer = ({ noMargin = false }) => {
                       alt="Powered by Click Dealer"
                       className="footer__click-logo"
                     />
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

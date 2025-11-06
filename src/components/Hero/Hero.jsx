@@ -375,7 +375,7 @@ const Hero = () => {
       <div className="hero-unit-bottom">
         <div className="hero-unit-block  sm:px-0 px-3">
           <div className="hero-unit-block__title">
-            S JAMES PRESTIGE
+            Professional Cars
             <div className="hero-unit-block__sub-head">
               Fuelled by Passion
               <br />

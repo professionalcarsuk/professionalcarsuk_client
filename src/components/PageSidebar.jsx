@@ -309,11 +309,11 @@ const PageSidebar = () => {
             <ul id="get-in-touch">
               <li className="mobile-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="/contact">01780 435024</a>
+                <a href="/contact">07788929755</a>
               </li>
               <li className="desktop-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="tel:01780435024">01780435024</a>
+                <a href="tel:07788929755">07788929755</a>
               </li>
               <li className="mobile-hidden">
                 <span
@@ -338,7 +338,7 @@ const PageSidebar = () => {
               </li>
               <li>
                 <span aria-hidden="true" className="icon icon-mail"></span>{" "}
-                <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
+                <a href="mailto:info@professionalcars.co.uk" title="Email Us">
                   Email Us
                 </a>
               </li>
@@ -362,15 +362,16 @@ const PageSidebar = () => {
           <blockquote>
             <div className="quote">
               <div className="pad-15">
-                The crew at S James Prestige were great, and could easily deal
-                with all our questions. The service was brilliant and we are
-                very happy with our new car. Will definitely be returning!
+                The dealers were very helpful and the vehicle was being cleaned when I arrived.
+                The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it.
+                The vehicle itself drives very well and is in showroom condition.
+                No problems with it so far. Would recommend the company.
               </div>
             </div>
-            <cite>Craig T</cite>
+            <cite>R. Fielding</cite>
           </blockquote>
           <a
-            href="https://uk.trustpilot.com/review/sjamesprestige.com"
+            href="https://www.google.com/search?sca_esv=4e076059c5272afe&rlz=1C1VDKB_enGB1111GB1111&sxsrf=AE3TifMufVM1Tm-SqCZzpSraEpBpqr4e0w:1762462188560&si=AMgyJEtREmoPL4P1I5IDCfuA8gybfVI2d5Uj7QMwYCZHKDZ-E7ShqGK4Pbd8Yi6FuewCfix1W75vMot2aKTK1nCdodQOfj37KNHDdx48nDiUMjapeB9AlNRblU_936J-0Y4uB4h5tDzqgK6jM3WmNjPMnxAWGP3Shw%3D%3D&q=Professional+Cars+Reviews&sa=X&ved=2ahUKEwia6rals96QAxWadUEAHZx6Hm4Q0bkNegQIPRAE&biw=1366&bih=633&dpr=1"
             className="btn"
             target="_blank"
             rel="noopener noreferrer"
