@@ -46,10 +46,11 @@
   border: 1px solid #bcbcbc;
   -webkit-box-sizing: border-box !important;
   box-sizing: border-box !important;
+  min-height: 320px;
 }
 
 .blocks__item:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -89,7 +90,7 @@
   background-size: cover !important;
   background-repeat: no-repeat;
   background-position: center center;
-  background-position-y: -95px;
+  /* background-position-y: -95px; */
 }
 
 .blocks__item--2 .blocks__wrapper.visible {
