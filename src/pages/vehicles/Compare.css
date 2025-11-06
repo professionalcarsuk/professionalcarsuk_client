@@ -1,0 +1,8 @@
+/* Compare page specific styles - overrides and page-scoped rules */
+
+@media (max-width: 480px) {
+  /* Compare page only: remove wrapper padding on small screens */
+  .compare-pg .wrapper {
+    padding: 0 !important;
+  }
+}

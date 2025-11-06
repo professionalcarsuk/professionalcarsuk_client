@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchRecentVehicles,
-  selectVehicleItems,
-  loadFavorites,
-  fetchVehicleById,
-  selectCurrentVehicle,
-} from "../../store/vehicleSlice";
-import FavoriteButton from "../../components/FavoriteButton";
-import "../../components/VehicleDetail-layout.css";
-import "../../components/VehicleDetail-gallery.css";
-import "../../components/VehicleDetail-sidebar.css";
-import "../../components/VehicleDetail-accordion.css";
-import "../../components/VehicleDetail-components.css";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import FavoriteButton from '../../components/FavoriteButton';
+import '../../components/VehicleDetail-accordion.css';
+import '../../components/VehicleDetail-components.css';
+import '../../components/VehicleDetail-gallery.css';
+import '../../components/VehicleDetail-layout.css';
+import '../../components/VehicleDetail-sidebar.css';
+import { fetchVehicleById, loadFavorites, selectCurrentVehicle } from '../../store/vehicleSlice';
 
 const VehicleDetail = () => {
   const { brand, vehicleId } = useParams();
@@ -35,13 +29,12 @@ const VehicleDetail = () => {
           setLoading(true);
           setError(null);
           const result = await dispatch(fetchVehicleById(vehicleId)).unwrap();
-          console.log("VehicleDetailStatic - Fetched vehicle data:", result);
           setVehicle(result);
           // Load favorites from localStorage
           dispatch(loadFavorites());
         } catch (err) {
-          setError("Failed to load vehicle. Please try again.");
-          console.error("Error fetching vehicle:", err);
+          setError('Failed to load vehicle. Please try again.');
+          console.error('Error fetching vehicle:', err);
         } finally {
           setLoading(false);
         }
@@ -57,8 +50,8 @@ const VehicleDetail = () => {
       setThumbnailWidth(window.innerWidth <= 768 ? 69 : 106);
     };
     updateThumbnailWidth();
-    window.addEventListener("resize", updateThumbnailWidth);
-    return () => window.removeEventListener("resize", updateThumbnailWidth);
+    window.addEventListener('resize', updateThumbnailWidth);
+    return () => window.removeEventListener('resize', updateThumbnailWidth);
   }, []);
 
   const nextImage = () => {
@@ -66,9 +59,7 @@ const VehicleDetail = () => {
   };
 
   const prevImage = () => {
-    setCurrentImageIndex(
-      (prev) => (prev - 1 + displayImages.length) % displayImages.length
-    );
+    setCurrentImageIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
   };
 
   const selectImage = (index) => {
@@ -76,7 +67,7 @@ const VehicleDetail = () => {
   };
 
   const scrollToThumbnail = (index) => {
-    const container = document.querySelector(".rsThumbsContainer");
+    const container = document.querySelector('.rsThumbsContainer');
     if (container) {
       const containerWidth = container.offsetWidth;
       const visibleThumbnails = Math.floor(containerWidth / thumbnailWidth);
@@ -88,31 +79,27 @@ const VehicleDetail = () => {
       const thumbnailRight = scrollPosition + thumbnailWidth;
 
       // If thumbnail is not fully visible, scroll to center it
-      if (
-        thumbnailLeft < currentScroll ||
-        thumbnailRight > currentScroll + containerWidth
-      ) {
-        const centerPosition =
-          scrollPosition - containerWidth / 2 + thumbnailWidth / 2;
+      if (thumbnailLeft < currentScroll || thumbnailRight > currentScroll + containerWidth) {
+        const centerPosition = scrollPosition - containerWidth / 2 + thumbnailWidth / 2;
         container.scrollTo({
           left: Math.max(0, centerPosition),
-          behavior: "smooth",
+          behavior: 'smooth',
         });
       }
     }
   };
 
   const scrollThumbnailsLeft = () => {
-    const container = document.querySelector(".rsThumbsContainer");
+    const container = document.querySelector('.rsThumbsContainer');
     if (container) {
-      container.scrollBy({ left: -100, behavior: "smooth" });
+      container.scrollBy({ left: -100, behavior: 'smooth' });
     }
   };
 
   const scrollThumbnailsRight = () => {
-    const container = document.querySelector(".rsThumbsContainer");
+    const container = document.querySelector('.rsThumbsContainer');
     if (container) {
-      container.scrollBy({ left: 100, behavior: "smooth" });
+      container.scrollBy({ left: 100, behavior: 'smooth' });
     }
   };
 
@@ -142,11 +129,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -157,11 +140,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/used-cars"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/used-cars">
                     <span itemProp="name">Used Cars</span>
                   </a>
                   <meta itemProp="position" content="2" />
@@ -226,11 +205,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -241,11 +216,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/used-cars"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/used-cars">
                     <span itemProp="name">Used Cars</span>
                   </a>
                   <meta itemProp="position" content="2" />
@@ -265,22 +236,20 @@ const VehicleDetail = () => {
         </div>
         <div
           className="error-message"
-          style={{ textAlign: "center", padding: "40px", background: "#fff" }}
+          style={{ textAlign: 'center', padding: '40px', background: '#fff' }}
         >
-          <h3 style={{ color: "#dc3545", marginBottom: "20px" }}>
-            Error Loading Vehicle
-          </h3>
+          <h3 style={{ color: '#dc3545', marginBottom: '20px' }}>Error Loading Vehicle</h3>
           <p>{error}</p>
           <button
             onClick={() => window.location.reload()}
             style={{
-              padding: "10px 20px",
-              background: "#171717",
-              color: "white",
-              border: "none",
-              borderRadius: "3px",
-              cursor: "pointer",
-              marginTop: "20px",
+              padding: '10px 20px',
+              background: '#171717',
+              color: 'white',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              marginTop: '20px',
             }}
           >
             Try Again
@@ -307,11 +276,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -322,11 +287,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/used-cars"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/used-cars">
                     <span itemProp="name">Used Cars</span>
                   </a>
                   <meta itemProp="position" content="2" />
@@ -346,22 +307,20 @@ const VehicleDetail = () => {
         </div>
         <div
           className="error-message"
-          style={{ textAlign: "center", padding: "40px", background: "#fff" }}
+          style={{ textAlign: 'center', padding: '40px', background: '#fff' }}
         >
-          <h3 style={{ color: "#dc3545", marginBottom: "20px" }}>
-            Vehicle Not Found
-          </h3>
+          <h3 style={{ color: '#dc3545', marginBottom: '20px' }}>Vehicle Not Found</h3>
           <p>The vehicle you're looking for could not be found.</p>
           <Link
             to="/used-cars"
             style={{
-              display: "inline-block",
-              padding: "10px 20px",
-              background: "#171717",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "3px",
-              marginTop: "20px",
+              display: 'inline-block',
+              padding: '10px 20px',
+              background: '#171717',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '3px',
+              marginTop: '20px',
             }}
           >
             Browse All Vehicles
@@ -389,11 +348,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/">
                     <span itemProp="name">Home</span>
                   </a>
                   <meta itemProp="position" content="1" />
@@ -404,11 +359,7 @@ const VehicleDetail = () => {
                   itemScope=""
                   itemType="http://schema.org/ListItem"
                 >
-                  <a
-                    itemType="http://schema.org/Thing"
-                    itemProp="item"
-                    href="/used-cars"
-                  >
+                  <a itemType="http://schema.org/Thing" itemProp="item" href="/used-cars">
                     <span itemProp="name">Used Cars</span>
                   </a>
                   <meta itemProp="position" content="2" />
@@ -428,38 +379,35 @@ const VehicleDetail = () => {
         </div>
         <div
           className="loading-message"
-          style={{ textAlign: "center", padding: "40px", background: "#fff" }}
+          style={{ textAlign: 'center', padding: '40px', background: '#fff' }}
         >
-          <h3 style={{ color: "#171717", marginBottom: "20px" }}>
-            Loading Vehicle Details...
-          </h3>
+          <h3 style={{ color: '#171717', marginBottom: '20px' }}>Loading Vehicle Details...</h3>
           <p>Please wait while we load the complete vehicle information.</p>
         </div>
       </div>
     );
   }
 
-  const images = vehicle.images || ["/images/default-vehicle.jpg"];
+  const images = vehicle.images || ['/images/default-vehicle.jpg'];
 
   // Extract image URLs from the images array (handles both string URLs and object URLs)
   const imageUrls = images
-    .map((img) => (typeof img === "string" ? img : img.url))
-    .filter((url) => url && url !== "/images/default-vehicle.jpg");
+    .map((img) => (typeof img === 'string' ? img : img.url))
+    .filter((url) => url && url !== '/images/default-vehicle.jpg');
 
   // Use extracted URLs or fallback to default
-  const displayImages =
-    imageUrls.length > 0 ? imageUrls : ["/images/default-vehicle.jpg"];
+  const displayImages = imageUrls.length > 0 ? imageUrls : ['/images/default-vehicle.jpg'];
 
   return (
     <div id="detail" className="car-7397673 veh-loc-4 snipcss-SJHlq">
       <div className="detail-header">
         <div className="detail-header__image">
           <img
-            data-src={displayImages[0] || "/images/default-vehicle.jpg"}
-            src={displayImages[0] || "/images/default-vehicle.jpg"}
+            data-src={displayImages[0] || '/images/default-vehicle.jpg'}
+            src={displayImages[0] || '/images/default-vehicle.jpg'}
             data-srcset=""
             className=""
-            onError={(e) => (e.target.style.display = "none")}
+            onError={(e) => (e.target.style.display = 'none')}
             alt="Vehicle"
           />
         </div>
@@ -478,11 +426,7 @@ const VehicleDetail = () => {
                     itemScope=""
                     itemType="http://schema.org/ListItem"
                   >
-                    <a
-                      itemType="http://schema.org/Thing"
-                      itemProp="item"
-                      href="/"
-                    >
+                    <a itemType="http://schema.org/Thing" itemProp="item" href="/">
                       <span itemProp="name">Home</span>
                     </a>
                     <meta itemProp="position" content="1" />
@@ -493,11 +437,7 @@ const VehicleDetail = () => {
                     itemScope=""
                     itemType="http://schema.org/ListItem"
                   >
-                    <Link
-                      itemType="http://schema.org/Thing"
-                      itemProp="item"
-                      to={`/used-cars`}
-                    >
+                    <Link itemType="http://schema.org/Thing" itemProp="item" to={`/used-cars`}>
                       <span itemProp="name">Current Stock</span>
                     </Link>
                     <meta itemProp="position" content="2" />
@@ -538,10 +478,18 @@ const VehicleDetail = () => {
             <div className="detail-header__wrapper">
               <div className="detail-header__title detail-title">
                 <h1 className="detail-title__main-title">
-                  {vehicle.title || `${vehicle.brand} ${vehicle.model}`}{" "}
-                  <span className="detail-title__sub-title">
-                    {vehicle.year || ""}
-                  </span>
+                  {vehicle.title || `${vehicle.brand} ${vehicle.model}`}{' '}
+                  {(vehicle.year || vehicle.subTitle) && (
+                    <span className="detail-title__sub-title">
+                      {vehicle.year && (
+                        <>
+                          {vehicle.year}
+                          {vehicle.subTitle ? ' ' : ''}
+                        </>
+                      )}
+                      {vehicle.subTitle}
+                    </span>
+                  )}
                 </h1>
               </div>
               <div className="detail-header__ctas">
@@ -552,16 +500,14 @@ const VehicleDetail = () => {
                         onClick={async () => {
                           setLoadingBrochure(true);
                           try {
-                            const response = await fetch(
-                              vehicle.brochures[0].url
-                            );
+                            const response = await fetch(vehicle.brochures[0].url);
                             const blob = await response.blob();
                             const url = URL.createObjectURL(blob);
-                            window.open(url, "_blank");
+                            window.open(url, '_blank');
                           } catch (error) {
-                            console.error("Failed to load brochure:", error);
+                            console.error('Failed to load brochure:', error);
                             // Fallback to direct link
-                            window.open(vehicle.brochures[0].url, "_blank");
+                            window.open(vehicle.brochures[0].url, '_blank');
                           } finally {
                             setLoadingBrochure(false);
                           }
@@ -595,7 +541,7 @@ const VehicleDetail = () => {
                             Loading...
                           </>
                         ) : (
-                          "Download Brochure"
+                          'Download Brochure'
                         )}
                       </button>
                     </li>
@@ -646,7 +592,7 @@ const VehicleDetail = () => {
                         <div
                           key={index}
                           className={`thumbnail rsNavItem rsThumb ${
-                            index === currentImageIndex ? "active" : ""
+                            index === currentImageIndex ? 'active' : ''
                           }`}
                           onClick={() => selectImage(index)}
                         >
@@ -679,60 +625,78 @@ const VehicleDetail = () => {
                     </div>
                   </div>
                   <div className="detail-sidebar__prices">
-                    <div className="detail-sidebar__price detail-sidebar__price--total">
-                      <em className="figure">
-                        £{vehicle.price?.toLocaleString() || "TBC"}
-                      </em>
-                    </div>
-                    <a href="#finance-section">
-                      <div className="detail-sidebar__price detail-sidebar__price--finance finance-available">
-                        {" "}
-                        From{" "}
-                        <em className="figure">
-                          £{vehicle.financeMonthly || "TBC"}
-                          <span>p/m.</span>
-                        </em>
+                    {vehicle.price && (
+                      <div className="detail-sidebar__price detail-sidebar__price--total">
+                        <em className="figure">£{vehicle.price.toLocaleString()}</em>
                       </div>
-                    </a>
+                    )}
+                    {vehicle.financeMonthly && (
+                      <a href="#finance-section">
+                        <div className="detail-sidebar__price detail-sidebar__price--finance finance-available">
+                          {' '}
+                          From{' '}
+                          <em className="figure">
+                            £{vehicle.financeMonthly}
+                            <span>p/m.</span>
+                          </em>
+                        </div>
+                      </a>
+                    )}
                   </div>
                   <div className="detail-sidebar__spec-pills">
                     <ul className="spec-pills">
-                      <li className="spec-pills__item spec-pills__item--year">
-                        {vehicle.year || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--mileage">
-                        {vehicle.mileage
-                          ? `${vehicle.mileage.toLocaleString()} Miles`
-                          : "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--engine-size">
-                        {vehicle.engineSize || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--fuel-type">
-                        {vehicle.fuelType || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--transmission">
-                        {vehicle.transmission || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--colour">
-                        {vehicle.color || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--body-type">
-                        {vehicle.bodyStyle || "TBC"}
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--doors">
-                        {vehicle.doors || "TBC"} Doors
-                      </li>
-                      <li className="spec-pills__item spec-pills__item--seats">
-                        {vehicle.seats || "TBC"} Seats
-                      </li>
+                      {vehicle.year && (
+                        <li className="spec-pills__item spec-pills__item--year">{vehicle.year}</li>
+                      )}
+                      {vehicle.mileage && (
+                        <li className="spec-pills__item spec-pills__item--mileage">
+                          {vehicle.mileage.toLocaleString()} Miles
+                        </li>
+                      )}
+                      {vehicle.engineSize && (
+                        <li className="spec-pills__item spec-pills__item--engine-size">
+                          {vehicle.engineSize}
+                        </li>
+                      )}
+                      {vehicle.fuelType && (
+                        <li className="spec-pills__item spec-pills__item--fuel-type">
+                          {vehicle.fuelType}
+                        </li>
+                      )}
+                      {vehicle.transmission && (
+                        <li className="spec-pills__item spec-pills__item--transmission">
+                          {vehicle.transmission}
+                        </li>
+                      )}
+                      {vehicle.color && (
+                        <li className="spec-pills__item spec-pills__item--colour">
+                          {vehicle.color}
+                        </li>
+                      )}
+                      {vehicle.bodyStyle && (
+                        <li className="spec-pills__item spec-pills__item--body-type">
+                          {vehicle.bodyStyle}
+                        </li>
+                      )}
+                      {vehicle.doors && (
+                        <li className="spec-pills__item spec-pills__item--doors">
+                          {vehicle.doors} Doors
+                        </li>
+                      )}
+                      {vehicle.seats && (
+                        <li className="spec-pills__item spec-pills__item--seats">
+                          {vehicle.seats} Seats
+                        </li>
+                      )}
                     </ul>
                   </div>
                   <div className="detail-sidebar__cta-list">
                     <ul className="detail-cta-list">
                       <li>
                         <Link
-                          to="/contact"
+                          to={`/enquiry?about=${encodeURIComponent(
+                            vehicle.title || `${vehicle.brand} ${vehicle.model}`
+                          )}&vehicle_id=${encodeURIComponent(vehicle.id || vehicle._id || '')}`}
                           title="Send An Enquiry"
                           className="btn--ghost"
                         >
@@ -757,34 +721,28 @@ const VehicleDetail = () => {
                             className="finance-available btn btn--engage btn--large style-ELfdD"
                             id="style-ELfdD"
                           >
-                            Apply For Finance{" "}
-                            <i
-                              className="far fa-chevron-right"
-                              aria-hidden="true"
-                            ></i>
+                            Apply For Finance{' '}
+                            <i className="far fa-chevron-right" aria-hidden="true"></i>
                           </Link>
                         </div>
                       </li>
                     </ul>
                     <ul className="detail-contact-list">
                       <li>
-                        T:{" "}
+                        T:{' '}
                         <a href="tel:01780435024" title="Call Us">
                           01780 435024
                         </a>
                       </li>
                       <li>
-                        M:{" "}
+                        M:{' '}
                         <a href="tel:01780435024" title="Call Us">
                           01780435024
                         </a>
                       </li>
                       <li>
-                        E:{" "}
-                        <a
-                          href="mailto:enquiries@sjamesprestige.com"
-                          title="Email Us"
-                        >
+                        E:{' '}
+                        <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
                           enquiries@sjamesprestige.com
                         </a>
                       </li>
@@ -799,25 +757,20 @@ const VehicleDetail = () => {
       <div className="detail-section detail-section--description">
         <div className="wrapper">
           <div className="container">
-            <div className="detail-description">
-              <div
-                className={`detail-description__content ${
-                  isExpanded ? "expanded" : ""
-                }`}
-              >
-                <p>
-                  {vehicle.description ||
-                    "No description available for this vehicle."}
-                </p>
+            {vehicle.description && (
+              <div className="detail-description">
+                <div className={`detail-description__content ${isExpanded ? 'expanded' : ''}`}>
+                  <p>{vehicle.description}</p>
+                </div>
+                <a
+                  id="read-more-button"
+                  className={isExpanded ? 'expanded' : ''}
+                  onClick={toggleReadMore}
+                >
+                  {isExpanded ? 'Read Less' : 'Read More'}
+                </a>
               </div>
-              <a
-                id="read-more-button"
-                className={isExpanded ? "expanded" : ""}
-                onClick={toggleReadMore}
-              >
-                {isExpanded ? "Read Less" : "Read More"}
-              </a>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -828,20 +781,15 @@ const VehicleDetail = () => {
               Vehicle <span>Information</span>
             </em>
             <div className="detail-information">
-              <details
-                className="detail-accordion detail-accordion--summary"
-                open=""
-              >
+              <details className="detail-accordion detail-accordion--summary" open="">
                 <summary>
                   Vehicle <span>Summary</span>
                 </summary>
                 <div className="detail-accordion__content">
                   <div className="vehicle-image">
                     <img
-                      data-src={
-                        displayImages[0] || "/images/default-vehicle.jpg"
-                      }
-                      src={displayImages[0] || "/images/default-vehicle.jpg"}
+                      data-src={displayImages[0] || '/images/default-vehicle.jpg'}
+                      src={displayImages[0] || '/images/default-vehicle.jpg'}
                       data-srcset=""
                       alt={`View our ${vehicle.brand} ${vehicle.model}`}
                       className="responsive-img"
@@ -849,102 +797,82 @@ const VehicleDetail = () => {
                   </div>
                   <div className="vehicle-stats">
                     <ul className="vehicle-stat-list">
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Year of Reg
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.year || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Registration
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.registration || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Mileage
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.mileage
-                            ? `${vehicle.mileage.toLocaleString()} miles`
-                            : "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Engine Size
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.engineSize || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">Colour</span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.color || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Previous owners
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.previousOwners || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Body Style
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.bodyStyle || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Transmission
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.transmission || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Fuel Type
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.fuelType || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          Insurance group
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          {vehicle.insuranceGroup || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          6 mths Road Tax
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          £{vehicle.roadTax6Months || "TBC"}
-                        </span>
-                      </li>
-                      <li>
-                        <span className="vehicle-stat-list__label">
-                          12 mths Road Tax
-                        </span>
-                        <span className="vehicle-stat-list__stat">
-                          £{vehicle.roadTax12Months || "TBC"}
-                        </span>
-                      </li>
+                      {vehicle.year && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Year of Reg</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.year}</span>
+                        </li>
+                      )}
+                      {vehicle.registration && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Registration</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.registration}</span>
+                        </li>
+                      )}
+                      {vehicle.mileage && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Mileage</span>
+                          <span className="vehicle-stat-list__stat">
+                            {vehicle.mileage.toLocaleString()} miles
+                          </span>
+                        </li>
+                      )}
+                      {vehicle.engineSize && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Engine Size</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.engineSize}</span>
+                        </li>
+                      )}
+                      {vehicle.color && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Colour</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.color}</span>
+                        </li>
+                      )}
+                      {vehicle.previousOwners && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Previous owners</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.previousOwners}</span>
+                        </li>
+                      )}
+                      {vehicle.bodyStyle && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Body Style</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.bodyStyle}</span>
+                        </li>
+                      )}
+                      {vehicle.transmission && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Transmission</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.transmission}</span>
+                        </li>
+                      )}
+                      {vehicle.fuelType && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Fuel Type</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.fuelType}</span>
+                        </li>
+                      )}
+                      {vehicle.insuranceGroup && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Insurance group</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.insuranceGroup}</span>
+                        </li>
+                      )}
+                      {vehicle.roadTax6Months && (
+                        <li>
+                          <span className="vehicle-stat-list__label">6 mths Road Tax</span>
+                          <span className="vehicle-stat-list__stat">£{vehicle.roadTax6Months}</span>
+                        </li>
+                      )}
+                      {vehicle.roadTax12Months && (
+                        <li>
+                          <span className="vehicle-stat-list__label">12 mths Road Tax</span>
+                          <span className="vehicle-stat-list__stat">
+                            £{vehicle.roadTax12Months}
+                          </span>
+                        </li>
+                      )}
                     </ul>
                   </div>
                 </div>
@@ -955,35 +883,52 @@ const VehicleDetail = () => {
                   open=""
                 >
                   <summary>
-                    This car includes{" "}
+                    This car includes{' '}
                     <span>
                       £
-                      {vehicle.fittedExtras.reduce(
-                        (total, extra) => total + (extra.value || 0),
-                        0
-                      )}
-                    </span>{" "}
-                    worth of fitted extras{" "}
+                      {(() => {
+                        const savedTotal = vehicle.formData && vehicle.formData.totalWorth;
+                        if (savedTotal && !isNaN(parseFloat(savedTotal))) {
+                          return parseFloat(savedTotal).toLocaleString();
+                        }
+                        return vehicle.fittedExtras
+                          .filter((extra) => extra.name && extra.value)
+                          .reduce((total, extra) => total + (parseFloat(extra.value) || 0), 0)
+                          .toLocaleString();
+                      })()}
+                    </span>{' '}
+                    worth of fitted extras{' '}
                   </summary>
                   <div className="detail-accordion__content">
                     <ul>
-                      {vehicle.fittedExtras.map((extra, index) => (
-                        <li key={index} className="">
-                          <div className="list-label">{extra.name}</div>
-                          <div className="list-stat"> £{extra.value}</div>
-                        </li>
-                      ))}
+                      {vehicle.fittedExtras
+                        .filter((extra) => extra.name && extra.value)
+                        .map((extra, index) => (
+                          <li key={index} className="">
+                            <div className="list-label">{extra.name}</div>
+                            <div className="list-stat">
+                              {' '}
+                              £{parseFloat(extra.value).toLocaleString()}
+                            </div>
+                          </li>
+                        ))}
                       <li className="">
                         <div className="list-label">
                           <strong>Total value of factory fitted extras</strong>
                         </div>
-                        <div className="list-stat">
-                          {" "}
+                        <div className="list-stat" style={{ marginLeft: '20px' }}>
+                          {' '}
                           £
-                          {vehicle.fittedExtras.reduce(
-                            (total, extra) => total + (extra.value || 0),
-                            0
-                          )}
+                          {(() => {
+                            const savedTotal = vehicle.formData && vehicle.formData.totalWorth;
+                            if (savedTotal && !isNaN(parseFloat(savedTotal))) {
+                              return parseFloat(savedTotal).toLocaleString();
+                            }
+                            return vehicle.fittedExtras
+                              .filter((extra) => extra.name && extra.value)
+                              .reduce((total, extra) => total + (parseFloat(extra.value) || 0), 0)
+                              .toLocaleString();
+                          })()}
                         </div>
                       </li>
                     </ul>
@@ -1001,10 +946,7 @@ const VehicleDetail = () => {
                 vehicle.stroke ||
                 vehicle.cc ||
                 vehicle.numberOfGears) && (
-                <details
-                  className="detail-accordion detail-accordion--performance"
-                  open=""
-                >
+                <details className="detail-accordion detail-accordion--performance" open="">
                   <summary>
                     Performance &amp; <span>Economy</span>
                   </summary>
@@ -1014,44 +956,30 @@ const VehicleDetail = () => {
                       vehicle.engineTorque ||
                       vehicle.enginePower) && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          Performance
-                        </em>
+                        <em className="detail-accordion__heading">Performance</em>
                         <ul className="row tablist">
                           {vehicle.topSpeed && (
                             <li className="">
                               <div className="list-label">Top speed</div>
-                              <div className="list-stat">
-                                {vehicle.topSpeed}
-                              </div>
+                              <div className="list-stat">{vehicle.topSpeed}</div>
                             </li>
                           )}
                           {vehicle.acceleration && (
                             <li className="">
                               <div className="list-label">0 to 60</div>
-                              <div className="list-stat">
-                                {vehicle.acceleration}
-                              </div>
+                              <div className="list-stat">{vehicle.acceleration}</div>
                             </li>
                           )}
                           {vehicle.engineTorque && (
                             <li className="">
-                              <div className="list-label">
-                                Engine torque (lbs/ft)
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.engineTorque}
-                              </div>
+                              <div className="list-label">Engine torque (lbs/ft)</div>
+                              <div className="list-stat">{vehicle.engineTorque}</div>
                             </li>
                           )}
                           {vehicle.enginePower && (
                             <li className="">
-                              <div className="list-label">
-                                Engine power (BHP)
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.enginePower}
-                              </div>
+                              <div className="list-label">Engine power (BHP)</div>
+                              <div className="list-stat">{vehicle.enginePower}</div>
                             </li>
                           )}
                         </ul>
@@ -1059,15 +987,11 @@ const VehicleDetail = () => {
                     )}
                     {vehicle.combinedMpg && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          Fuel Consumption
-                        </em>
+                        <em className="detail-accordion__heading">Fuel Consumption</em>
                         <ul className="row tablist">
                           <li className="">
                             <div className="list-label">Combined (mpg)</div>
-                            <div className="list-stat">
-                              {vehicle.combinedMpg}
-                            </div>
+                            <div className="list-stat">{vehicle.combinedMpg}</div>
                           </li>
                         </ul>
                       </div>
@@ -1078,39 +1002,29 @@ const VehicleDetail = () => {
                       vehicle.cc ||
                       vehicle.numberOfGears) && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          Engine &amp; Drive Train
-                        </em>
+                        <em className="detail-accordion__heading">Engine &amp; Drive Train</em>
                         <ul className="row tablist">
                           {vehicle.bore && (
                             <li className="">
-                              <div className="list-label">
-                                Cylinders - bore (mm)
-                              </div>
+                              <div className="list-label">Cylinders - bore (mm)</div>
                               <div className="list-stat">{vehicle.bore}</div>
                             </li>
                           )}
                           {vehicle.transmission && (
                             <li className="">
                               <div className="list-label">Transmission</div>
-                              <div className="list-stat">
-                                {vehicle.transmission}
-                              </div>
+                              <div className="list-stat">{vehicle.transmission}</div>
                             </li>
                           )}
                           {vehicle.numberOfGears && (
                             <li className="">
                               <div className="list-label">Number of gears</div>
-                              <div className="list-stat">
-                                {vehicle.numberOfGears}
-                              </div>
+                              <div className="list-stat">{vehicle.numberOfGears}</div>
                             </li>
                           )}
                           {vehicle.stroke && (
                             <li className="">
-                              <div className="list-label">
-                                Cylinders - stroke (mm)
-                              </div>
+                              <div className="list-label">Cylinders - stroke (mm)</div>
                               <div className="list-stat">{vehicle.stroke}</div>
                             </li>
                           )}
@@ -1123,9 +1037,7 @@ const VehicleDetail = () => {
                           {vehicle.cylinders && (
                             <li className="">
                               <div className="list-label">Cylinders</div>
-                              <div className="list-stat">
-                                {vehicle.cylinders}
-                              </div>
+                              <div className="list-stat">{vehicle.cylinders}</div>
                             </li>
                           )}
                         </ul>
@@ -1137,74 +1049,57 @@ const VehicleDetail = () => {
                         <ul className="row tablist">
                           <li className="">
                             <div className="list-label">CO2 (g/km)</div>
-                            <div className="list-stat">
-                              {vehicle.co2Emissions}
-                            </div>
+                            <div className="list-stat">{vehicle.co2Emissions}</div>
                           </li>
-                          <li className="">
-                            <div className="list-label">
-                              Standard Euro emissions
-                            </div>
-                            <div className="list-stat">
-                              {vehicle.euroEmissions || "Euro 6"}
-                            </div>
-                          </li>
-                          <li className="">
-                            <div className="list-label">
-                              Ultra Low Emission Zone
-                            </div>
-                            <div className="list-stat">
-                              {vehicle.ultraLowEmissionZone || "Compliant"}
-                            </div>
-                          </li>
+                          {vehicle.euroEmissions && (
+                            <li className="">
+                              <div className="list-label">Standard Euro emissions</div>
+                              <div className="list-stat">{vehicle.euroEmissions}</div>
+                            </li>
+                          )}
+                          {vehicle.ultraLowEmissionZone && (
+                            <li className="">
+                              <div className="list-label">Ultra Low Emission Zone</div>
+                              <div className="list-stat">{vehicle.ultraLowEmissionZone}</div>
+                            </li>
+                          )}
                         </ul>
                       </div>
                     )}
                   </div>
                 </details>
               )}
-              {(vehicle.interiorFeatures &&
-                vehicle.interiorFeatures.length > 0) ||
-              (vehicle.exteriorFeatures &&
-                vehicle.exteriorFeatures.length > 0) ? (
-                <details
-                  className="detail-accordion detail-accordion--interior-exterior"
-                  open=""
-                >
+              {(vehicle.interiorFeatures && vehicle.interiorFeatures.length > 0) ||
+              (vehicle.exteriorFeatures && vehicle.exteriorFeatures.length > 0) ? (
+                <details className="detail-accordion detail-accordion--interior-exterior" open="">
                   <summary>
                     Interior / <span>Exterior</span>
                   </summary>
                   <div className="detail-accordion__content">
-                    {vehicle.interiorFeatures &&
-                      vehicle.interiorFeatures.length > 0 && (
-                        <div className="accordion-group">
-                          <em className="detail-accordion__heading">
-                            Interior Features
-                          </em>
-                          <ul className="row tablist">
-                            {vehicle.interiorFeatures.map((feature, index) => (
-                              <li key={index} className="">
-                                <div className="list-stat">{feature}</div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    {vehicle.exteriorFeatures &&
-                      vehicle.exteriorFeatures.length > 0 && (
-                        <div className="accordion-group">
-                          <em className="detail-accordion__heading">
-                            Exterior Features
-                          </em>
-                          <ul className="row tablist">
-                            {vehicle.exteriorFeatures.map((feature, index) => (
-                              <li key={index} className="">
-                                <div className="list-stat">{feature}</div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {vehicle.interiorFeatures && vehicle.interiorFeatures.length > 0 && (
+                      <div className="accordion-group">
+                        <em className="detail-accordion__heading">Interior Features</em>
+                        <ul className="row tablist">
+                          {vehicle.interiorFeatures.map((feature, index) => (
+                            <li key={index} className="">
+                              <div className="list-stat">{feature}</div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {vehicle.exteriorFeatures && vehicle.exteriorFeatures.length > 0 && (
+                      <div className="accordion-group">
+                        <em className="detail-accordion__heading">Exterior Features</em>
+                        <ul className="row tablist">
+                          {vehicle.exteriorFeatures.map((feature, index) => (
+                            <li key={index} className="">
+                              <div className="list-stat">{feature}</div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </details>
               ) : null}
@@ -1224,34 +1119,26 @@ const VehicleDetail = () => {
               vehicle.turningCircle ||
               vehicle.maxRoofLoad ||
               vehicle.kerbWeight ? (
-                <details
-                  className="detail-accordion detail-accordion--safety-other"
-                  open=""
-                >
+                <details className="detail-accordion detail-accordion--safety-other" open="">
                   <summary>
                     Safety / <span>Other</span>
                   </summary>
                   <div className="detail-accordion__content">
-                    {vehicle.safetyFeatures &&
-                      vehicle.safetyFeatures.length > 0 && (
-                        <div className="accordion-group accordion-group--full-width">
-                          <em className="detail-accordion__heading">
-                            Safety Features
-                          </em>
-                          <ul className="row tablist">
-                            {vehicle.safetyFeatures.map((feature, index) => (
-                              <li key={index} className="">
-                                <div className="list-stat">{feature}</div>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
+                    {vehicle.safetyFeatures && vehicle.safetyFeatures.length > 0 && (
+                      <div className="accordion-group accordion-group--full-width">
+                        <em className="detail-accordion__heading">Safety Features</em>
+                        <ul className="row tablist justify-between">
+                          {vehicle.safetyFeatures.map((feature, index) => (
+                            <li key={index} className="">
+                              <div className="list-stat">{feature}</div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                     {vehicle.ncapRating && (
-                      <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          NCAP Ratings
-                        </em>{" "}
+                      <div className="accordion-group accordion-group--full-width">
+                        <em className="detail-accordion__heading">NCAP Ratings</em>{' '}
                         {vehicle.ncapRating}
                       </div>
                     )}
@@ -1262,42 +1149,30 @@ const VehicleDetail = () => {
                       vehicle.heightWithRails ||
                       vehicle.widthWithMirrors) && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          Dimensions
-                        </em>
+                        <em className="detail-accordion__heading">Dimensions</em>
                         <ul className="row tablist">
                           {vehicle.height && (
                             <li className="">
                               <div className="list-label">Height</div>
-                              <div className="list-stat">
-                                {vehicle.height}mm
-                              </div>
+                              <div className="list-stat">{vehicle.height}mm</div>
                             </li>
                           )}
                           {vehicle.heightWithRails && (
                             <li className="">
-                              <div className="list-label">
-                                Height inclusive of roof rails
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.heightWithRails}mm
-                              </div>
+                              <div className="list-label">Height inclusive of roof rails</div>
+                              <div className="list-stat">{vehicle.heightWithRails}mm</div>
                             </li>
                           )}
                           {vehicle.length && (
                             <li className="">
                               <div className="list-label">Length</div>
-                              <div className="list-stat">
-                                {vehicle.length}mm
-                              </div>
+                              <div className="list-stat">{vehicle.length}mm</div>
                             </li>
                           )}
                           {vehicle.wheelbase && (
                             <li className="">
                               <div className="list-label">Wheelbase</div>
-                              <div className="list-stat">
-                                {vehicle.wheelbase}mm
-                              </div>
+                              <div className="list-stat">{vehicle.wheelbase}mm</div>
                             </li>
                           )}
                           {vehicle.width && (
@@ -1308,12 +1183,8 @@ const VehicleDetail = () => {
                           )}
                           {vehicle.widthWithMirrors && (
                             <li className="">
-                              <div className="list-label">
-                                Width including mirrors
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.widthWithMirrors}mm
-                              </div>
+                              <div className="list-label">Width including mirrors</div>
+                              <div className="list-stat">{vehicle.widthWithMirrors}mm</div>
                             </li>
                           )}
                         </ul>
@@ -1328,15 +1199,11 @@ const VehicleDetail = () => {
                       vehicle.maxRoofLoad ||
                       vehicle.kerbWeight) && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">
-                          Weights &amp; Capacities
-                        </em>
+                        <em className="detail-accordion__heading">Weights &amp; Capacities</em>
                         <ul className="row tablist">
                           {vehicle.luggageCapacitySeatsUp && (
                             <li className="">
-                              <div className="list-label">
-                                Luggage capacity (seats up)
-                              </div>
+                              <div className="list-label">Luggage capacity (seats up)</div>
                               <div className="list-stat">
                                 {vehicle.luggageCapacitySeatsUp} litres
                               </div>
@@ -1344,9 +1211,7 @@ const VehicleDetail = () => {
                           )}
                           {vehicle.luggageCapacitySeatsDown && (
                             <li className="">
-                              <div className="list-label">
-                                Luggage capacity (seats down)
-                              </div>
+                              <div className="list-label">Luggage capacity (seats down)</div>
                               <div className="list-stat">
                                 {vehicle.luggageCapacitySeatsDown} litres
                               </div>
@@ -1360,50 +1225,32 @@ const VehicleDetail = () => {
                           )}
                           {vehicle.grossWeight && (
                             <li className="">
-                              <div className="list-label">
-                                Gross vehicle weight
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.grossWeight} kg
-                              </div>
+                              <div className="list-label">Gross vehicle weight</div>
+                              <div className="list-stat">{vehicle.grossWeight} kg</div>
                             </li>
                           )}
                           {vehicle.maxLoadingWeight && (
                             <li className="">
-                              <div className="list-label">
-                                Max loading weight
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.maxLoadingWeight} kg
-                              </div>
+                              <div className="list-label">Max loading weight</div>
+                              <div className="list-stat">{vehicle.maxLoadingWeight} kg</div>
                             </li>
                           )}
                           {vehicle.turningCircle && (
                             <li className="">
-                              <div className="list-label">
-                                Turning circle (kerb to kerb)
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.turningCircle} metres
-                              </div>
+                              <div className="list-label">Turning circle (kerb to kerb)</div>
+                              <div className="list-stat">{vehicle.turningCircle} metres</div>
                             </li>
                           )}
                           {vehicle.maxRoofLoad && (
                             <li className="">
                               <div className="list-label">Max roof load</div>
-                              <div className="list-stat">
-                                {vehicle.maxRoofLoad} kg
-                              </div>
+                              <div className="list-stat">{vehicle.maxRoofLoad} kg</div>
                             </li>
                           )}
                           {vehicle.kerbWeight && (
                             <li className="">
-                              <div className="list-label">
-                                Minimum kerb weight
-                              </div>
-                              <div className="list-stat">
-                                {vehicle.kerbWeight} kg
-                              </div>
+                              <div className="list-label">Minimum kerb weight</div>
+                              <div className="list-stat">{vehicle.kerbWeight} kg</div>
                             </li>
                           )}
                         </ul>
@@ -1414,14 +1261,10 @@ const VehicleDetail = () => {
               ) : null}
               {/* More details will be added here */}
               <div className="detail-disclaimer">
+                <p>For more info on this vehicle call our showroom on 01780 435024</p>
                 <p>
-                  For more info on this vehicle call our showroom on 01780
-                  435024
-                </p>
-                <p>
-                  Every effort has been made to ensure the accuracy of the above
-                  information but errors may occur. Please check with a
-                  salesperson.
+                  Every effort has been made to ensure the accuracy of the above information but
+                  errors may occur. Please check with a salesperson.
                 </p>
               </div>
             </div>

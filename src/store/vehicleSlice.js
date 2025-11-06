@@ -1,21 +1,36 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 
 // Fetch recent vehicles public endpoint (uses client API)
 export const fetchRecentVehicles = createAsyncThunk(
-  "vehicles/fetchRecent",
+  'vehicles/fetchRecent',
   async (_, { rejectWithValue }) => {
     try {
       const res = await fetch(
         `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
         }/api/client/vehicles/recent?page=1&pageSize=200`
       );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch vehicles");
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch vehicles');
+      return data.data || [];
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+// Fetch vehicles for Part Exchange dropdown
+export const fetchPartExchangeVehicles = createAsyncThunk(
+  'vehicles/fetchPartExchange',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
+        }/api/client/part-exchange-vehicles`
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch vehicles');
       return data.data || [];
     } catch (err) {
       return rejectWithValue(err.message);
@@ -25,16 +40,16 @@ export const fetchRecentVehicles = createAsyncThunk(
 
 // Fetch individual vehicle by ID
 export const fetchVehicleById = createAsyncThunk(
-  "vehicles/fetchById",
+  'vehicles/fetchById',
   async (vehicleId, { rejectWithValue }) => {
     try {
       const res = await fetch(
         `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
         }/api/client/vehicles/${vehicleId}`
       );
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to fetch vehicle");
+      if (!res.ok) throw new Error(data.message || 'Failed to fetch vehicle');
       return data.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -43,12 +58,14 @@ export const fetchVehicleById = createAsyncThunk(
 );
 
 const vehicleSlice = createSlice({
-  name: "vehicles",
+  name: 'vehicles',
   initialState: {
     items: [],
+    partExchangeItems: [],
     currentVehicle: null,
     favorites: [],
-    status: "idle",
+    status: 'idle',
+    partExchangeStatus: 'idle',
     loading: false,
     error: null,
   },
@@ -60,12 +77,9 @@ const vehicleSlice = createSlice({
         state.favorites.push(vehicle);
         // Save to localStorage
         try {
-          localStorage.setItem(
-            "vehicle_favorites",
-            JSON.stringify(state.favorites)
-          );
+          localStorage.setItem('vehicle_favorites', JSON.stringify(state.favorites));
         } catch (error) {
-          console.error("Error saving favorites to localStorage:", error);
+          console.error('Error saving favorites to localStorage:', error);
         }
       }
     },
@@ -74,45 +88,54 @@ const vehicleSlice = createSlice({
       state.favorites = state.favorites.filter((fav) => fav.id !== vehicleId);
       // Save to localStorage
       try {
-        localStorage.setItem(
-          "vehicle_favorites",
-          JSON.stringify(state.favorites)
-        );
+        localStorage.setItem('vehicle_favorites', JSON.stringify(state.favorites));
       } catch (error) {
-        console.error("Error saving favorites to localStorage:", error);
+        console.error('Error saving favorites to localStorage:', error);
       }
     },
     loadFavorites: (state) => {
       try {
-        const storedFavorites = localStorage.getItem("vehicle_favorites");
+        const storedFavorites = localStorage.getItem('vehicle_favorites');
         if (storedFavorites) {
           state.favorites = JSON.parse(storedFavorites);
         }
       } catch (error) {
-        console.error("Error loading favorites from localStorage:", error);
+        console.error('Error loading favorites from localStorage:', error);
       }
     },
     clearFavorites: (state) => {
       state.favorites = [];
       try {
-        localStorage.removeItem("vehicle_favorites");
+        localStorage.removeItem('vehicle_favorites');
       } catch (error) {
-        console.error("Error clearing favorites from localStorage:", error);
+        console.error('Error clearing favorites from localStorage:', error);
       }
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecentVehicles.pending, (state) => {
-        state.status = "loading";
+        state.status = 'loading';
         state.error = null;
       })
       .addCase(fetchRecentVehicles.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.items = action.payload;
       })
       .addCase(fetchRecentVehicles.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+      .addCase(fetchPartExchangeVehicles.pending, (state) => {
+        state.partExchangeStatus = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchPartExchangeVehicles.fulfilled, (state, action) => {
+        state.partExchangeStatus = 'succeeded';
+        state.partExchangeItems = action.payload;
+      })
+      .addCase(fetchPartExchangeVehicles.rejected, (state, action) => {
+        state.partExchangeStatus = 'failed';
         state.error = action.payload;
       })
       .addCase(fetchVehicleById.pending, (state) => {
@@ -133,36 +156,29 @@ const vehicleSlice = createSlice({
 export const selectVehicleItems = (state) => state.vehicles.items || [];
 
 // Memoized selectors for brands
-export const selectUniqueBrands = createSelector(
-  [selectVehicleItems],
-  (items) => {
-    const seen = new Set();
-    const brands = [];
-    for (const v of items) {
-      const name = (v.brand || "").toString();
-      if (!name) continue;
-      const key = name.toLowerCase();
-      if (!seen.has(key)) {
-        seen.add(key);
-        brands.push(name);
-      }
+export const selectUniqueBrands = createSelector([selectVehicleItems], (items) => {
+  const seen = new Set();
+  const brands = [];
+  for (const v of items) {
+    const name = (v.brand || '').toString();
+    if (!name) continue;
+    const key = name.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      brands.push(name);
     }
-    return brands.sort((a, b) => a.localeCompare(b));
   }
-);
+  return brands.sort((a, b) => a.localeCompare(b));
+});
 
 export const selectVanBrands = createSelector([selectVehicleItems], (items) => {
   const seen = new Set();
   const brands = [];
   for (const v of items) {
-    const body = (v.bodyStyle || v.bodyType || "").toString().toLowerCase();
+    const body = (v.bodyStyle || v.bodyType || '').toString().toLowerCase();
     if (!body) continue;
-    if (
-      body.includes("van") ||
-      body.includes("panel") ||
-      body.includes("box")
-    ) {
-      const name = (v.brand || "").toString();
+    if (body.includes('van') || body.includes('panel') || body.includes('box')) {
+      const name = (v.brand || '').toString();
       if (!name) continue;
       const key = name.toLowerCase();
       if (!seen.has(key)) {
@@ -177,8 +193,7 @@ export const selectVanBrands = createSelector([selectVehicleItems], (items) => {
 export const selectCurrentVehicle = (state) => state.vehicles.currentVehicle;
 
 export const selectFavorites = (state) => state.vehicles.favorites || [];
-export const selectFavoritesCount = (state) =>
-  (state.vehicles.favorites || []).length;
+export const selectFavoritesCount = (state) => (state.vehicles.favorites || []).length;
 
 // Memoized selector for checking if a vehicle is favorited
 export const selectIsFavorite = createSelector(
@@ -186,11 +201,7 @@ export const selectIsFavorite = createSelector(
   (favorites, vehicleId) => favorites.some((fav) => fav.id === vehicleId)
 );
 
-export const {
-  addToFavorites,
-  removeFromFavorites,
-  loadFavorites,
-  clearFavorites,
-} = vehicleSlice.actions;
+export const { addToFavorites, removeFromFavorites, loadFavorites, clearFavorites } =
+  vehicleSlice.actions;
 
 export default vehicleSlice.reducer;

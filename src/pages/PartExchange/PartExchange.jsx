@@ -1,25 +1,52 @@
-import React, { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCallback, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import PageWithSidebarLayout from '../../layouts/PageWithSidebarLayout';
 import {
-  updateFormField,
+  clearError,
+  resetForm,
   setCurrentStep,
   submitPartExchangeForm,
-  resetForm,
-  clearError,
-} from "../../store/partExchangeSlice";
-import "./PartExchange.css";
+  updateFormField,
+} from '../../store/partExchangeSlice';
+import { fetchPartExchangeVehicles } from '../../store/vehicleSlice';
+import './PartExchange.css';
 
 const PartExchange = () => {
   const dispatch = useDispatch();
-  const { formData, currentStep, isSubmitting, submitSuccess, submitError } =
-    useSelector((state) => state.partExchange);
+  const { formData, currentStep, isSubmitting, submitSuccess, submitError } = useSelector(
+    (state) => state.partExchange
+  );
+
+  // Get vehicles from Redux store - Part Exchange specific
+  const allVehicles = useSelector((state) => state.vehicles.partExchangeItems || []);
+
+  // Fetch Part Exchange vehicles on component mount
+  useEffect(() => {
+    dispatch(fetchPartExchangeVehicles());
+  }, [dispatch]);
+
+  // Prepare sorted vehicles with display text
+  const vehicles = useMemo(() => {
+    const processed = allVehicles
+      .map((v) => ({
+        id: v._id || v.id,
+        title: v.title || '',
+        subtitle: v.subtitle || '',
+        displayText: `${v.title || ''} ${v.subtitle || ''}`.trim(),
+      }))
+      .sort((a, b) => a.displayText.localeCompare(b.displayText));
+
+    return processed;
+  }, [allVehicles]);
+
+  // Initialize filtered vehicles - no longer needed for simple dropdown
+  // Vehicles are now directly rendered in the select element
 
   // Handle success and error toasts
   useEffect(() => {
     if (submitSuccess) {
-      toast.success("Part exchange valuation submitted successfully");
+      toast.success('Part exchange valuation submitted successfully');
       dispatch(resetForm());
     }
   }, [submitSuccess, dispatch]);
@@ -37,6 +64,31 @@ const PartExchange = () => {
       dispatch(updateFormField({ field: name, value }));
     },
     [dispatch]
+  );
+
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      // Clear any previous errors
+      dispatch(clearError());
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        toast.error('Please enter a valid email address');
+        return;
+      }
+
+      // Captcha validation
+      if (formData.captchaResponse !== '10') {
+        toast.error('Incorrect captcha answer');
+        return;
+      }
+
+      dispatch(submitPartExchangeForm(formData));
+    },
+    [formData, dispatch]
   );
 
   const handleNext = useCallback(() => {
@@ -74,82 +126,50 @@ const PartExchange = () => {
     };
 
     if (!validateStep(currentStep)) {
-      toast.error("Please fill all required fields");
+      toast.error('Please fill all required fields');
       return;
     }
 
     if (currentStep === 3) {
       // Submit the form when on step 3
-      handleSubmit(new Event("submit", { cancelable: true, bubbles: true }));
+      handleSubmit(new Event('submit', { cancelable: true, bubbles: true }));
     } else if (currentStep < 3) {
       dispatch(setCurrentStep(currentStep + 1));
     }
-  }, [currentStep, formData, dispatch]);
+  }, [currentStep, formData, dispatch, handleSubmit]);
 
   const handleBack = useCallback(() => {
     if (currentStep > 1) {
       dispatch(setCurrentStep(currentStep - 1));
     }
   }, [currentStep, dispatch]);
-
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-
-      // Clear any previous errors
-      dispatch(clearError());
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
-        toast.error("Please enter a valid email address");
-        return;
-      }
-
-      // Captcha validation
-      if (formData.captchaResponse !== "10") {
-        toast.error("Incorrect captcha answer");
-        return;
-      }
-
-      dispatch(submitPartExchangeForm(formData));
-    },
-    [formData, dispatch]
-  );
   const mainContent = (
     <div className="pad-20 overflow-hidden part-exchange-page">
       <p>
         <strong>
-          Our dedicated team of vehicle valuation experts are ready to give you
-          an up-to-the-minute market value of your car.
+          Our dedicated team of vehicle valuation experts are ready to give you an up-to-the-minute
+          market value of your car.
         </strong>
       </p>
       <h2>Free Quote</h2>
 
       <p>
-        If you are considering part exchanging your current vehicle we are able
-        to provide you with a free, no-obligation quote.
+        If you are considering part exchanging your current vehicle we are able to provide you with
+        a free, no-obligation quote.
       </p>
       <p>
-        Please contact one of our Sales Consultants on 01780 435024 or complete
-        our valuation form below.
+        Please contact one of our Sales Consultants on 01780 435024 or complete our valuation form
+        below.
       </p>
-      <p>
-        We will contact you as soon as possible with the best possible price for
-        your car.
-      </p>
+      <p>We will contact you as soon as possible with the best possible price for your car.</p>
 
       {/* SSL Certificate and Header Section */}
       <div className="form-header">
         <div className="header-content">
-          <h1 className="valuation-title">
-            Online Vehicle Valuation Application
-          </h1>
+          <h1 className="valuation-title">Online Vehicle Valuation Application</h1>
           <div className="valuation-description">
             <p>Our online application is quick, simple and secure.</p>
-            <p>
-              Once completed, one of our team will contact you straight back.
-            </p>
+            <p>Once completed, one of our team will contact you straight back.</p>
           </div>
         </div>
         <div className="ssl-badge">
@@ -176,15 +196,20 @@ const PartExchange = () => {
                 </label>
               </div>
               <div className="form-input">
-                <input
-                  type="text"
+                <select
                   id="enquiry_regarding"
                   name="enquiry_regarding"
                   value={formData.enquiry_regarding}
                   onChange={handleChange}
-                  placeholder="Enter your enquiry"
                   required
-                />
+                >
+                  <option value="">Select a vehicle</option>
+                  {vehicles.map((vehicle) => (
+                    <option key={vehicle.id} value={vehicle.displayText}>
+                      {vehicle.displayText}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div className="form-row">
@@ -538,9 +563,7 @@ const PartExchange = () => {
             </div>
             <div className="form-row">
               <div className="form-label">
-                <label htmlFor="last_service_mileage">
-                  Last service mileage
-                </label>
+                <label htmlFor="last_service_mileage">Last service mileage</label>
               </div>
               <div className="form-input">
                 <input
@@ -602,8 +625,8 @@ const PartExchange = () => {
               <div className="form-label"></div>
               <div className="form-input">
                 <p className="upload_image_p">
-                  If you have any photos of your vehicle already uploaded to
-                  facebook, flickr etc. Please feel free to copy the link below
+                  If you have any photos of your vehicle already uploaded to facebook, flickr etc.
+                  Please feel free to copy the link below
                 </p>
               </div>
             </div>
@@ -689,11 +712,7 @@ const PartExchange = () => {
         {currentStep < 3 && (
           <div className="form-navigation">
             {currentStep > 1 && (
-              <button
-                type="button"
-                onClick={handleBack}
-                className="btn btn-secondary"
-              >
+              <button type="button" onClick={handleBack} className="btn btn-secondary">
                 Back
               </button>
             )}
@@ -701,7 +720,7 @@ const PartExchange = () => {
               type="button"
               onClick={handleNext}
               className="btn btn-primary"
-              style={{ marginLeft: currentStep === 1 ? "auto" : "0" }}
+              style={{ marginLeft: currentStep === 1 ? 'auto' : '0' }}
             >
               Next
             </button>
@@ -710,11 +729,7 @@ const PartExchange = () => {
 
         {currentStep === 3 && (
           <div className="form-navigation">
-            <button
-              type="button"
-              onClick={handleBack}
-              className="btn btn-secondary"
-            >
+            <button type="button" onClick={handleBack} className="btn btn-secondary">
               Back
             </button>
             <button
@@ -723,7 +738,7 @@ const PartExchange = () => {
               className="btn btn-primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Valuation"}
+              {isSubmitting ? 'Submitting...' : 'Submit Valuation'}
             </button>
           </div>
         )}

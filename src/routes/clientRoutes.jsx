@@ -1,30 +1,31 @@
+import { MainLayout } from '../layouts';
 import {
-  Home,
   About,
-  Warranty,
+  Compare,
+  Complaints,
   Contact,
+  CookiePolicy,
+  Customization,
+  Enquiry,
+  Home,
+  NotFound,
+  PartExchange,
+  PrivacyPolicy,
+  Search,
   // Careers,
   SellCar,
-  PartExchange,
-  Customization,
-  Complaints,
+  Showroom,
   Sitemap,
   TermsOfUse,
-  PrivacyPolicy,
-  CookiePolicy,
-  VehicleListings,
-  Showroom,
-  Search,
   VehicleDetailStatic,
-  Compare,
-  NotFound,
-} from "../pages";
-import { MainLayout } from "../layouts";
+  VehicleListings,
+  Warranty,
+} from '../pages';
 
 export const clientRoutes = [
   // Public Routes
   {
-    path: "/",
+    path: '/',
     element: (
       <MainLayout>
         <Home />
@@ -32,7 +33,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/about",
+    path: '/about',
     element: (
       <MainLayout>
         <About />
@@ -40,7 +41,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/warranty",
+    path: '/warranty',
     element: (
       <MainLayout>
         <Warranty />
@@ -48,10 +49,18 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/contact",
+    path: '/contact',
     element: (
       <MainLayout>
         <Contact />
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/enquiry',
+    element: (
+      <MainLayout>
+        <Enquiry />
       </MainLayout>
     ),
   },
@@ -64,7 +73,7 @@ export const clientRoutes = [
   //   ),
   // },
   {
-    path: "/sellcar",
+    path: '/sellcar',
     element: (
       <MainLayout>
         <SellCar />
@@ -72,7 +81,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/part-exchange",
+    path: '/part-exchange',
     element: (
       <MainLayout>
         <PartExchange />
@@ -80,7 +89,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/customization",
+    path: '/customization',
     element: (
       <MainLayout>
         <Customization />
@@ -88,7 +97,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/complaints",
+    path: '/complaints',
     element: (
       <MainLayout>
         <Complaints />
@@ -96,7 +105,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/sitemap",
+    path: '/sitemap',
     element: (
       <MainLayout>
         <Sitemap />
@@ -104,7 +113,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/terms-of-use",
+    path: '/terms-of-use',
     element: (
       <MainLayout>
         <TermsOfUse />
@@ -112,7 +121,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/privacy-policy",
+    path: '/privacy-policy',
     element: (
       <MainLayout>
         <PrivacyPolicy />
@@ -120,7 +129,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/cookie-policy",
+    path: '/cookie-policy',
     element: (
       <MainLayout>
         <CookiePolicy />
@@ -130,7 +139,7 @@ export const clientRoutes = [
 
   // Dynamic Vehicle Routes
   {
-    path: "/vehicles/:type",
+    path: '/vehicles/:type',
     element: (
       <MainLayout>
         <VehicleListings />
@@ -138,7 +147,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/vehicles/:type/:brand",
+    path: '/vehicles/:type/:brand',
     element: (
       <MainLayout>
         <VehicleListings />
@@ -146,7 +155,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/search",
+    path: '/search',
     element: (
       <MainLayout>
         <Search />
@@ -156,7 +165,7 @@ export const clientRoutes = [
 
   // Legacy Routes (redirect to new dynamic routes)
   {
-    path: "/used-cars",
+    path: '/used-cars',
     element: (
       <MainLayout>
         <Showroom />
@@ -164,7 +173,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/used-vans",
+    path: '/used-vans',
     element: (
       <MainLayout>
         <Showroom />
@@ -172,7 +181,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/used/cars/:brand",
+    path: '/used/cars/:brand',
     element: (
       <MainLayout>
         <Showroom />
@@ -180,7 +189,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/used/vans/:brand",
+    path: '/used/vans/:brand',
     element: (
       <MainLayout>
         <Showroom />
@@ -190,7 +199,7 @@ export const clientRoutes = [
 
   // Vehicle Detail Route
   {
-    path: "/vehicle/:brand/:vehicleId",
+    path: '/vehicle/:brand/:vehicleId',
     element: (
       <MainLayout>
         <VehicleDetailStatic />
@@ -200,7 +209,7 @@ export const clientRoutes = [
 
   // Compare Route
   {
-    path: "/compare",
+    path: '/compare',
     element: (
       <MainLayout>
         <Compare />
@@ -210,7 +219,7 @@ export const clientRoutes = [
 
   // Services Routes
   {
-    path: "/sellcar",
+    path: '/sellcar',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -221,7 +230,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/partex",
+    path: '/partex',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -232,7 +241,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/customisation",
+    path: '/customisation',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -243,7 +252,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/complaints",
+    path: '/complaints',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -254,7 +263,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/warranty",
+    path: '/warranty',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -267,7 +276,7 @@ export const clientRoutes = [
 
   // Dynamic Showroom Routes
   {
-    path: "/showroom",
+    path: '/showroom',
     element: (
       <MainLayout>
         <Showroom />
@@ -275,7 +284,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/showroom/:brand",
+    path: '/showroom/:brand',
     element: (
       <MainLayout>
         <Showroom />
@@ -285,7 +294,7 @@ export const clientRoutes = [
 
   // About Routes
   {
-    path: "/about",
+    path: '/about',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -298,7 +307,7 @@ export const clientRoutes = [
 
   // Other Routes
   {
-    path: "/finance",
+    path: '/finance',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -309,7 +318,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/insurance",
+    path: '/insurance',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -320,7 +329,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/news",
+    path: '/news',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -331,7 +340,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: "/reviews",
+    path: '/reviews',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
@@ -344,7 +353,7 @@ export const clientRoutes = [
 
   // 404 Catch-all Route - Must be last
   {
-    path: "*",
+    path: '*',
     element: (
       <MainLayout>
         <NotFound />

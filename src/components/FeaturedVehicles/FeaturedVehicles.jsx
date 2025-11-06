@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import "./FeaturedVehicles.css";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import {
-  fetchRecentVehicles,
-  selectVehicleItems,
-} from "../../store/vehicleSlice";
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchRecentVehicles, selectVehicleItems } from '../../store/vehicleSlice';
+import './FeaturedVehicles.css';
 
 const FeaturedVehicles = () => {
   const dispatch = useDispatch();
@@ -23,9 +20,7 @@ const FeaturedVehicles = () => {
   const vehicles = allVehicles.slice(0, displayCount);
 
   // Log raw payload for debugging
-  useEffect(() => {
-    console.log("FeaturedVehicles - allVehicles payload:", allVehicles);
-  }, [allVehicles]);
+  useEffect(() => {}, [allVehicles]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);
@@ -66,8 +61,8 @@ const FeaturedVehicles = () => {
     updateDimensions();
     // Reset current index when screen size changes
     setCurrentIndex(0);
-    window.addEventListener("resize", updateDimensions);
-    return () => window.removeEventListener("resize", updateDimensions);
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
   const goNext = () => {
@@ -111,7 +106,7 @@ const FeaturedVehicles = () => {
     const base = currentIndex * (itemWidth + itemMargin);
     setCurrentTranslate(base);
     if (containerRef.current && !isDragging) {
-      containerRef.current.style.transition = "transform 0.5s ease-in-out";
+      containerRef.current.style.transition = 'transform 0.5s ease-in-out';
       containerRef.current.style.transform = `translateX(-${base}px)`;
     }
   }, [currentIndex, itemWidth, itemMargin, isDragging]);
@@ -121,7 +116,7 @@ const FeaturedVehicles = () => {
     setIsDragging(true);
     setStartX(pageX);
     if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-    if (containerRef.current) containerRef.current.style.transition = "none";
+    if (containerRef.current) containerRef.current.style.transition = 'none';
   };
 
   const pointerMove = (pageX) => {
@@ -130,8 +125,7 @@ const FeaturedVehicles = () => {
     const base = currentIndex * (itemWidth + itemMargin);
     const next = base - deltaX;
     setCurrentTranslate(next);
-    if (containerRef.current)
-      containerRef.current.style.transform = `translateX(-${next}px)`;
+    if (containerRef.current) containerRef.current.style.transform = `translateX(-${next}px)`;
   };
 
   const pointerUp = (pageX) => {
@@ -146,7 +140,7 @@ const FeaturedVehicles = () => {
     } else {
       const base = currentIndex * (itemWidth + itemMargin);
       if (containerRef.current) {
-        containerRef.current.style.transition = "transform 0.5s ease-in-out";
+        containerRef.current.style.transition = 'transform 0.5s ease-in-out';
         containerRef.current.style.transform = `translateX(-${base}px)`;
       }
     }
@@ -211,12 +205,8 @@ const FeaturedVehicles = () => {
                 className="touchcarousel-container"
                 style={{
                   // transform: `translateX(-${currentTranslate}px)`,
-                  transform: `translateX(-${
-                    currentIndex * (itemWidth + itemMargin)
-                  }px)`,
-                  transition: isDragging
-                    ? "none"
-                    : "transform 0.5s ease-in-out",
+                  transform: `translateX(-${currentIndex * (itemWidth + itemMargin)}px)`,
+                  transition: isDragging ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
                 {vehicles.map((v) => {
@@ -225,57 +215,46 @@ const FeaturedVehicles = () => {
                     v.title ||
                     (v.brand && v.model
                       ? `${v.brand} ${v.model}`
-                      : v.formData?.title || "Untitled");
+                      : v.formData?.title || 'Untitled');
                   const priceVal =
-                    typeof v.price !== "undefined" && v.price !== null
+                    typeof v.price !== 'undefined' && v.price !== null
                       ? v.price
                       : v.formData?.price;
-                  const price = priceVal
-                    ? `£${Number(priceVal).toLocaleString()}`
-                    : "";
+                  const price = priceVal ? `£${Number(priceVal).toLocaleString()}` : '';
                   // finance / price from
                   const financeVal =
-                    v.financeMonthly ||
-                    v.formData?.priceFromFinance ||
-                    v.formData?.priceFrom;
-                  const finance = financeVal ? `£${financeVal}` : "";
+                    v.financeMonthly || v.formData?.priceFromFinance || v.formData?.priceFrom;
+                  const finance = financeVal ? `£${financeVal}` : '';
                   // images may be array of objects or strings
-                  let image = "/images/placeholder.jpg";
+                  let image = '/images/placeholder.jpg';
                   if (v.images && v.images.length) {
                     const first = v.images[0];
-                    image =
-                      typeof first === "string"
-                        ? first
-                        : first.url || first.src || image;
+                    image = typeof first === 'string' ? first : first.url || first.src || image;
                   } else if (
                     v.formData &&
                     v.formData.existingImages &&
                     v.formData.existingImages.length
                   ) {
                     const first = v.formData.existingImages[0];
-                    image =
-                      typeof first === "string"
-                        ? first
-                        : first.url || first.src || image;
+                    image = typeof first === 'string' ? first : first.url || first.src || image;
                   } else if (v.formData && v.formData.image) {
                     image = v.formData.image;
                   }
+                  const year = v.year || v.formData?.year || '';
+                  const subTitle = v.subTitle || v.formData?.subtitle || '';
                   const variant =
                     v.variant ||
                     v.formData?.variant ||
-                    `${v.year || v.formData?.year || ""} ${
-                      v.formData?.trim || ""
-                    }`;
+                    (year || subTitle
+                      ? `${year && subTitle ? `${year} ${subTitle}` : year || subTitle}`
+                      : '');
                   const vehicleId = v._id || v.id;
                   const brandSlug = v.brand
-                    ? v.brand.toLowerCase().replace(/\s+/g, "-")
-                    : "unknown";
+                    ? v.brand.toLowerCase().replace(/\s+/g, '-')
+                    : 'unknown';
 
                   return (
-                    <li
-                      key={v.id || v._id || vehicleId}
-                      className="touchcarousel-item"
-                    >
+                    <li key={v.id || v._id || vehicleId} className="touchcarousel-item">
                       <Link
                         to={`/vehicle/${brandSlug}/${vehicleId}`}
                         title={`Used ${title} for sale in Essendine`}
@@ -301,9 +280,7 @@ const FeaturedVehicles = () => {
                             )}
                           </div>
                           <div className="carousel-info__title">{title}</div>
-                          <div className="carousel-info__variant">
-                            {variant}
-                          </div>
+                          <div className="carousel-info__variant">{variant}</div>
                         </div>
                       </Link>
                     </li>
@@ -313,18 +290,10 @@ const FeaturedVehicles = () => {
             </div>
           </div>
           <div className="arrow-holder left">
-            <a
-              className="arrow-icon left"
-              onClick={goPrev}
-              aria-label="Previous"
-            ></a>
+            <a className="arrow-icon left" onClick={goPrev} aria-label="Previous"></a>
           </div>
           <div className="arrow-holder right">
-            <a
-              className="arrow-icon right"
-              onClick={goNext}
-              aria-label="Next"
-            ></a>
+            <a className="arrow-icon right" onClick={goNext} aria-label="Next"></a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import FavoriteButton from '../../components/FavoriteButton';
 import RefineSearchDrawer from '../../components/RefineSearchDrawer';
 import { fetchRecentVehicles, loadFavorites, selectVehicleItems } from '../../store/vehicleSlice';
@@ -8,6 +8,7 @@ import './Showroom.css';
 
 const Showroom = () => {
   const { brand } = useParams();
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const allVehicles = useSelector(selectVehicleItems);
   const vehicleStatus = useSelector((state) => state.vehicles.status);
@@ -48,6 +49,12 @@ const Showroom = () => {
     setIsRefineSearchOpen(false);
   };
 
+  // Fetch fresh vehicle data when page mounts or URL changes
+  useEffect(() => {
+    dispatch(fetchRecentVehicles());
+    setCurrentPage(1); // Reset to first page when navigating
+  }, [brand, dispatch]);
+
   const getCurrentSortLabel = () => {
     const option = sortOptions.find((opt) => opt.value === sortOption);
     return option ? option.label : 'Price (high to low)';
@@ -75,6 +82,46 @@ const Showroom = () => {
     }
   }, []);
 
+  // Fetch filtered vehicles from API
+  const fetchFilteredVehicles = useCallback(
+    async (params = {}) => {
+      try {
+        const queryParams = new URLSearchParams();
+
+        // Add search parameters to query
+        for (const [key, value] of searchParams.entries()) {
+          if (value && value.trim() !== '') {
+            queryParams.append(key, value);
+          }
+        }
+
+        // Add any additional params
+        Object.entries(params).forEach(([key, value]) => {
+          if (value !== null && value !== undefined && value !== '') {
+            queryParams.append(key, value);
+          }
+        });
+
+        const response = await fetch(
+          `${
+            import.meta.env.VITE_API_URL || 'http://localhost:5000'
+          }/api/client/vehicles/filter?${queryParams.toString()}`
+        );
+
+        const data = await response.json();
+        if (data.success) {
+          return data.data;
+        } else {
+          throw new Error(data.message || 'Failed to fetch vehicles');
+        }
+      } catch (error) {
+        console.error('Error fetching filtered vehicles:', error);
+        throw error;
+      }
+    },
+    [searchParams]
+  );
+
   const getBrandDisplayName = (brandSlug) => {
     const brandMap = {
       audi: 'Audi',
@@ -99,23 +146,12 @@ const Showroom = () => {
 
   // Determine pathname and whether we're on cars/vans sections or brand pages
   const pathname = window.location.pathname;
-  const isVansSection = pathname.startsWith('/used/vans');
-  const isCarsSection = pathname.startsWith('/used/cars');
+  const isVansSection = pathname.startsWith('/used/vans') || pathname === '/used-vans';
+  const isCarsSection = pathname.startsWith('/used/cars') || pathname === '/used-cars';
   const isVansPage = pathname === '/used-vans';
   const isAllCarsPage = !brand && pathname === '/used-cars';
   const isBrandPage = Boolean(brand) && (isVansSection || isCarsSection);
   const brandName = isBrandPage ? getBrandDisplayName(brand) : 'Used Cars';
-
-  useEffect(() => {
-    // Dispatch fetchRecentVehicles if not already loaded
-    if (vehicleStatus === 'idle') {
-      dispatch(fetchRecentVehicles());
-    }
-    // Load favorites from localStorage
-    dispatch(loadFavorites());
-    // Fetch brands
-    fetchBrands();
-  }, [dispatch, vehicleStatus]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -130,7 +166,7 @@ const Showroom = () => {
     };
   }, [isSortDropdownOpen]);
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 12;
   const totalPages = Math.ceil(filteredVehicles.length / itemsPerPage);
   const displayedVehicles = filteredVehicles.slice(
     (currentPage - 1) * itemsPerPage,
@@ -143,39 +179,83 @@ const Showroom = () => {
   };
 
   useEffect(() => {
-    // Filter vehicles based on the current section (cars/vans) and optional brand
-    let filtered = allVehicles || [];
-
-    if (isVansSection) {
-      const before = filtered.length;
-      filtered = filtered.filter(
-        (vehicle) =>
-          (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase() === 'van'
+    const loadVehicles = async () => {
+      // Check if there are search parameters in the URL
+      const hasSearchParams = Array.from(searchParams.entries()).some(
+        ([, value]) => value && value.trim() !== ''
       );
-      console.log(`Vans filter: ${before} -> ${filtered.length}`);
-    } else if (isCarsSection) {
-      const before = filtered.length;
-      filtered = filtered.filter((vehicle) => {
-        const body = (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase();
-        return body !== 'van';
-      });
-      console.log(`Cars filter: ${before} -> ${filtered.length}`);
-    }
 
-    // If a brand slug is present in the URL, apply brand filtering (case-insensitive)
-    if (brand) {
-      const before = filtered.length;
-      filtered = filtered.filter(
-        (vehicle) => vehicle.brand && vehicle.brand.toLowerCase() === brandName.toLowerCase()
-      );
-      console.log(`Brand filter (${brandName}): ${before} -> ${filtered.length}`);
-    }
+      if (hasSearchParams) {
+        // Fetch filtered vehicles from backend
+        try {
+          const filteredVehicles = await fetchFilteredVehicles();
+          setFilteredVehicles(sortVehicles(filteredVehicles, sortOption));
+          setCurrentPage(1);
+        } catch (error) {
+          console.error('Error fetching filtered vehicles:', error);
+          // Fallback to local filtering if API fails
+          let filtered = allVehicles || [];
+          if (isVansSection) {
+            filtered = filtered.filter(
+              (vehicle) =>
+                (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase() === 'van'
+            );
+          } else if (isCarsSection) {
+            filtered = filtered.filter((vehicle) => {
+              const body = (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase();
+              return body !== 'van';
+            });
+          }
+          if (brand) {
+            filtered = filtered.filter(
+              (vehicle) => vehicle.brand && vehicle.brand.toLowerCase() === brandName.toLowerCase()
+            );
+          }
+          setFilteredVehicles(sortVehicles(filtered, sortOption));
+          setCurrentPage(1);
+        }
+      } else {
+        // No search parameters, use local filtering
+        let filtered = allVehicles || [];
 
-    // Apply sorting
-    const sorted = sortVehicles(filtered, sortOption);
-    setFilteredVehicles(sorted);
-    setCurrentPage(1); // Reset to first page when filtering/sorting changes
-  }, [allVehicles, brandName, isVansSection, isCarsSection, sortOption, brand, sortVehicles]);
+        if (isVansSection) {
+          filtered = filtered.filter(
+            (vehicle) =>
+              (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase() === 'van'
+          );
+        } else if (isCarsSection) {
+          filtered = filtered.filter((vehicle) => {
+            const body = (vehicle.bodyStyle || vehicle.formData?.bodyStyle || '').toLowerCase();
+            return body !== 'van';
+          });
+        }
+
+        // If a brand slug is present in the URL, apply brand filtering (case-insensitive)
+        if (brand) {
+          filtered = filtered.filter(
+            (vehicle) => vehicle.brand && vehicle.brand.toLowerCase() === brandName.toLowerCase()
+          );
+        }
+
+        // Apply sorting
+        const sorted = sortVehicles(filtered, sortOption);
+        setFilteredVehicles(sorted);
+        setCurrentPage(1); // Reset to first page when filtering/sorting changes
+      }
+    };
+
+    loadVehicles();
+  }, [
+    allVehicles,
+    brandName,
+    isVansSection,
+    isCarsSection,
+    sortOption,
+    brand,
+    sortVehicles,
+    searchParams,
+    fetchFilteredVehicles,
+  ]);
 
   const formatPrice = (price) => {
     if (price === 0 || !price) return 'Contact for price';
@@ -188,32 +268,75 @@ const Showroom = () => {
   };
 
   const getVehicleTitle = (vehicle) => {
-    return vehicle.title || `${vehicle.brand} ${vehicle.model || 'Unknown Model'}`;
+    return vehicle.title || ``;
   };
 
   const getVehicleVariant = (vehicle) => {
-    const parts = [];
-    if (vehicle.year) parts.push(vehicle.year);
-    if (vehicle.fuelType) parts.push(vehicle.fuelType);
-    if (vehicle.transmission) parts.push(vehicle.transmission);
-    if (vehicle.engineSize) parts.push(vehicle.engineSize);
-    return parts.join(', ') || 'Details available on request';
+    if (vehicle.year || vehicle.subTitle) {
+      return `${
+        vehicle.year && vehicle.subTitle
+          ? `${vehicle.year} ${vehicle.subTitle}`
+          : vehicle.year || vehicle.subTitle
+      }`;
+    }
+    return 'Details available on request';
   };
 
   // Fetch brands data
-  const fetchBrands = async () => {
+  const fetchBrands = useCallback(async (retryCount = 0) => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands`
       );
+
+      // Handle rate limiting (429)
+      if (response.status === 429) {
+        if (retryCount < 3) {
+          const retryDelay = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          console.warn(
+            `Brands API rate limited. Retrying in ${retryDelay}ms... (attempt ${retryCount + 1}/3)`
+          );
+          setTimeout(() => fetchBrands(retryCount + 1), retryDelay);
+          return;
+        } else {
+          console.error(
+            'Brands API rate limit exceeded after 3 attempts. Using empty brands list.'
+          );
+          setBrands([]);
+          return;
+        }
+      }
+
+      // Handle other error status codes
+      if (!response.ok) {
+        console.error(`Brands API error: ${response.status} ${response.statusText}`);
+        setBrands([]);
+        return;
+      }
+
       const data = await response.json();
       if (data.success) {
         setBrands(data.data);
+      } else {
+        console.error('Brands API returned success=false:', data);
+        setBrands([]);
       }
     } catch (error) {
       console.error('Error fetching brands:', error);
+      setBrands([]);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    // Dispatch fetchRecentVehicles if not already loaded
+    if (vehicleStatus === 'idle') {
+      dispatch(fetchRecentVehicles());
+    }
+    // Load favorites from localStorage
+    dispatch(loadFavorites());
+    // Fetch brands
+    fetchBrands();
+  }, [dispatch, vehicleStatus, fetchBrands]);
 
   if (vehicleStatus === 'loading') {
     return (
@@ -981,19 +1104,25 @@ const Showroom = () => {
                                 <div className="listing__price listing__price--total">
                                   <em className="figure">{formatPrice(vehicle.price)}</em>
                                 </div>
-                                <Link
-                                  to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
-                                    vehicle.id || index
-                                  }#finance-section`}
-                                >
-                                  <div className="listing__price listing__price--finance finance-available">
-                                    Per month{' '}
-                                    <em className="figure">
-                                      {formatFinance(vehicle.financeMonthly)}
-                                      <span>p/m*.</span>
-                                    </em>
-                                  </div>
-                                </Link>
+                                {vehicle.financeMonthly &&
+                                  vehicle.financeMonthly !== 0 &&
+                                  vehicle.financeMonthly !== '0' &&
+                                  vehicle.financeMonthly !== 'null' &&
+                                  vehicle.financeMonthly !== '' && (
+                                    <Link
+                                      to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
+                                        vehicle.id || index
+                                      }#finance-section`}
+                                    >
+                                      <div className="listing__price listing__price--finance finance-available">
+                                        Per month{' '}
+                                        <em className="figure">
+                                          {formatFinance(vehicle.financeMonthly)}
+                                          <span>p/m*.</span>
+                                        </em>
+                                      </div>
+                                    </Link>
+                                  )}
                               </div>
                               <div className="listing__ctas">
                                 <Link

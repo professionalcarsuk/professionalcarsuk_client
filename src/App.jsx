@@ -1,18 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
-import { clientRoutes } from "./routes";
-import "./App.css";
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
+import './App.css';
+import { AuthProvider } from './contexts/AuthContext';
+import { clientRoutes } from './routes';
+
+function RouteContainer() {
+  const location = useLocation();
+  return (
+    <Routes location={location} key={location.key}>
+      {clientRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
+    </Routes>
+  );
+}
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          {clientRoutes.map((route, index) => (
-            <Route key={index} path={route.path} element={route.element} />
-          ))}
-        </Routes>
+        <RouteContainer />
       </Router>
     </AuthProvider>
   );

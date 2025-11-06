@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
-import "./Showroom.css";
-import RefineSearchDrawer from "../../components/RefineSearchDrawer";
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import RefineSearchDrawer from '../../components/RefineSearchDrawer';
+import './Showroom.css';
 
 const Search = () => {
   const [searchParams] = useSearchParams();
-  const [sortOption, setSortOption] = useState("h");
+  const location = useLocation();
+  const [sortOption, setSortOption] = useState('h');
   const [filteredVehicles, setFilteredVehicles] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [brandName, setBrandName] = useState(null);
@@ -20,15 +21,9 @@ const Search = () => {
 
   const VEHICLES_PER_PAGE = 12;
 
-  // Calculate pagination
-  const totalPages = Math.ceil(filteredVehicles.length / VEHICLES_PER_PAGE);
-  const startIndex = (currentPage - 1) * VEHICLES_PER_PAGE;
-  const endIndex = startIndex + VEHICLES_PER_PAGE;
-  const currentVehicles = filteredVehicles.slice(startIndex, endIndex);
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleSortChange = (e) => {
@@ -36,65 +31,134 @@ const Search = () => {
   };
 
   // Fetch filtered vehicles from API
-  const fetchFilteredVehicles = async (params = {}) => {
+  const fetchFilteredVehicles = useCallback(
+    async (page = 1, params = {}) => {
+      try {
+        const queryParams = new URLSearchParams();
+
+        // Add search parameters to query
+        for (const [key, value] of searchParams.entries()) {
+          if (value && value.trim() !== '') {
+            queryParams.append(key, value);
+          }
+        }
+
+        // Add any additional params
+        Object.entries(params).forEach(([key, value]) => {
+          if (value !== null && value !== undefined && value !== '') {
+            queryParams.append(key, value);
+          }
+        });
+
+        // Add pagination
+        queryParams.append('page', page);
+        queryParams.append('pageSize', VEHICLES_PER_PAGE);
+
+        const fullUrl = `${
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
+        }/api/client/vehicles/filter?${queryParams.toString()}`;
+        console.log('DEBUG: Fetching vehicles from:', fullUrl);
+
+        const response = await fetch(fullUrl);
+
+        const data = await response.json();
+        console.log('DEBUG: API response:', data.data?.length, 'vehicles');
+        if (data.success) {
+          return data.data;
+        } else {
+          throw new Error(data.message || 'Failed to fetch vehicles');
+        }
+      } catch (error) {
+        console.error('Error fetching filtered vehicles:', error);
+        throw error;
+      }
+    },
+    [searchParams, VEHICLES_PER_PAGE]
+  );
+
+  // Fetch total count of vehicles matching filters
+  const fetchVehicleCount = useCallback(async () => {
     try {
       const queryParams = new URLSearchParams();
 
       // Add search parameters to query
       for (const [key, value] of searchParams.entries()) {
-        if (value && value.trim() !== "") {
+        if (value && value.trim() !== '') {
           queryParams.append(key, value);
         }
       }
 
-      // Add any additional params
-      Object.entries(params).forEach(([key, value]) => {
-        if (value !== null && value !== undefined && value !== "") {
-          queryParams.append(key, value);
-        }
-      });
+      queryParams.append('count_only', 'true');
 
       const response = await fetch(
         `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
         }/api/client/vehicles/filter?${queryParams.toString()}`
       );
 
       const data = await response.json();
       if (data.success) {
-        return data.data;
+        return data.count || 0;
       } else {
-        throw new Error(data.message || "Failed to fetch vehicles");
+        throw new Error(data.message || 'Failed to fetch vehicle count');
       }
     } catch (error) {
-      console.error("Error fetching filtered vehicles:", error);
-      throw error;
+      console.error('Error fetching vehicle count:', error);
+      return 0;
     }
-  };
+  }, [searchParams]);
 
   // Fetch brands data
-  const fetchBrands = async () => {
+  const fetchBrands = useCallback(async (retryCount = 0) => {
     try {
       const response = await fetch(
-        `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
-        }/api/client/brands`
+        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands`
       );
+
+      // Handle rate limiting (429)
+      if (response.status === 429) {
+        if (retryCount < 3) {
+          const retryDelay = Math.pow(2, retryCount) * 1000; // Exponential backoff: 1s, 2s, 4s
+          console.warn(
+            `Brands API rate limited. Retrying in ${retryDelay}ms... (attempt ${retryCount + 1}/3)`
+          );
+          setTimeout(() => fetchBrands(retryCount + 1), retryDelay);
+          return;
+        } else {
+          console.error(
+            'Brands API rate limit exceeded after 3 attempts. Using empty brands list.'
+          );
+          setBrands([]);
+          return;
+        }
+      }
+
+      // Handle other error status codes
+      if (!response.ok) {
+        console.error(`Brands API error: ${response.status} ${response.statusText}`);
+        setBrands([]);
+        return;
+      }
+
       const data = await response.json();
       if (data.success) {
         setBrands(data.data);
+      } else {
+        console.error('Brands API returned success=false:', data);
+        setBrands([]);
       }
     } catch (error) {
-      console.error("Error fetching brands:", error);
+      console.error('Error fetching brands:', error);
+      setBrands([]);
     }
-  };
+  }, []);
 
   // Fetch models for a specific brand
   const fetchModels = async (brandId) => {
     try {
       const response = await fetch(
         `${
-          import.meta.env.VITE_API_URL || "http://localhost:5000"
+          import.meta.env.VITE_API_URL || 'http://localhost:5000'
         }/api/client/models?brand=${brandId}`
       );
       const data = await response.json();
@@ -102,86 +166,98 @@ const Search = () => {
         setModels(data.data);
       }
     } catch (error) {
-      console.error("Error fetching models:", error);
+      console.error('Error fetching models:', error);
     }
   };
 
   // Get brand name by ID
-  const getBrandName = (brandId) => {
-    const brand = brands.find((b) => b._id === brandId);
-    return brand ? brand.name : null;
-  };
+  const getBrandName = useCallback(
+    (brandId) => {
+      const brand = brands.find((b) => b._id === brandId);
+      return brand ? brand.name : null;
+    },
+    [brands]
+  );
 
   // Get model name by ID
-  const getModelName = (modelId) => {
-    const model = models.find((m) => m._id === modelId);
-    return model ? model.model : null;
-  };
+  const getModelName = useCallback(
+    (modelId) => {
+      const model = models.find((m) => m._id === modelId);
+      return model ? model.model : null;
+    },
+    [models]
+  );
 
-  const sortVehicles = (vehicles, sortBy) => {
-    const sorted = [...vehicles];
-    switch (sortBy) {
-      case "h": // Price (high to low)
-        return sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
-      case "l": // Price (low to high)
-        return sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
-      case "m": // Make/model
-        return sorted.sort((a, b) => {
-          const brandA = (a.brand || "").toLowerCase();
-          const brandB = (b.brand || "").toLowerCase();
-          if (brandA !== brandB) {
-            return brandA.localeCompare(brandB);
-          }
-          const modelA = (a.model || "").toLowerCase();
-          const modelB = (b.model || "").toLowerCase();
-          return modelA.localeCompare(modelB);
-        });
-      case "nis": // Latest Arrivals
-        return sorted.sort((a, b) => (b.id || 0) - (a.id || 0));
-      case "rr": // Recently Reduced (using same logic as latest arrivals)
-        return sorted.sort((a, b) => (b.id || 0) - (a.id || 0));
-      default:
-        return sorted;
-    }
-  };
+  // (removed unused sortVehicles helper; using useMemo-based sorting instead)
 
   useEffect(() => {
     const loadVehicles = async () => {
       try {
         setLoading(true);
-        const vehicles = await fetchFilteredVehicles();
+        setCurrentPage(1); // Reset to first page when search params change
+
+        // Fetch total count first
+        const count = await fetchVehicleCount();
+        setTotalCount(count);
+        console.log('DEBUG: totalCount from API =', count);
+
+        // Then fetch first page of vehicles
+        let vehicles = await fetchFilteredVehicles(1);
+        console.log(
+          'DEBUG: Page 1 vehicles from API:',
+          vehicles.length,
+          vehicles.map((v) => `${v.brand} ${v.model}`)
+        );
+
         setFilteredVehicles(vehicles);
       } catch (err) {
-        setError("Failed to load vehicles. Please try again.");
-        console.error("Error fetching vehicles:", err);
+        setError('Failed to load vehicles. Please try again.');
+        console.error('Error fetching vehicles:', err);
       } finally {
         setLoading(false);
       }
     };
 
     loadVehicles();
-  }, [searchParams]);
+  }, [location.key, searchParams, fetchFilteredVehicles, fetchVehicleCount]);
 
   // Fetch brands on component mount
   useEffect(() => {
     fetchBrands();
-  }, []);
+  }, [fetchBrands]);
 
-  // Fetch models and update brand/model names when search params change
+  // Handle page changes - fetch next page of vehicles
   useEffect(() => {
-    const make = searchParams.get("make");
-    const model = searchParams.get("model");
+    if (currentPage > 1) {
+      const loadNextPage = async () => {
+        try {
+          setLoading(true);
+          let vehicles = await fetchFilteredVehicles(currentPage);
 
+          setFilteredVehicles(vehicles);
+        } catch (err) {
+          setError('Failed to load vehicles. Please try again.');
+          console.error('Error fetching vehicles:', err);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadNextPage();
+    }
+  }, [currentPage, fetchFilteredVehicles, searchParams]);
+
+  // Handle changes to 'make': fetch models and update brand name
+  useEffect(() => {
+    const make = searchParams.get('make');
     if (make) {
-      // If make is an ID (numeric), fetch models for that brand
       if (!isNaN(make)) {
+        // treat as ID
         fetchModels(make);
         setBrandName(getBrandName(make));
       } else {
-        // If make is a name, find the brand
-        const brand = brands.find(
-          (b) => b.name.toLowerCase() === make.toLowerCase()
-        );
+        // treat as name
+        const brand = brands.find((b) => b.name.toLowerCase() === make.toLowerCase());
         if (brand) {
           fetchModels(brand._id);
           setBrandName(brand.name);
@@ -191,33 +267,80 @@ const Search = () => {
       setBrandName(null);
       setModels([]);
     }
+  }, [searchParams, brands, getBrandName]);
 
+  // Handle changes to 'model': update model name when models list or URL param changes
+  useEffect(() => {
+    const model = searchParams.get('model');
     if (model && !isNaN(model)) {
       setModelName(getModelName(model));
     } else if (model) {
-      // If model is a name, find it
-      const modelObj = models.find(
-        (m) => m.model.toLowerCase() === model.toLowerCase()
-      );
+      const modelObj = models.find((m) => m.model.toLowerCase() === model.toLowerCase());
       setModelName(modelObj ? modelObj.model : model);
     } else {
       setModelName(null);
     }
-  }, [searchParams, brands]);
+  }, [searchParams, models, getModelName]);
 
-  useEffect(() => {
-    // Apply sorting to filtered vehicles
-    const sorted = sortVehicles(filteredVehicles, sortOption);
-    setFilteredVehicles(sorted);
-  }, [sortOption]);
+  // Use useMemo for sorted vehicles to avoid useEffect issues
+  const sortedVehicles = useMemo(() => {
+    let sorted = [...filteredVehicles];
+
+    // Apply sorting based on sortOption
+    switch (sortOption) {
+      case 'h': // Price high to low
+        sorted.sort((a, b) => (b.price || 0) - (a.price || 0));
+        break;
+      case 'l': // Price low to high
+        sorted.sort((a, b) => (a.price || 0) - (b.price || 0));
+        break;
+      case 'm': // Make/model
+        sorted.sort((a, b) => {
+          const aName = `${a.brand || ''} ${a.model || ''}`.toLowerCase();
+          const bName = `${b.brand || ''} ${b.model || ''}`.toLowerCase();
+          return aName.localeCompare(bName);
+        });
+        break;
+      case 'nis': // Latest Arrivals (newest first)
+        sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case 'rr': // Recently Reduced (by price change, would need backend support)
+        // For now, default to latest arrivals
+        sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      default:
+        break;
+    }
+
+    return sorted;
+  }, [filteredVehicles, sortOption]);
+
+  // Calculate pagination using total count from backend
+  const totalPages = Math.ceil(totalCount / VEHICLES_PER_PAGE);
+  const startIndex = (currentPage - 1) * VEHICLES_PER_PAGE + 1;
+  // Use actual sortedVehicles length to show what's actually displayed
+  const endIndex = startIndex + sortedVehicles.length - 1;
+  const currentVehicles = sortedVehicles;
+
+  console.log('DEBUG pagination:', {
+    currentPage,
+    startIndex,
+    endIndex,
+    totalCount,
+    sortedVehiclesLength: sortedVehicles.length,
+    VEHICLES_PER_PAGE,
+  });
 
   // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [filteredVehicles.length, sortOption]);
+  }, [searchParams, sortOption]); // If route moved away from /search, render nothing (but keep hooks order intact)
+  if (location.pathname !== '/search') {
+    return null;
+  }
 
   const formatPrice = (price) => {
-    if (price === 0 || !price) return "Contact for price";
+    if (price === 0 || !price) return 'Contact for price';
     return `£${price.toLocaleString()}`;
   };
 
@@ -227,28 +350,35 @@ const Search = () => {
   };
 
   const getVehicleTitle = (vehicle) => {
-    return (
-      vehicle.title || `${vehicle.brand} ${vehicle.model || "Unknown Model"}`
-    );
+    return vehicle.title || `${vehicle.brand} ${vehicle.model || 'Unknown Model'}`;
   };
 
   const getVehicleVariant = (vehicle) => {
     const parts = [];
     if (vehicle.year) parts.push(vehicle.year);
-    if (vehicle.formData?.fuelType) parts.push(vehicle.formData.fuelType);
-    if (vehicle.formData?.transmission)
-      parts.push(vehicle.formData.transmission);
+    if (vehicle.fuelType) parts.push(vehicle.fuelType);
+    if (vehicle.transmission) parts.push(vehicle.transmission);
     if (vehicle.engineSize) parts.push(vehicle.engineSize);
-    return parts.join(", ") || "Details available on request";
+    return parts.join(', ') || 'Details available on request';
   };
 
   const getSearchTitle = () => {
-    const budgetSwitch = searchParams.get("budgetswitch");
-    const budget =
-      searchParams.get("budget") ||
-      (budgetSwitch === "1" ? searchParams.get("budgetmax") : null);
-    if (budget) {
-      return `Vehicles within £${budget} per month`;
+    const budgetSwitch = searchParams.get('budgetswitch');
+    if (budgetSwitch === '1') {
+      const min = searchParams.get('budgetmin');
+      const max = searchParams.get('budgetmax');
+      if (min && !max) return `Vehicles from £${min} per month`;
+      if (!min && max) return `Vehicles within £${max} per month`;
+      if (min && max) return `Vehicles £${min}–£${max} per month`;
+    } else {
+      const minPrice = searchParams.get('min_price');
+      const maxPrice = searchParams.get('max_price');
+      if (minPrice && !maxPrice) return `Vehicles from £${Number(minPrice).toLocaleString()}`;
+      if (!minPrice && maxPrice) return `Vehicles up to £${Number(maxPrice).toLocaleString()}`;
+      if (minPrice && maxPrice)
+        return `Vehicles £${Number(minPrice).toLocaleString()}–£${Number(
+          maxPrice
+        ).toLocaleString()}`;
     }
 
     // If we have brand and model names, use them for the title
@@ -258,16 +388,28 @@ const Search = () => {
       return `${brandName} Vehicles`;
     }
 
-    return "Search Results";
+    return 'Search Results';
   };
 
   const getSearchSubtitle = () => {
-    const budgetSwitch = searchParams.get("budgetswitch");
-    const budget =
-      searchParams.get("budget") ||
-      (budgetSwitch === "1" ? searchParams.get("budgetmax") : null);
-    if (budget) {
-      return `Vehicles available with monthly payments up to £${budget}`;
+    const budgetSwitch = searchParams.get('budgetswitch');
+    if (budgetSwitch === '1') {
+      const min = searchParams.get('budgetmin');
+      const max = searchParams.get('budgetmax');
+      if (min && !max) return `Vehicles available with monthly payments from £${min}`;
+      if (!min && max) return `Vehicles available with monthly payments up to £${max}`;
+      if (min && max) return `Vehicles available with monthly payments £${min}–£${max}`;
+    } else {
+      const minPrice = searchParams.get('min_price');
+      const maxPrice = searchParams.get('max_price');
+      if (minPrice && !maxPrice)
+        return `Vehicles available with prices from £${Number(minPrice).toLocaleString()}`;
+      if (!minPrice && maxPrice)
+        return `Vehicles available with prices up to £${Number(maxPrice).toLocaleString()}`;
+      if (minPrice && maxPrice)
+        return `Vehicles available priced £${Number(minPrice).toLocaleString()}–£${Number(
+          maxPrice
+        ).toLocaleString()}`;
     }
 
     if (brandName && modelName) {
@@ -276,21 +418,21 @@ const Search = () => {
       return `Browse our selection of ${brandName} vehicles`;
     }
 
-    return "Vehicles matching your search criteria";
+    return 'Vehicles matching your search criteria';
   };
 
   // Generate breadcrumb items based on search parameters
   const getBreadcrumbItems = () => {
-    const items = [{ name: "Home", href: "/", position: 1 }];
+    const items = [{ name: 'Home', href: '/', position: 1 }];
 
     // Always add "Showroom" as the second level
-    items.push({ name: "Showroom", href: "/used-cars", position: 2 });
+    items.push({ name: 'Showroom', href: '/used-cars', position: 2 });
 
     // Add brand if available
     if (brandName) {
       items.push({
         name: brandName,
-        href: `/used-cars?make=${searchParams.get("make")}`,
+        href: `/used-cars?make=${searchParams.get('make')}`,
         position: 3,
       });
 
@@ -331,9 +473,7 @@ const Search = () => {
                 <div className="res-filt__sortform">
                   <div className="custom-select-wrapper">
                     <div className="custom-select ">
-                      <span className="custom-select__value">
-                        Price (high to low)
-                      </span>
+                      <span className="custom-select__value">Price (high to low)</span>
                       <span className="custom-select__arrow"></span>
                     </div>
                   </div>
@@ -359,11 +499,7 @@ const Search = () => {
                     itemType="http://schema.org/ListItem"
                   >
                     {item.href ? (
-                      <a
-                        itemType="http://schema.org/Thing"
-                        itemProp="item"
-                        href={item.href}
-                      >
+                      <a itemType="http://schema.org/Thing" itemProp="item" href={item.href}>
                         <span itemProp="name">{item.name}</span>
                       </a>
                     ) : (
@@ -384,11 +520,7 @@ const Search = () => {
                 <div className="res-filt__mobile-filters">
                   <div className="mobile-filters">
                     <div className="mobile-filters__search">
-                      <a
-                        id="mobile-open"
-                        className="btn"
-                        onClick={() => setIsDrawerOpen(true)}
-                      >
+                      <a id="mobile-open" className="btn" onClick={() => setIsDrawerOpen(true)}>
                         Refine Search
                       </a>
                     </div>
@@ -427,11 +559,7 @@ const Search = () => {
         <div id="results">
           <div className="wrapper">
             <div className="container">
-              <input
-                type="hidden"
-                id="button_class_hidden"
-                value="button green full"
-              />
+              <input type="hidden" id="button_class_hidden" value="button green full" />
               <div className="vehicle-results-list">
                 <div className="results-vehicleresults grid-view">
                   {/* Loading placeholders */}
@@ -473,9 +601,7 @@ const Search = () => {
                                   </g>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                             <li>
                               <span className="vehicle-spec__icon">
@@ -493,9 +619,7 @@ const Search = () => {
                                   ></path>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                             <li>
                               <span className="vehicle-spec__icon">
@@ -510,9 +634,7 @@ const Search = () => {
                                   </g>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                             <li>
                               <span className="vehicle-spec__icon">
@@ -529,9 +651,7 @@ const Search = () => {
                                   ></path>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                             <li>
                               <span className="vehicle-spec__icon">
@@ -557,9 +677,7 @@ const Search = () => {
                                   </g>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                             <li>
                               <span className="vehicle-spec__icon">
@@ -583,9 +701,7 @@ const Search = () => {
                                   </g>
                                 </svg>
                               </span>
-                              <span className="vehicle-spec__stat">
-                                Loading...
-                              </span>
+                              <span className="vehicle-spec__stat">Loading...</span>
                             </li>
                           </ul>
                         </div>
@@ -605,8 +721,7 @@ const Search = () => {
                               </div>
                               <a href="#finance-section">
                                 <div className="listing__price listing__price--finance finance-available">
-                                  Per month{" "}
-                                  <em className="figure">Loading...</em>
+                                  Per month <em className="figure">Loading...</em>
                                 </div>
                               </a>
                             </div>
@@ -644,11 +759,7 @@ const Search = () => {
               <div className="mobile-filter-header__wrapper">
                 <div className="mobile-filters">
                   <div className="mobile-filters__search">
-                    <a
-                      id="mobile-open"
-                      className="btn"
-                      onClick={() => setIsDrawerOpen(true)}
-                    >
+                    <a id="mobile-open" className="btn" onClick={() => setIsDrawerOpen(true)}>
                       Refine Search
                     </a>
                   </div>
@@ -656,9 +767,7 @@ const Search = () => {
                 <div className="res-filt__sortform">
                   <div className="custom-select-wrapper">
                     <div className="custom-select ">
-                      <span className="custom-select__value">
-                        Price (high to low)
-                      </span>
+                      <span className="custom-select__value">Price (high to low)</span>
                       <span className="custom-select__arrow"></span>
                     </div>
                   </div>
@@ -684,11 +793,7 @@ const Search = () => {
                     itemType="http://schema.org/ListItem"
                   >
                     {item.href ? (
-                      <a
-                        itemType="http://schema.org/Thing"
-                        itemProp="item"
-                        href={item.href}
-                      >
+                      <a itemType="http://schema.org/Thing" itemProp="item" href={item.href}>
                         <span itemProp="name">{item.name}</span>
                       </a>
                     ) : (
@@ -703,31 +808,26 @@ const Search = () => {
         </div>
         <div
           className="error-message"
-          style={{ textAlign: "center", padding: "40px", background: "#fff" }}
+          style={{ textAlign: 'center', padding: '40px', background: '#fff' }}
         >
-          <h3 style={{ color: "#dc3545", marginBottom: "20px" }}>
-            Error Loading Search Results
-          </h3>
+          <h3 style={{ color: '#dc3545', marginBottom: '20px' }}>Error Loading Search Results</h3>
           <p>{error}</p>
           <button
             onClick={() => window.location.reload()}
             style={{
-              padding: "10px 20px",
-              background: "#171717",
-              color: "white",
-              border: "none",
-              borderRadius: "3px",
-              cursor: "pointer",
-              marginTop: "20px",
+              padding: '10px 20px',
+              background: '#171717',
+              color: 'white',
+              border: 'none',
+              borderRadius: '3px',
+              cursor: 'pointer',
+              marginTop: '20px',
             }}
           >
             Try Again
           </button>
         </div>
-        <RefineSearchDrawer
-          isOpen={isDrawerOpen}
-          onClose={() => setIsDrawerOpen(false)}
-        />
+        <RefineSearchDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
       </div>
     );
   }
@@ -740,11 +840,7 @@ const Search = () => {
             <div className="mobile-filter-header__wrapper">
               <div className="mobile-filters">
                 <div className="mobile-filters__search">
-                  <a
-                    id="mobile-open"
-                    className="btn"
-                    onClick={() => setIsDrawerOpen(true)}
-                  >
+                  <a id="mobile-open" className="btn" onClick={() => setIsDrawerOpen(true)}>
                     Refine Search
                   </a>
                 </div>
@@ -752,9 +848,7 @@ const Search = () => {
               <div className="res-filt__sortform">
                 <div className="custom-select-wrapper">
                   <div className="custom-select ">
-                    <span className="custom-select__value">
-                      Price (high to low)
-                    </span>
+                    <span className="custom-select__value">Price (high to low)</span>
                     <span className="custom-select__arrow"></span>
                   </div>
                 </div>
@@ -780,11 +874,7 @@ const Search = () => {
                   itemType="http://schema.org/ListItem"
                 >
                   {item.href ? (
-                    <a
-                      itemType="http://schema.org/Thing"
-                      itemProp="item"
-                      href={item.href}
-                    >
+                    <a itemType="http://schema.org/Thing" itemProp="item" href={item.href}>
                       <span itemProp="name">{item.name}</span>
                     </a>
                   ) : (
@@ -805,11 +895,7 @@ const Search = () => {
               <div className="res-filt__mobile-filters">
                 <div className="mobile-filters">
                   <div className="mobile-filters__search">
-                    <a
-                      id="mobile-open"
-                      className="btn"
-                      onClick={() => setIsDrawerOpen(true)}
-                    >
+                    <a id="mobile-open" className="btn" onClick={() => setIsDrawerOpen(true)}>
                       Refine Search
                     </a>
                   </div>
@@ -817,12 +903,11 @@ const Search = () => {
               </div>
               <div className="res-filt__showing">
                 <em>
-                  Currently showing{" "}
+                  Currently showing{' '}
                   <strong>
-                    {startIndex + 1} -{" "}
-                    {Math.min(endIndex, filteredVehicles.length)}
-                  </strong>{" "}
-                  out of <strong>{filteredVehicles.length}</strong>
+                    {startIndex} - {endIndex}
+                  </strong>{' '}
+                  out of <strong>{totalCount}</strong>
                 </em>
               </div>
               <div className="res-filt__sortform">
@@ -855,30 +940,24 @@ const Search = () => {
       <div id="results">
         <div className="wrapper">
           <div className="container">
-            <input
-              type="hidden"
-              id="button_class_hidden"
-              value="button green full"
-            />
+            <input type="hidden" id="button_class_hidden" value="button green full" />
             <div className="vehicle-results-list">
               <div className="results-vehicleresults grid-view">
                 {currentVehicles.length > 0 ? (
                   currentVehicles.map((vehicle, index) => {
-                    const vehicleId = vehicle.id || index;
                     // Prefer to render two stacked images (primary + alternate)
                     // and let CSS handle the hover swap (same approach as Showroom.jsx).
                     const firstImageUrl =
                       vehicle.images && vehicle.images.length > 0
-                        ? typeof vehicle.images[0] === "string"
+                        ? typeof vehicle.images[0] === 'string'
                           ? vehicle.images[0]
                           : vehicle.images[0].url
                         : `/images/placeholder.svg`;
 
-                    const hasMultipleImages =
-                      vehicle.images && vehicle.images.length > 1;
+                    const hasMultipleImages = vehicle.images && vehicle.images.length > 1;
 
                     const secondImageUrl = hasMultipleImages
-                      ? typeof vehicle.images[1] === "string"
+                      ? typeof vehicle.images[1] === 'string'
                         ? vehicle.images[1]
                         : vehicle.images[1].url
                       : null;
@@ -891,9 +970,7 @@ const Search = () => {
                         <div className="listing__wrapper">
                           <div className="listing__image">
                             <Link
-                              to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
-                                vehicle.id || index
-                              }`}
+                              to={`/vehicle/${vehicle.brand?.toLowerCase()}/${vehicle.id || index}`}
                               title={getVehicleTitle(vehicle)}
                             >
                               <div className="maintain-ratio">
@@ -905,7 +982,7 @@ const Search = () => {
                                     alt={`View our ${getVehicleTitle(vehicle)}`}
                                     className="vehicle-img--1 responsive-img"
                                     onError={(e) => {
-                                      e.target.src = "/images/placeholder.svg";
+                                      e.target.src = '/images/placeholder.svg';
                                     }}
                                   />
                                   {hasMultipleImages && (
@@ -913,13 +990,10 @@ const Search = () => {
                                       data-src={secondImageUrl}
                                       data-srcset=""
                                       src={secondImageUrl}
-                                      alt={`View our ${getVehicleTitle(
-                                        vehicle
-                                      )} - alternate view`}
+                                      alt={`View our ${getVehicleTitle(vehicle)} - alternate view`}
                                       className="vehicle-img--2 responsive-img"
                                       onError={(e) => {
-                                        e.target.src =
-                                          "/images/placeholder.svg";
+                                        e.target.src = '/images/placeholder.svg';
                                       }}
                                     />
                                   )}
@@ -945,9 +1019,7 @@ const Search = () => {
                                     </g>
                                   </svg>
                                 </span>
-                                <span className="vehicle-spec__stat">
-                                  {vehicle.year || "N/A"}
-                                </span>
+                                <span className="vehicle-spec__stat">{vehicle.year || 'N/A'}</span>
                               </li>
                               <li>
                                 <span className="vehicle-spec__icon">
@@ -966,9 +1038,7 @@ const Search = () => {
                                   </svg>
                                 </span>
                                 <span className="vehicle-spec__stat">
-                                  {vehicle.mileage
-                                    ? `${vehicle.mileage.toLocaleString()}`
-                                    : "N/A"}
+                                  {vehicle.mileage ? `${vehicle.mileage.toLocaleString()}` : 'N/A'}
                                 </span>
                               </li>
                               <li>
@@ -985,7 +1055,7 @@ const Search = () => {
                                   </svg>
                                 </span>
                                 <span className="vehicle-spec__stat">
-                                  {vehicle.formData?.transmission || "N/A"}
+                                  {vehicle.transmission || 'N/A'}
                                 </span>
                               </li>
                               <li>
@@ -1004,7 +1074,7 @@ const Search = () => {
                                   </svg>
                                 </span>
                                 <span className="vehicle-spec__stat">
-                                  {vehicle.engineSize || "N/A"}
+                                  {vehicle.engineSize || 'N/A'}
                                 </span>
                               </li>
                               <li>
@@ -1015,10 +1085,7 @@ const Search = () => {
                                     height="19.317"
                                     viewBox="0 0 20.248 19.317"
                                   >
-                                    <g
-                                      transform="translate(0 0)"
-                                      opacity="0.504"
-                                    >
+                                    <g transform="translate(0 0)" opacity="0.504">
                                       <path
                                         d="M55.663,194.85a2.191,2.191,0,1,0,2.191,2.191A2.193,2.193,0,0,0,55.663,194.85Zm0,3.19a1,1,0,1,1,1-1A1,1,0,0,1,55.663,198.04Z"
                                         transform="translate(-51.349 -187.58)"
@@ -1034,9 +1101,7 @@ const Search = () => {
                                     </g>
                                   </svg>
                                 </span>
-                                <span className="vehicle-spec__stat">
-                                  {vehicle.color || "N/A"}
-                                </span>
+                                <span className="vehicle-spec__stat">{vehicle.color || 'N/A'}</span>
                               </li>
                               <li>
                                 <span className="vehicle-spec__icon">
@@ -1061,7 +1126,7 @@ const Search = () => {
                                   </svg>
                                 </span>
                                 <span className="vehicle-spec__stat">
-                                  {vehicle.formData?.fuelType || "N/A"}
+                                  {vehicle.fuelType || 'N/A'}
                                 </span>
                               </li>
                             </ul>
@@ -1078,23 +1143,23 @@ const Search = () => {
                               </div>
                               <div className="listing__prices">
                                 <div className="listing__price listing__price--total">
-                                  <em className="figure">
-                                    {formatPrice(vehicle.price)}
-                                  </em>
+                                  <em className="figure">{formatPrice(vehicle.price)}</em>
                                 </div>
-                                <Link
-                                  to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
-                                    vehicle.id || index
-                                  }#finance-section`}
-                                >
-                                  <div className="listing__price listing__price--finance finance-available">
-                                    Per month{" "}
-                                    <em className="figure">
-                                      {formatFinance(vehicle.financeMonthly)}
-                                      <span>p/m*.</span>
-                                    </em>
-                                  </div>
-                                </Link>
+                                {vehicle.financeMonthly && (
+                                  <Link
+                                    to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
+                                      vehicle.id || index
+                                    }#finance-section`}
+                                  >
+                                    <div className="listing__price listing__price--finance finance-available">
+                                      Per month{' '}
+                                      <em className="figure">
+                                        {formatFinance(vehicle.financeMonthly)}
+                                        <span>p/m*.</span>
+                                      </em>
+                                    </div>
+                                  </Link>
+                                )}
                               </div>
                               <div className="listing__ctas">
                                 <Link
@@ -1105,10 +1170,7 @@ const Search = () => {
                                 >
                                   View Details
                                 </Link>
-                                <Link
-                                  to="/contact"
-                                  className="btn btn--bordered finance-available"
-                                >
+                                <Link to="/contact" className="btn btn--bordered finance-available">
                                   Finance Me
                                 </Link>
                               </div>
@@ -1122,30 +1184,29 @@ const Search = () => {
                   <div
                     className="no-vehicles"
                     style={{
-                      gridColumn: "1 / -1",
-                      textAlign: "center",
-                      padding: "60px 20px",
-                      background: "#f2f2f2",
-                      borderRadius: "10px",
+                      gridColumn: '1 / -1',
+                      textAlign: 'center',
+                      padding: '60px 20px',
+                      background: '#f2f2f2',
+                      borderRadius: '10px',
                     }}
                   >
-                    <h3 style={{ color: "#555", marginBottom: "20px" }}>
+                    <h3 style={{ color: '#555', marginBottom: '20px' }}>
                       No vehicles found matching your search criteria
                     </h3>
-                    <p style={{ color: "#888" }}>
-                      Try adjusting your search parameters or browse our full
-                      inventory.
+                    <p style={{ color: '#888' }}>
+                      Try adjusting your search parameters or browse our full inventory.
                     </p>
                     <Link
                       to="/used-cars"
                       style={{
-                        display: "inline-block",
-                        marginTop: "20px",
-                        padding: "10px 20px",
-                        background: "#171717",
-                        color: "#fff",
-                        textDecoration: "none",
-                        borderRadius: "3px",
+                        display: 'inline-block',
+                        marginTop: '20px',
+                        padding: '10px 20px',
+                        background: '#171717',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        borderRadius: '3px',
                       }}
                     >
                       Browse All Used Cars
@@ -1158,30 +1219,10 @@ const Search = () => {
               <input type="hidden" name="make" value="" id="makeid" />
               <input type="hidden" name="model" value="" id="modelid" />
               <input type="hidden" name="body" value="" id="bodyid" />
-              <input
-                type="hidden"
-                name="vehicle_type"
-                value=""
-                id="vehicle_type"
-              />
-              <input
-                type="hidden"
-                name="vehicle_location"
-                value=""
-                id="vehicle_location"
-              />
-              <input
-                type="hidden"
-                name="location_name"
-                value=""
-                id="location_name"
-              />
-              <input
-                type="hidden"
-                name="location_path"
-                value="used"
-                id="location_path"
-              />
+              <input type="hidden" name="vehicle_type" value="" id="vehicle_type" />
+              <input type="hidden" name="vehicle_location" value="" id="vehicle_location" />
+              <input type="hidden" name="location_name" value="" id="location_name" />
+              <input type="hidden" name="location_path" value="used" id="location_path" />
               <input type="hidden" name="group_type" value="" id="group_type" />
             </form>
             <div className="res-filt res-filt--bottom">
@@ -1208,9 +1249,7 @@ const Search = () => {
                             <li key={pageNumber}>
                               <a
                                 href="javascript:void(0)"
-                                className={
-                                  pageNumber === currentPage ? "active" : ""
-                                }
+                                className={pageNumber === currentPage ? 'active' : ''}
                                 onClick={() => handlePageChange(pageNumber)}
                               >
                                 {pageNumber}
@@ -1251,9 +1290,7 @@ const Search = () => {
         <div className="wrapper">
           <div className="container">
             <div className="results-finance-example vehicle-7261668">
-              <div className="results-finance-example__title">
-                Finance Representative
-              </div>
+              <div className="results-finance-example__title">Finance Representative</div>
               <div className="results-finance-figure results-finance-figure--product">
                 <span className="label">Product</span>
                 <span className="stat">HP</span>
@@ -1313,86 +1350,69 @@ const Search = () => {
       <div className="results-accordion-block">
         <div className="wrapper">
           <div className="container">
-            <details
-              className="results-accordion results-accordion--vehicles"
-              open=""
-            >
+            <details className="results-accordion results-accordion--vehicles" open="">
               <summary>Search Results</summary>
-              <ul
-                className="makesmodels__list makesmodels__list--brand"
-                role="menu"
-              >
+              <ul className="makesmodels__list makesmodels__list--brand" role="menu">
                 {brands.map((brand) => (
                   <li
                     key={brand._id}
                     className="makesmodels__listitem makesmodels__listitem--brand"
                   >
                     <a
-                      href={`/used/cars/${brand.name
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`}
+                      href={`/used/cars/${brand.name.toLowerCase().replace(/\s+/g, '-')}`}
                       className="makesmodels__listitem__link"
                       title={`Used ${brand.name}`}
                       role="menuitem"
                     >
-                      {" "}
-                      Used {brand.name}{" "}
+                      {' '}
+                      Used {brand.name}{' '}
                     </a>
                   </li>
                 ))}
               </ul>
             </details>
-            <details
-              className="results-accordion results-accordion--webzation"
-              open=""
-            >
+            <details className="results-accordion results-accordion--webzation" open="">
               <summary>
                 <h1>{getSearchTitle()}</h1>
               </summary>
               <p>
-                {getSearchSubtitle()}. Take the opportunity to browse our
-                current range online before contacting a member of the showroom
-                team to find out more. Our friendly and knowledgeable staff will
-                be more than happy to answer any questions and provide advice
-                and guidance when necessary. Alternatively, why not pay a visit
-                to our showroom in person and take a closer look at the
-                selection of vehicles for sale.
+                {getSearchSubtitle()}. Take the opportunity to browse our current range online
+                before contacting a member of the showroom team to find out more. Our friendly and
+                knowledgeable staff will be more than happy to answer any questions and provide
+                advice and guidance when necessary. Alternatively, why not pay a visit to our
+                showroom in person and take a closer look at the selection of vehicles for sale.
               </p>
               <p></p>
               <p>
-                Every effort has been made to ensure the accuracy of the above
-                vehicles information but errors may occur. Please check with a
-                salesperson.
+                Every effort has been made to ensure the accuracy of the above vehicles information
+                but errors may occur. Please check with a salesperson.
               </p>
               <p>
-                The representative finance examples shown above are for
-                illustrative purposes only. Fees, rates and monthly payments may
-                change subject to underwriting decision.
+                The representative finance examples shown above are for illustrative purposes only.
+                Fees, rates and monthly payments may change subject to underwriting decision.
               </p>
               <p>
                 <strong>Representative APR 11.9 %</strong>
               </p>
               <p>
                 <em>
-                  *Fees are already accounted for within the payments displayed
-                  and are included within the total amount payable.
+                  *Fees are already accounted for within the payments displayed and are included
+                  within the total amount payable.
                 </em>
               </p>
               <p>
                 <em>
-                  Finance is available to UK residents aged 18 years or older,
-                  subject to status. Terms &amp; Conditions apply. Indemnities
-                  may be required. Other finance offers may be available but
-                  cannot be used in conjunction with this offer. We work with a
-                  number of carefully selected credit providers who may be able
-                  to offer you finance for your purchase, commission may be
-                  received. We are only able to offer finance products from
-                  these providers. Postal Address:{" "}
+                  Finance is available to UK residents aged 18 years or older, subject to status.
+                  Terms &amp; Conditions apply. Indemnities may be required. Other finance offers
+                  may be available but cannot be used in conjunction with this offer. We work with a
+                  number of carefully selected credit providers who may be able to offer you finance
+                  for your purchase, commission may be received. We are only able to offer finance
+                  products from these providers. Postal Address:{' '}
                   <strong>
-                    S James Prestige Limited, Wakeley Works, Bourne Road,
-                    Essendine, Lincolnshire PE9 4LT
+                    S James Prestige Limited, Wakeley Works, Bourne Road, Essendine, Lincolnshire
+                    PE9 4LT
                   </strong>
-                  . Find contact details{" "}
+                  . Find contact details{' '}
                   <a href="/contact.php" title="Contact Details">
                     here.
                   </a>
@@ -1402,10 +1422,7 @@ const Search = () => {
           </div>
         </div>
       </div>
-      <RefineSearchDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => setIsDrawerOpen(false)}
-      />
+      <RefineSearchDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} />
     </div>
   );
 };

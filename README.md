@@ -1,329 +1,248 @@
-# React + Vite
+# Professional Cars Client Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based client application for the Professional Cars website, featuring vehicle browsing, contact forms, and responsive design.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Vehicle Browsing**: Browse available vehicles with filtering and search
+- **Contact Forms**: Customer inquiry forms with validation
+- **Responsive Design**: Mobile-first design with Tailwind CSS
+- **Modern UI**: Clean, professional interface with smooth animations
+- **State Management**: Redux Toolkit for global state management
+- **Routing**: React Router for client-side navigation
+- **Form Handling**: Comprehensive form validation and submission
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework**: React 19 with Hooks
+- **Build Tool**: Vite
+- **State Management**: Redux Toolkit + React Redux
+- **Routing**: React Router DOM v7
+- **Styling**: Tailwind CSS with PostCSS
+- **Icons**: Lucide React icons
+- **Notifications**: React Toastify
+- **Development**: ESLint, Hot Module Replacement
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js (v16 or higher)
+- npm or yarn
 
----
+## Installation
 
-# 🍪 Cookie & Data Storage System
+1. **Navigate to client directory:**
 
-This application implements a comprehensive cookie and localStorage management system that replicates the data storage patterns from the legacy website. The system is GDPR-compliant and provides utilities for managing user consent, tracking data, and persistent storage.
+   ```bash
+   cd frontend/client
+   ```
 
-## 📊 Data Storage Overview
+2. **Install dependencies:**
 
-### Cookies (Document Cookies)
+   ```bash
+   npm install
+   ```
 
-The following cookies are automatically managed by the system:
+3. **Environment Setup:**
+   Create a `.env` file in the client directory:
 
-| Cookie Name               | Purpose                     | Expiration | Example Value                       |
-| ------------------------- | --------------------------- | ---------- | ----------------------------------- |
-| `consentAcceptedRejected` | GDPR consent status         | 1 year     | `true`                              |
-| `vehicle_makes`           | Number of vehicle makes     | 1 day      | `11`                                |
-| `website_locations`       | Number of website locations | 1 day      | `0`                                 |
-| `website_telephone`       | Contact telephone number    | 30 days    | `01780 435024`                      |
-| `_utmParameters`          | UTM tracking parameters     | 1 day      | `{"utm_source":"google"}`           |
-| `_click_vc_data`          | Click tracking data         | Session    | `{"id":"website","accountId":1234}` |
+   ```env
+   # API Configuration
+   VITE_API_URL=http://localhost:5000
 
-### LocalStorage
+   # App Configuration
+   VITE_APP_ENV=development
+   ```
 
-The following data is stored in browser localStorage:
+## Development Setup
 
-| Key                          | Purpose                       | Example Value                                            |
-| ---------------------------- | ----------------------------- | -------------------------------------------------------- |
-| `cookieConsent`              | Basic consent flag            | `"true"`                                                 |
-| `click_gtm_default_consents` | Detailed GTM consent settings | `{"ad_storage":"granted","analytics_storage":"granted"}` |
-| `favourites`                 | User favourite vehicles       | `{"ids":[123,456],"source":"app"}`                       |
+1. **Start development server:**
 
-## 🚀 Quick Start
+   ```bash
+   npm run dev
+   ```
 
-### Automatic Initialization
+   The application will be available at `http://localhost:5175`
 
-The system automatically initializes default values when the app starts:
+2. **Build for production:**
+
+   ```bash
+   npm run build
+   ```
+
+3. **Preview production build:**
+
+   ```bash
+   npm run preview
+   ```
+
+4. **Lint code:**
+   ```bash
+   npm run lint
+   ```
+
+## Project Structure
+
+```
+frontend/client/
+├── public/           # Static assets
+│   ├── favicon.ico
+│   └── images/
+├── src/
+│   ├── components/   # Reusable UI components
+│   │   ├── common/   # Shared components
+│   │   ├── layout/   # Layout components
+│   │   └── ui/       # UI-specific components
+│   ├── pages/        # Page components
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   ├── Contact.jsx
+│   │   ├── Vehicles.jsx
+│   │   └── VehicleDetails.jsx
+│   ├── redux/        # Redux store and slices
+│   │   ├── slices/   # Redux slices
+│   │   ├── store.js  # Store configuration
+│   │   └── selectors.js
+│   ├── hooks/        # Custom React hooks
+│   ├── utils/        # Utility functions
+│   ├── services/     # API service functions
+│   ├── App.jsx       # Main app component
+│   ├── main.jsx      # App entry point
+│   └── index.css     # Global styles
+├── index.html        # HTML template
+├── vite.config.js    # Vite configuration
+├── tailwind.config.js # Tailwind configuration
+├── postcss.config.js  # PostCSS configuration
+└── package.json      # Dependencies and scripts
+```
+
+## Key Components
+
+### Layout Components
+
+- **Header**: Navigation bar with logo and menu
+- **Footer**: Site footer with contact information
+- **ScrollToTop**: Button for smooth scrolling to top
+
+### Page Components
+
+- **Home**: Landing page with hero section and featured vehicles
+- **Vehicles**: Vehicle listing with filters and search
+- **VehicleDetails**: Individual vehicle information page
+- **Contact**: Contact form and information
+- **About**: Company information page
+
+### UI Components
+
+- **VehicleCard**: Vehicle display card with image and details
+- **ContactForm**: Form component with validation
+- **FilterPanel**: Vehicle filtering controls
+- **SearchBar**: Vehicle search functionality
+
+## State Management
+
+The application uses Redux Toolkit for state management:
+
+### Slices
+
+- **vehiclesSlice**: Vehicle data and filtering state
+- **contactSlice**: Contact form state
+- **uiSlice**: UI state (modals, loading, etc.)
+
+### Store Configuration
+
+- Configured with Redux DevTools for development
+- Persisted state using redux-persist
+
+## API Integration
+
+The client communicates with the backend API through service functions:
 
 ```javascript
-// This happens automatically in main.jsx
-import { initializeDefaultData } from "./utils/cookieStorage";
-initializeDefaultData();
+// Example API call
+import { apiService } from '../services/apiService';
+
+const vehicles = await apiService.getVehicles();
+const contactResult = await apiService.submitContact(formData);
 ```
 
-### Basic Usage
+## Styling
 
-```javascript
-import { CookieStorage, LocalStorage } from "./utils/cookieStorage";
+- **Tailwind CSS**: Utility-first CSS framework
+- **Responsive Design**: Mobile-first approach
+- **Custom Components**: Reusable styled components
+- **Animations**: CSS transitions and transforms
 
-// Check consent status
-const hasConsented = CookieStorage.getConsentAccepted();
+## Development Guidelines
 
-// Save UTM parameters
-CookieStorage.setUtmParameters({
-  utm_source: "google",
-  utm_medium: "cpc",
-  utm_campaign: "summer_sale",
-});
+### Component Structure
 
-// Get stored telephone
-const phone = CookieStorage.getWebsiteTelephone();
+```jsx
+// Example component structure
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-// Manage favourites
-import { useFavourites } from "./hooks/useFavourites";
+const MyComponent = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.mySlice.data);
 
-function MyComponent() {
-  const { favourites, toggleFavourite, isFavourite } = useFavourites();
+  const handleAction = () => {
+    dispatch(myAction());
+  };
 
-  return (
-    <button onClick={() => toggleFavourite(vehicleId)}>
-      {isFavourite(vehicleId) ? "Remove from Favourites" : "Add to Favourites"}
-    </button>
-  );
-}
+  return <div className="my-component">{/* Component JSX */}</div>;
+};
+
+export default MyComponent;
 ```
 
-## 🛠️ API Reference
+### State Management
 
-### CookieStorage
+- Use Redux for global state
+- Use local state (useState) for component-specific state
+- Dispatch actions for state updates
 
-#### Consent Management
+### API Calls
 
-```javascript
-CookieStorage.setConsentAccepted(); // Save consent
-CookieStorage.getConsentAccepted(); // Check consent (boolean)
+- Use service functions for API communication
+- Handle loading states and errors appropriately
+- Use React Toastify for user notifications
+
+## Environment Variables
+
+| Variable       | Description             | Default               | Required |
+| -------------- | ----------------------- | --------------------- | -------- |
+| `VITE_API_URL` | Backend API URL         | http://localhost:5000 | Yes      |
+| `VITE_APP_ENV` | Application environment | development           | No       |
+
+## Deployment
+
+### Vercel Deployment
+
+1. Connect the `frontend/client` directory to Vercel
+2. Set `VITE_API_URL` environment variable to your backend URL
+3. Deploy automatically
+
+### Manual Deployment
+
+```bash
+npm run build
+# Deploy the 'dist' folder to your hosting provider
 ```
 
-#### Website Data
+## Browser Support
 
-```javascript
-CookieStorage.setVehicleMakes(count); // Save vehicle count
-CookieStorage.getVehicleMakes(); // Get vehicle count
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-CookieStorage.setWebsiteLocations(count); // Save location count
-CookieStorage.getWebsiteLocations(); // Get location count
+## Contributing
 
-CookieStorage.setWebsiteTelephone(phone); // Save phone number
-CookieStorage.getWebsiteTelephone(); // Get phone number
-```
+1. Follow React and Redux best practices
+2. Use ESLint configuration
+3. Test components thoroughly
+4. Update documentation for new features
 
-#### Tracking Data
+## License
 
-```javascript
-CookieStorage.setUtmParameters(params); // Save UTM data
-CookieStorage.getUtmParameters(); // Get UTM data
-
-CookieStorage.setClickTrackingData(data); // Save click tracking
-CookieStorage.getClickTrackingData(); // Get click tracking
-```
-
-### LocalStorage
-
-#### GTM Consents
-
-```javascript
-LocalStorage.setGtmConsents({
-  ad_storage: "granted",
-  analytics_storage: "granted",
-  // ... other consent types
-});
-LocalStorage.getGtmConsents(); // Returns consent object
-```
-
-#### Favourites Management
-
-```javascript
-LocalStorage.setFavourites({ ids: [1, 2, 3], source: "app" });
-LocalStorage.getFavourites(); // Returns favourites object
-
-LocalStorage.addToFavourites(vehicleId);
-LocalStorage.removeFromFavourites(vehicleId);
-LocalStorage.isFavourite(vehicleId); // Returns boolean
-```
-
-### Data Manager (High-level API)
-
-```javascript
-import {
-  saveUtmParameters,
-  saveClickTrackingData,
-  toggleFavourite,
-  getAllStoredData,
-  clearAllData,
-} from "./utils/dataManager";
-
-// Save tracking data
-saveUtmParameters({ utm_source: "direct" });
-saveClickTrackingData({ id: "website", accountId: 123 });
-
-// Toggle favourites
-toggleFavourite(vehicleId);
-
-// Get all stored data (for debugging)
-const allData = getAllStoredData();
-
-// Clear all data (GDPR compliance)
-clearAllData();
-```
-
-## ⚙️ Configuration
-
-### Default Values
-
-The system initializes with these default values:
-
-```javascript
-// Set in initializeDefaultData()
-CookieStorage.setVehicleMakes("11");
-CookieStorage.setWebsiteLocations("0");
-CookieStorage.setWebsiteTelephone("01780 435024");
-
-LocalStorage.setGtmConsents({
-  ad_storage: "denied",
-  ad_user_data: "denied",
-  ad_personalization: "denied",
-  analytics_storage: "denied",
-  functionality_storage: "granted",
-  personalization_storage: "denied",
-  security_storage: "granted",
-});
-
-LocalStorage.setFavourites({ ids: [], source: "z0tryf2o8" });
-```
-
-### Cookie Expiration Times
-
-- Consent cookies: 1 year
-- Tracking cookies: 1 day
-- Telephone: 30 days
-- Session cookies: Browser session
-
-### GTM Integration
-
-The system automatically updates Google Tag Manager consents:
-
-```javascript
-if (window.gtag) {
-  window.gtag("consent", "update", gtmConsents);
-}
-```
-
-## 🔒 GDPR Compliance
-
-### Consent Management
-
-- Users must explicitly accept cookies via banner or policy page
-- Consent is stored persistently and checked on every page load
-- Cross-component communication ensures consistent consent state
-
-### Data Clearing
-
-- `clearAllData()` function removes all stored data
-- Individual data types can be cleared using specific methods
-- Cookie expiration ensures automatic cleanup
-
-### User Rights
-
-- Right to access: `getAllStoredData()`
-- Right to erasure: `clearAllData()`
-- Right to object: Modify consent settings
-
-## 🧪 Testing
-
-### DataStorageTest Component
-
-Use the included test component to verify functionality:
-
-```javascript
-import { DataStorageTest } from "./components";
-
-// Add to any page for testing
-<DataStorageTest />;
-```
-
-This component provides:
-
-- Real-time data viewing
-- Interactive testing buttons
-- UTM parameter simulation
-- Favourite management testing
-
-### Browser Developer Tools
-
-Check stored data in:
-
-- **Cookies:** Application → Storage → Cookies
-- **LocalStorage:** Application → Storage → Local Storage
-
-## 📁 File Structure
-
-```
-src/
-├── components/
-│   ├── CookieConsentBanner/     # Consent banner component
-│   └── DataStorageTest/         # Testing component
-├── hooks/
-│   └── useFavourites.js         # Favourites management hook
-├── pages/
-│   └── CookiePolicyPage/        # Cookie policy with accept button
-├── utils/
-│   ├── cookieStorage.js         # Core cookie/localStorage utilities
-│   ├── dataManager.js           # High-level data management
-│   └── index.js                 # Utility exports
-└── main.jsx                     # App initialization
-```
-
-## 🔄 Migration from Legacy System
-
-This implementation replicates the exact data structure from the old website:
-
-### Old Website Cookies → New System
-
-- `consentAcceptedRejected` ✅ Implemented
-- `_ga`, `_ga_*` → Handled by Google Analytics
-- `_click_vc_data` ✅ Implemented
-- `_utmParameters` ✅ Implemented
-- `PHPSESSID` → Handled by server
-- Custom data cookies ✅ All implemented
-
-### Old Website localStorage → New System
-
-- `click_gtm_default_consents` ✅ Implemented
-- `favourites` ✅ Implemented
-
-## 🚨 Important Notes
-
-1. **SameSite Cookies**: All cookies use `SameSite=Lax` for security
-2. **Secure Context**: Cookies work in both HTTP and HTTPS
-3. **Browser Compatibility**: Supports all modern browsers
-4. **Data Persistence**: Data survives browser restarts
-5. **Performance**: Minimal impact on page load times
-
-## 🐛 Troubleshooting
-
-### Banner Not Showing
-
-- Check if `cookieConsent` exists in localStorage
-- Clear localStorage and refresh
-
-### Data Not Saving
-
-- Check browser cookie settings
-- Verify incognito/private mode restrictions
-- Check for JavaScript errors in console
-
-### Import Errors
-
-- Ensure correct relative paths: `../../utils/cookieStorage`
-- Check file exists in `src/utils/` directory
-
----
-
-For questions or issues with the cookie system, refer to the component implementations or create an issue in the project repository.
+Private and proprietary to Professional Cars Limited.

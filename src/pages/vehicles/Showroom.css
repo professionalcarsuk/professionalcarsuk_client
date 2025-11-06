@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap');
 /* ClickIcons font-face intentionally provided from globals.css to avoid
    duplicate declarations across page/component styles. */
 body {
@@ -94,15 +94,9 @@ html {
   --search-listing-details-button-color: var(--search-listing-button-color);
   --search-listing-engage-button-color: var(--accent-color);
   --search-listing-engage-button-border: var(--accent-color);
-  --search-listing-engage-button-bg-hover: var(
-    --search-listing-button-bg-hover
-  );
-  --search-listing-engage-button-color-hover: var(
-    --search-listing-button-color-hover
-  );
-  --search-listing-engage-button-border-hover: var(
-    --search-listing-button-bg-hover
-  );
+  --search-listing-engage-button-bg-hover: var(--search-listing-button-bg-hover);
+  --search-listing-engage-button-color-hover: var(--search-listing-button-color-hover);
+  --search-listing-engage-button-border-hover: var(--search-listing-button-bg-hover);
   --search-listing-favourites-bg-hover: var(--accent-color);
   --search-listing-favourites-bg-selected: var(--accent-color);
   --search-facets-border: var(--border-color);
@@ -128,7 +122,7 @@ html {
   --search-group-showmore-hover: var(--text-color);
   --input-dropdown-border: var(--border-color);
   --input-dropdown-arrow-color: var(--accent-color);
-  --input-dropdown-arrow-icon: "\ea47";
+  --input-dropdown-arrow-icon: '\ea47';
   --input-dropdown-label-color: var(--text-color);
   --input-dropdown-label-color-hover: var(--accent-color);
   --input-dropdown-heading-color: var(--heading-color);
@@ -168,28 +162,18 @@ html {
   );
   --search-listing-carousel-button-color: white;
   --search-listing-carousel-button-bg-hover: var(--accent-color);
-  --search-listing-carousel-button-color-hover: var(
-    --search-listing-carousel-button-color
-  );
+  --search-listing-carousel-button-color-hover: var(--search-listing-carousel-button-color);
   --search-toggle-radius: calc(var(--toggle-height) / 2);
-  --search-toggle-control-size: calc(
-    var(--toggle-height) - (var(--toggle-gutter) * 2)
-  );
+  --search-toggle-control-size: calc(var(--toggle-height) - (var(--toggle-gutter) * 2));
   --search-makesmodels-color: var(--text-color);
   --search-makesmodels-border: var(--border-color);
   --search-makesmodels-bg-hover: var(--accent-color);
   --search-makesmodels-border-hover: var(--accent-color);
   --search-listing-finance-button-color: var(--accent-color);
   --search-listing-finance-button-border: var(--accent-color);
-  --search-listing-finance-button-bg-hover: var(
-    --search-listing-button-bg-hover
-  );
-  --search-listing-finance-button-color-hover: var(
-    --search-listing-button-color-hover
-  );
-  --search-listing-finance-button-border-hover: var(
-    --search-listing-button-bg-hover
-  );
+  --search-listing-finance-button-bg-hover: var(--search-listing-button-bg-hover);
+  --search-listing-finance-button-color-hover: var(--search-listing-button-color-hover);
+  --search-listing-finance-button-border-hover: var(--search-listing-button-bg-hover);
   --landing-text-color: var(--text-color);
   --landing-heading-color: var(--heading-color);
   --landing-top-border: var(--border-color);
@@ -230,15 +214,9 @@ html {
   --landing-listing-button-color-hover: white;
   --landing-listing-engage-button-color: var(--accent-color);
   --landing-listing-engage-button-border: var(--accent-color);
-  --landing-listing-engage-button-bg-hover: var(
-    --landing-listing-button-bg-hover
-  );
-  --landing-listing-engage-button-color-hover: var(
-    --landing-listing-button-color-hover
-  );
-  --landing-listing-engage-button-border-hover: var(
-    --landing-listing-button-bg-hover
-  );
+  --landing-listing-engage-button-bg-hover: var(--landing-listing-button-bg-hover);
+  --landing-listing-engage-button-color-hover: var(--landing-listing-button-color-hover);
+  --landing-listing-engage-button-border-hover: var(--landing-listing-button-bg-hover);
   --landing-finance-heading-color: var(--landing-heading-color);
   --landing-finance-figure-label-color: var(--text-color);
   --landing-listing-finance-color: var(--landing-listing-price-color);
@@ -246,15 +224,9 @@ html {
   --landing-listing-space-mobile: var(--space-3);
   --landing-listing-finance-button-color: var(--accent-color);
   --landing-listing-finance-button-border: var(--accent-color);
-  --landing-listing-finance-button-bg-hover: var(
-    --landing-listing-button-bg-hover
-  );
-  --landing-listing-finance-button-color-hover: var(
-    --landing-listing-button-color-hover
-  );
-  --landing-listing-finance-button-border-hover: var(
-    --landing-listing-button-bg-hover
-  );
+  --landing-listing-finance-button-bg-hover: var(--landing-listing-button-bg-hover);
+  --landing-listing-finance-button-color-hover: var(--landing-listing-button-color-hover);
+  --landing-listing-finance-button-border-hover: var(--landing-listing-button-bg-hover);
   --landing-listing-attention-grabber-color: var(--accent-color);
   --landing-listing-ksp-text-color: var(--text-color);
   --landing-listing-ksp-icon-color: var(--accent-color);
@@ -337,11 +309,7 @@ html {
   --pex-widget-mileage-border: var(--pex-widget-border-color);
   --pex-widget-button-radius: var(--pex-widget-input-radius);
   --pex-widget-button-bg: var(--pex-widget-primary-color);
-  --pex-widget-button-bg-hover: color-mix(
-    in srgb,
-    var(--pex-widget-button-bg),
-    #fff 25%
-  );
+  --pex-widget-button-bg-hover: color-mix(in srgb, var(--pex-widget-button-bg), #fff 25%);
   --pex-widget-badge-border: var(--pex-widget-border-color);
   --pex-widget-badge-color: var(--pex-widget-heading-color);
   --pex-widget-solid-button-bg: var(--pex-widget-primary-color);
@@ -359,16 +327,12 @@ html {
   --pex-widget-bordered-button-color: var(--pex-widget-heading-color);
   --pex-widget-bordered-button-border: var(--pex-widget-border-color);
   --pex-widget-bordered-button-bg-hover: var(--pex-widget-primary-color);
-  --pex-widget-bordered-button-border-hover: var(
-    --pex-widget-bordered-button-bg-hover
-  );
+  --pex-widget-bordered-button-border-hover: var(--pex-widget-bordered-button-bg-hover);
   --fin-calc-pex-card-primary-color: #151515;
   --fin-calc-pex-card-heading-color: #252525;
   --fin-calc-pex-card-border: var(--fin-calc-pex-card-primary-color);
   --fin-calc-pex-card-badge-color: var(--fin-calc-pex-card-heading-color);
-  --fin-calc-pex-card-close-button-color: var(
-    --fin-calc-pex-card-primary-color
-  );
+  --fin-calc-pex-card-close-button-color: var(--fin-calc-pex-card-primary-color);
   --fin-calc-pex-card-close-button-color-hover: color-mix(
     in srgb,
     var(--fin-calc-pex-card-close-button-color),
@@ -390,12 +354,8 @@ html {
     var(--pex-widget-button-bg),
     #fff 95%
   );
-  --fin-calc-pex-card-add-button-color-hover: var(
-    --fin-calc-pex-card-primary-color
-  );
-  --fin-calc-pex-card-add-button-border-hover: var(
-    --fin-calc-pex-card-primary-color
-  );
+  --fin-calc-pex-card-add-button-color-hover: var(--fin-calc-pex-card-primary-color);
+  --fin-calc-pex-card-add-button-border-hover: var(--fin-calc-pex-card-primary-color);
   --pex-form-widget-primary-color: #151515;
   --pex-form-widget-heading-color: #252525;
   --pex-form-widget-border: #d4d4d4;
@@ -415,12 +375,8 @@ html {
   );
   --pex-form-widget-bordered-button-color: var(--pex-form-widget-heading-color);
   --pex-form-widget-bordered-button-border: var(--pex-form-widget-border);
-  --pex-form-widget-bordered-button-bg-hover: var(
-    --pex-form-widget-primary-color
-  );
-  --pex-form-widget-bordered-button-border-hover: var(
-    --pex-form-widget-bordered-button-bg-hover
-  );
+  --pex-form-widget-bordered-button-bg-hover: var(--pex-form-widget-primary-color);
+  --pex-form-widget-bordered-button-border-hover: var(--pex-form-widget-bordered-button-bg-hover);
 }
 
 /* Compare page favourites panel styles */
@@ -640,7 +596,7 @@ html {
 
 .clear-fix:after,
 .clear-fix:before {
-  content: "";
+  content: '';
   display: table;
 }
 
@@ -765,7 +721,7 @@ ol {
 }
 
 .breadcrumb__list::after {
-  content: "";
+  content: '';
   display: table;
   clear: both;
 }
@@ -1054,7 +1010,7 @@ summary {
 }
 
 .results-accordion-block details summary::after {
-  content: "\eac7";
+  content: '\eac7';
   font-family: ClickIcons;
   color: #171717;
   position: absolute;
@@ -1196,13 +1152,13 @@ a:visited {
 
 .breadcrumb__listitem a::after,
 .breadcrumb__listitem a:visited::after {
-  content: ">";
+  content: '>';
   margin-left: 5px;
   color: #eeeeee;
 }
 
 .breadcrumb__listitem span::after {
-  content: ">";
+  content: '>';
   margin-left: 5px;
   color: #eeeeee;
 }
@@ -1535,7 +1491,7 @@ select {
   padding: 0 20px 0 5px;
   margin: 0;
   color: #555;
-  background: #fff url("/images/select-icon.svg") no-repeat;
+  background: #fff url('/images/select-icon.svg') no-repeat;
   background-size: 12px 12px;
   background-position: right 5px center;
   border-radius: 5px;
@@ -1813,7 +1769,7 @@ ol.pagenavi li.pagenavi__prev a:hover {
 
 .maintain-ratio:before {
   display: block;
-  content: "";
+  content: '';
   width: 100%;
   padding-top: 87.87878788%;
 }
@@ -2004,7 +1960,7 @@ svg:not(:root) {
 }
 
 .listing__price--finance:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 100%;
@@ -2061,11 +2017,7 @@ svg:not(:root) {
   border-bottom: 1px solid rgba(23, 23, 23, 0.1);
 }
 
-.results-vehicleresults.grid-view
-  .listing
-  .listing-vehicle-spec
-  .vehicle-spec
-  li {
+.results-vehicleresults.grid-view .listing .listing-vehicle-spec .vehicle-spec li {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -2165,10 +2117,7 @@ svg:not(:root) {
   }
 
   /* Adjust vehicle specs layout - use 2x3 grid for tablets */
-  .results-vehicleresults.grid-view
-    .listing
-    .listing-vehicle-spec
-    .vehicle-spec {
+  .results-vehicleresults.grid-view .listing .listing-vehicle-spec .vehicle-spec {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 columns */
     grid-template-rows: repeat(2, auto); /* 2 rows */
@@ -2181,11 +2130,7 @@ svg:not(:root) {
     border-bottom: 1px solid rgba(23, 23, 23, 0.1);
   }
 
-  .results-vehicleresults.grid-view
-    .listing
-    .listing-vehicle-spec
-    .vehicle-spec
-    li {
+  .results-vehicleresults.grid-view .listing .listing-vehicle-spec .vehicle-spec li {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -2236,6 +2181,57 @@ svg:not(:root) {
 }
 
 @media (max-width: 768px) {
+  /* Prevent horizontal overflow by allowing flex children to shrink */
+  .results-vehicleresults,
+  .results-vehicleresults.grid-view .listing,
+  .results-vehicleresults.grid-view .listing__wrapper,
+  .results-vehicleresults.grid-view .listing__info,
+  .results-vehicleresults.grid-view .listing__prices,
+  .results-vehicleresults.grid-view .listing__price {
+    min-width: 0;
+  }
+
+  /* Page-only: remove inner padding on card wrapper elements that cause horizontal overflow
+     Targets only listing cards inside results to avoid changing other pages */
+  .results-vehicleresults.grid-view .listing .wrapper,
+  .results-vehicleresults.grid-view .listing .pad-20.overflow-hidden {
+    padding: 0 !important;
+    box-sizing: border-box;
+    min-width: 0;
+  }
+
+  /* Allow long headings to wrap instead of forcing card to widen */
+  .results-vehicleresults.grid-view .listing__heading {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  /* Let price row wrap on small screens to avoid overflow */
+  .results-vehicleresults.grid-view .listing__prices {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* Make individual price blocks shrink/wrap safely */
+  .results-vehicleresults.grid-view .listing__price {
+    flex: 1 1 140px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+  }
+
+  /* Constrain price text so it doesn't expand the card width */
+  .results-vehicleresults.grid-view .listing__price .figure,
+  .results-vehicleresults.grid-view .listing__price--finance .figure {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* As a last resort, hide any horizontal overflow from the grid */
+  .results-vehicleresults {
+    overflow-x: hidden;
+  }
   /* Mobile: hide desktop filter header and show mobile sticky header */
   .res-filt--top .res-filt__mobile-filters {
     display: none;
@@ -2471,10 +2467,7 @@ svg:not(:root) {
   }
 
   /* Use CSS Grid for vehicle specs on small screens - 2 columns x 3 rows */
-  .results-vehicleresults.grid-view
-    .listing
-    .listing-vehicle-spec
-    .vehicle-spec {
+  .results-vehicleresults.grid-view .listing .listing-vehicle-spec .vehicle-spec {
     display: grid !important;
     grid-template-columns: 1fr 1fr; /* 2 columns */
     grid-template-rows: repeat(3, auto); /* 3 rows */
@@ -2487,11 +2480,7 @@ svg:not(:root) {
     border-bottom: 1px solid rgba(23, 23, 23, 0.1);
   }
 
-  .results-vehicleresults.grid-view
-    .listing
-    .listing-vehicle-spec
-    .vehicle-spec
-    li {
+  .results-vehicleresults.grid-view .listing .listing-vehicle-spec .vehicle-spec li {
     display: flex !important;
     align-items: center;
     justify-content: flex-start;
@@ -2513,6 +2502,122 @@ svg:not(:root) {
     font-size: 12px;
   }
 
+  /* Extra-small: further tighten price layout and prevent overflow */
+  .results-vehicleresults.grid-view .listing__prices {
+    gap: 4px;
+  }
+
+  .results-vehicleresults.grid-view .listing__price {
+    flex: 1 1 120px;
+    padding: 6px 8px;
+  }
+
+  .results-vehicleresults.grid-view .listing__price .figure,
+  .results-vehicleresults.grid-view .listing__price--finance .figure {
+    font-size: 16px;
+  }
+
+  /* Ultra-small phones: complete layout redesign below 370px */
+  @media (max-width: 370px) {
+    /* ULTRA-COMPACT CARD LAYOUT: drastically shrink image and hide specs */
+
+    /* Drastically shrink the image container */
+    .results-vehicleresults.grid-view .listing__image {
+      flex: 0 0 auto;
+      width: 100%;
+      max-height: 140px;
+      overflow: hidden;
+    }
+
+    .results-vehicleresults.grid-view .listing__image .maintain-ratio:before {
+      padding-top: 66.67%;
+    }
+
+    .results-vehicleresults.grid-view .listing__image .maintain-ratio {
+      max-height: 140px;
+    }
+
+    .results-vehicleresults.grid-view .listing__image img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 140px;
+      -o-object-fit: cover;
+      object-fit: cover;
+    }
+
+    /* Hide vehicle spec row to save vertical space */
+    .results-vehicleresults.grid-view .listing .listing-vehicle-spec {
+      display: none;
+    }
+
+    /* Tighten info section padding significantly */
+    .results-vehicleresults.grid-view .listing__info {
+      padding: 6px !important;
+      flex: 1 1 auto;
+      width: 100%;
+    }
+
+    .results-vehicleresults.grid-view .listing__info .listing__wrapper {
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    /* Headings: very small, wrap allowed */
+    .results-vehicleresults.grid-view .listing__heading {
+      white-space: normal;
+      word-break: break-word;
+      hyphens: auto;
+    }
+
+    .results-vehicleresults.grid-view .listing__heading--title {
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .results-vehicleresults.grid-view .listing__heading--subtitle {
+      font-size: 10px;
+      line-height: 1.2;
+    }
+
+    /* Price row: ultra-compact, single line if possible */
+    .results-vehicleresults.grid-view .listing__prices {
+      flex-wrap: wrap;
+      gap: 2px;
+      margin-bottom: 4px !important;
+    }
+
+    .results-vehicleresults.grid-view .listing__price {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 2px 4px !important;
+      font-size: 8px;
+    }
+
+    .results-vehicleresults.grid-view .listing__price .figure {
+      font-size: 11px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* CTA buttons: compact, side-by-side */
+    .results-vehicleresults.grid-view .listing__ctas {
+      margin-top: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .results-vehicleresults.grid-view .listing__ctas a {
+      flex: 1 1 48%;
+      min-width: 0;
+      padding: 0 4px !important;
+      font-size: 9px;
+      line-height: 26px;
+    }
+  }
   /* Adjust button sizes */
   .listing__ctas a {
     font-size: 11px;
@@ -2633,11 +2738,11 @@ svg:not(:root) {
 
 /* Pagination chevron icons */
 .ci-chevron-double-right-r:before {
-  content: "\eaea";
+  content: '\eaea';
 }
 
 .ci-chevron-double-left-r:before {
-  content: "\eae9";
+  content: '\eae9';
 }
 
 .ci {

@@ -30,7 +30,10 @@ const MainLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      {/* Force remount of page content on route change to avoid stale views (e.g., staying on Search) */}
+      <main key={location.pathname} className="flex-grow">
+        {children}
+      </main>
       {!hideBanner && <FixedBannerBottom />}
       <Footer noMargin={noFooterMargin} />
       <CookieConsentBanner />

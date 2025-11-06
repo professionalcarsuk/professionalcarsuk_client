@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchRecentVehicles,
-  selectUniqueBrands,
-  selectVanBrands,
-  selectFavoritesCount,
-  loadFavorites,
-} from "../../store/vehicleSlice";
-import "./Navbar.css";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { fetchRecentVehicles, loadFavorites, selectFavoritesCount } from '../../store/vehicleSlice';
+import './Navbar.css';
 
 const Navbar = () => {
+  const [showroomBrands, setShowroomBrands] = useState([]);
+  const [vanBrands, setVanBrands] = useState([]);
+  const [loadingShowroomBrands, setLoadingShowroomBrands] = useState(true);
+  const [loadingVanBrands, setLoadingVanBrands] = useState(true);
+
+  // Mobile menu and search states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // Mobile search states
   const [mobileSearchForm, setMobileSearchForm] = useState({
-    vehtype: "cars",
-    make: "",
-    model: "",
+    vehtype: '',
+    make: '',
+    model: '',
   });
   const [mobileBrands, setMobileBrands] = useState([]);
   const [mobileModels, setMobileModels] = useState([]);
@@ -31,8 +31,6 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const brands = useSelector(selectUniqueBrands);
-  const vanBrands = useSelector(selectVanBrands);
   const favoritesCount = useSelector(selectFavoritesCount);
 
   useEffect(() => {
@@ -42,21 +40,61 @@ const Navbar = () => {
     dispatch(loadFavorites());
   }, [dispatch]);
 
+  // Fetch showroom brands (cars)
+  useEffect(() => {
+    const fetchShowroomBrands = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands?type=cars`
+        );
+        const result = await response.json();
+        if (result.success) {
+          setShowroomBrands(result.data.map((brand) => brand.name));
+        }
+      } catch (error) {
+        console.error('Error fetching showroom brands:', error);
+      } finally {
+        setLoadingShowroomBrands(false);
+      }
+    };
+
+    fetchShowroomBrands();
+  }, []);
+
+  // Fetch van brands
+  useEffect(() => {
+    const fetchVanBrands = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands?type=vans`
+        );
+        const result = await response.json();
+        if (result.success) {
+          setVanBrands(result.data.map((brand) => brand.name));
+        }
+      } catch (error) {
+        console.error('Error fetching van brands:', error);
+      } finally {
+        setLoadingVanBrands(false);
+      }
+    };
+
+    fetchVanBrands();
+  }, []);
+
   // Fetch brands for mobile search on component mount
   useEffect(() => {
     const fetchMobileBrands = async () => {
       try {
         const response = await fetch(
-          `${
-            import.meta.env.VITE_API_URL || "http://localhost:5000"
-          }/api/client/brands`
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands`
         );
         const result = await response.json();
         if (result.success) {
           setMobileBrands(result.data);
         }
       } catch (error) {
-        console.error("Error fetching mobile brands:", error);
+        console.error('Error fetching mobile brands:', error);
       } finally {
         setLoadingMobileBrands(false);
       }
@@ -76,16 +114,16 @@ const Navbar = () => {
       setLoadingMobileModels(true);
       try {
         const response = await fetch(
-          `${
-            import.meta.env.VITE_API_URL || "http://localhost:5000"
-          }/api/client/models?brand=${mobileSearchForm.make}`
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/models?brand=${
+            mobileSearchForm.make
+          }`
         );
         const result = await response.json();
         if (result.success) {
           setMobileModels(result.data);
         }
       } catch (error) {
-        console.error("Error fetching mobile models:", error);
+        console.error('Error fetching mobile models:', error);
       } finally {
         setLoadingMobileModels(false);
       }
@@ -97,31 +135,24 @@ const Navbar = () => {
   // Prevent body scroll when mobile menu or search is open
   useEffect(() => {
     if (isMenuOpen || isSearchOpen) {
-      document.body.classList.add("mobile-menu-open");
+      document.body.classList.add('mobile-menu-open');
     } else {
-      document.body.classList.remove("mobile-menu-open");
+      document.body.classList.remove('mobile-menu-open');
     }
 
     // Cleanup on unmount
     return () => {
-      document.body.classList.remove("mobile-menu-open");
+      document.body.classList.remove('mobile-menu-open');
     };
   }, [isMenuOpen, isSearchOpen]);
 
   // Determine if parent menus should be marked active based on current path
-  const isShowroomActive =
-    pathname.startsWith("/used-cars") || pathname.startsWith("/used/cars");
-  const isVansActive =
-    pathname.startsWith("/used-vans") || pathname.startsWith("/used/vans");
-  const isServicesActive = [
-    "/sellcar",
-    "/part-exchange",
-    "/customization",
-    "/complaints",
-  ].some((p) => pathname.startsWith(p));
-  const isAboutActive = ["/about", "/about-us"].some((p) =>
-    pathname.startsWith(p)
+  const isShowroomActive = pathname.startsWith('/used-cars') || pathname.startsWith('/used/cars');
+  const isVansActive = pathname.startsWith('/used-vans') || pathname.startsWith('/used/vans');
+  const isServicesActive = ['/sellcar', '/part-exchange', '/customization', '/complaints'].some(
+    (p) => pathname.startsWith(p)
   );
+  const isAboutActive = ['/about', '/about-us'].some((p) => pathname.startsWith(p));
 
   // Dropdowns will stay open during navigation to child routes naturally
   // No need for useEffect to manage this
@@ -146,8 +177,8 @@ const Navbar = () => {
       };
 
       // Reset model when make changes
-      if (name === "make") {
-        updated.model = "";
+      if (name === 'make') {
+        updated.model = '';
       }
 
       return updated;
@@ -161,19 +192,22 @@ const Navbar = () => {
     // Build search parameters
     const params = new URLSearchParams();
 
-    // Add vehicle type
-    if (mobileSearchForm.vehtype === "vans") {
-      params.append("type", "van");
+    // Only add vehicle type if explicitly selected
+    if (mobileSearchForm.vehtype === 'vans') {
+      params.append('type', 'van');
+    } else if (mobileSearchForm.vehtype === 'cars') {
+      params.append('type', 'cars');
     }
+    // If vehtype is empty, don't add type parameter - search all vehicles
 
     // Add make if selected
     if (mobileSearchForm.make) {
-      params.append("make", mobileSearchForm.make);
+      params.append('make', mobileSearchForm.make);
     }
 
     // Add model if selected
     if (mobileSearchForm.model) {
-      params.append("model", mobileSearchForm.model);
+      params.append('model', mobileSearchForm.model);
     }
 
     // Navigate to search page with parameters
@@ -210,11 +244,7 @@ const Navbar = () => {
                   title="S James Prestige Limited"
                   className="hdr-logo"
                 >
-                  <img
-                    src="/logo.png"
-                    alt="S James Prestige Limited"
-                    className="responsive-img"
-                  />
+                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
                 </a>
               </div>
               <a
@@ -240,11 +270,7 @@ const Navbar = () => {
                   title="S James Prestige Limited"
                   className="hdr-logo"
                 >
-                  <img
-                    src="/logo.png"
-                    alt="S James Prestige Limited"
-                    className="responsive-img"
-                  />
+                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
                 </a>
               </div>
               <div className="header__nav">
@@ -252,33 +278,20 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <a href="/contact">
-                        <i className="ci ci-map-marker-alt"></i> Wakeley Works,
-                        Essendine, Rutland
+                        <i className="ci ci-map-marker-alt"></i> Wakeley Works, Essendine, Rutland
                       </a>
                     </li>
                     <li className="mobile-hidden">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-phone-2"
-                      ></span>{" "}
+                      <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
                       <a href="tel:01780435024">017804 35024</a>
                     </li>
                     <li className="desktop-hidden">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-phone-2"
-                      ></span>{" "}
+                      <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
                       <a href="tel:01780435024">01780435024</a>
                     </li>
                     <li>
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-mail"
-                      ></span>{" "}
-                      <a
-                        href="mailto:enquiries@sjamesprestige.com"
-                        title="Email Us"
-                      >
+                      <span aria-hidden="true" className="icon icon-mail"></span>{' '}
+                      <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
                         Email Us
                       </a>
                     </li>
@@ -307,15 +320,9 @@ const Navbar = () => {
                             <em>
                               <Link to="/compare">
                                 <i
-                                  className={
-                                    favoritesCount > 0
-                                      ? "fas fa-heart"
-                                      : "far fa-heart"
-                                  }
+                                  className={favoritesCount > 0 ? 'fas fa-heart' : 'far fa-heart'}
                                 ></i>
-                                <span className="favourites-count">
-                                  {favoritesCount}
-                                </span>
+                                <span className="favourites-count">{favoritesCount}</span>
                               </Link>
                             </em>
                           </div>
@@ -338,7 +345,7 @@ const Navbar = () => {
                             setIsMenuOpen(!isMenuOpen);
                           }}
                         >
-                          <i className="fa fa-bars"></i> Menu{" "}
+                          <i className="fa fa-bars"></i> Menu{' '}
                         </a>
                         <a
                           className="toggle"
@@ -347,7 +354,7 @@ const Navbar = () => {
                           href="#"
                           onClick={(e) => e.preventDefault()}
                         >
-                          <i className="fa fa-search"></i> Browse{" "}
+                          <i className="fa fa-search"></i> Browse{' '}
                         </a>
                       </div>
                       <ul
@@ -368,21 +375,21 @@ const Navbar = () => {
                             itemProp="url"
                             className={({ isActive }) =>
                               isActive
-                                ? "megamenu__listitem__link active"
-                                : "megamenu__listitem__link"
+                                ? 'megamenu__listitem__link active'
+                                : 'megamenu__listitem__link'
                             }
                             title="Home"
                             role="menuitem"
                           >
-                            {" "}
+                            {' '}
                             Home
                           </NavLink>
                         </li>
                         <li
                           className={
-                            "megamenu__listitem sub" +
-                            (isShowroomActive ? " active" : "") +
-                            (activeDropdown === "showroom" ? " open" : "")
+                            'megamenu__listitem sub' +
+                            (isShowroomActive ? ' active' : '') +
+                            (activeDropdown === 'showroom' ? ' open' : '')
                           }
                           id="listitem__used-cars--parent"
                           itemProp="name"
@@ -397,17 +404,15 @@ const Navbar = () => {
                             data-menu-close=""
                             onClick={(e) => {
                               e.preventDefault();
-                              toggleDropdown("showroom");
+                              toggleDropdown('showroom');
                             }}
                           >
-                            {" "}
+                            {' '}
                             Showroom <i className="ci ci-angle-down-l"></i>
                           </a>
                           <div
                             className={
-                              activeDropdown === "showroom"
-                                ? "megasubmenu open"
-                                : "megasubmenu"
+                              activeDropdown === 'showroom' ? 'megasubmenu open' : 'megasubmenu'
                             }
                             itemScope=""
                             itemType="http://www.schema.org/SiteNavigationElement"
@@ -419,18 +424,16 @@ const Navbar = () => {
                                   <div className="o-megamenu">
                                     <div className="column-1">
                                       <div className="megamenu-group megamenu-group--used-cars">
-                                        <div className="megamenu-group__title">
-                                          Showroom
-                                        </div>
+                                        <div className="megamenu-group__title">Showroom</div>
                                         <ul className="megamenu-group__list">
                                           <li>
                                             <NavLink
                                               to="/used-cars"
                                               title="View all cars"
                                               className={
-                                                pathname === "/used-cars"
-                                                  ? "megasubmenu__listitem__link active"
-                                                  : "megasubmenu__listitem__link"
+                                                pathname === '/used-cars'
+                                                  ? 'megasubmenu__listitem__link active'
+                                                  : 'megasubmenu__listitem__link'
                                               }
                                             >
                                               View all cars
@@ -441,13 +444,11 @@ const Navbar = () => {
                                     </div>
                                     <div className="column-2">
                                       <div className="megamenu-group megamenu-group--finance">
-                                        <div className="megamenu-group__title">
-                                          Finance
-                                        </div>
+                                        <div className="megamenu-group__title">Finance</div>
                                         <ul className="megamenu-group__list">
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=150"
+                                              href="/search?type=cars&budgetswitch=1&budgetmax=150"
                                               title=""
                                               rel="nofollow"
                                             >
@@ -456,7 +457,7 @@ const Navbar = () => {
                                           </li>
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=250"
+                                              href="/search?type=cars&budgetswitch=1&budgetmax=250"
                                               title=""
                                               rel="nofollow"
                                             >
@@ -465,7 +466,7 @@ const Navbar = () => {
                                           </li>
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=99999"
+                                              href="/search?type=cars&budgetswitch=1&budgetmin=250"
                                               title=""
                                               rel="nofollow"
                                             >
@@ -477,39 +478,36 @@ const Navbar = () => {
                                     </div>
                                     <div className="column-3">
                                       <div className="megamenu-group megamenu-group--brands">
-                                        <div className="megamenu-group__title">
-                                          Brands
-                                        </div>
+                                        <div className="megamenu-group__title">Brands</div>
                                         <ul className="megamenu-group__list">
-                                          {(brands && brands.length > 0
-                                            ? brands
+                                          {(showroomBrands && showroomBrands.length > 0
+                                            ? showroomBrands
                                             : [
-                                                "Audi",
-                                                "BMW",
-                                                "Cupra",
-                                                "Ford",
-                                                "Mercedes-Benz",
-                                                "Nissan",
-                                                "Porsche",
-                                                "Skoda",
-                                                "Toyota",
-                                                "Volkswagen",
-                                                "Volvo",
+                                                'Audi',
+                                                'BMW',
+                                                'Cupra',
+                                                'Ford',
+                                                'Mercedes-Benz',
+                                                'Nissan',
+                                                'Porsche',
+                                                'Skoda',
+                                                'Toyota',
+                                                'Volkswagen',
+                                                'Volvo',
                                               ]
                                           ).map((brand) => {
                                             const slug = brand
                                               .toLowerCase()
-                                              .replace(/\s+/g, "-")
-                                              .replace(/--+/g, "-");
+                                              .replace(/\s+/g, '-')
+                                              .replace(/--+/g, '-');
                                             return (
                                               <li key={brand}>
                                                 <NavLink
                                                   to={`/used/cars/${slug}`}
                                                   className={
-                                                    pathname ===
-                                                    `/used/cars/${slug}`
-                                                      ? "megasubmenu__listitem__link active"
-                                                      : "megasubmenu__listitem__link"
+                                                    pathname === `/used/cars/${slug}`
+                                                      ? 'megasubmenu__listitem__link active'
+                                                      : 'megasubmenu__listitem__link'
                                                   }
                                                 >
                                                   <span>{brand}</span>
@@ -528,9 +526,9 @@ const Navbar = () => {
                         </li>
                         <li
                           className={
-                            "megamenu__listitem sub" +
-                            (isVansActive ? " active" : "") +
-                            (activeDropdown === "vans" ? " open" : "")
+                            'megamenu__listitem sub' +
+                            (isVansActive ? ' active' : '') +
+                            (activeDropdown === 'vans' ? ' open' : '')
                           }
                           id="listitem__used-vans--parent"
                           itemProp="name"
@@ -544,17 +542,15 @@ const Navbar = () => {
                             role="menuitem"
                             onClick={(e) => {
                               e.preventDefault();
-                              toggleDropdown("vans");
+                              toggleDropdown('vans');
                             }}
                           >
-                            {" "}
+                            {' '}
                             Used Vans <i className="ci ci-angle-down-l"></i>
                           </a>
                           <div
                             className={
-                              activeDropdown === "vans"
-                                ? "megasubmenu open"
-                                : "megasubmenu"
+                              activeDropdown === 'vans' ? 'megasubmenu open' : 'megasubmenu'
                             }
                             itemScope=""
                             itemType="http://www.schema.org/SiteNavigationElement"
@@ -566,18 +562,16 @@ const Navbar = () => {
                                   <div className="o-megamenu">
                                     <div className="column-1">
                                       <div className="megamenu-group megamenu-group--used-vans">
-                                        <div className="megamenu-group__title">
-                                          Used Vans
-                                        </div>
+                                        <div className="megamenu-group__title">Used Vans</div>
                                         <ul className="megamenu-group__list">
                                           <li>
                                             <NavLink
                                               to="/used-vans"
                                               title="View all vans"
                                               className={
-                                                pathname === "/used-vans"
-                                                  ? "megasubmenu__listitem__link active"
-                                                  : "megasubmenu__listitem__link"
+                                                pathname === '/used-vans'
+                                                  ? 'megasubmenu__listitem__link active'
+                                                  : 'megasubmenu__listitem__link'
                                               }
                                             >
                                               View all vans
@@ -588,13 +582,11 @@ const Navbar = () => {
                                     </div>
                                     <div className="column-2">
                                       <div className="megamenu-group megamenu-group--finance">
-                                        <div className="megamenu-group__title">
-                                          Finance
-                                        </div>
+                                        <div className="megamenu-group__title">Finance</div>
                                         <ul className="megamenu-group__list">
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=150"
+                                              href="/search?type=vans&budgetswitch=1&budgetmax=150"
                                               rel="nofollow"
                                             >
                                               Upto £150 p/m
@@ -602,7 +594,7 @@ const Navbar = () => {
                                           </li>
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=250"
+                                              href="/search?type=vans&budgetswitch=1&budgetmax=250"
                                               rel="nofollow"
                                             >
                                               Upto £250 p/m
@@ -610,7 +602,7 @@ const Navbar = () => {
                                           </li>
                                           <li>
                                             <a
-                                              href="/search?budgetswitch=1&budget=99999"
+                                              href="/search?type=vans&budgetswitch=1&budgetmin=250"
                                               rel="nofollow"
                                             >
                                               £250 p/m &amp; Over
@@ -621,15 +613,13 @@ const Navbar = () => {
                                     </div>
                                     <div className="column-3">
                                       <div className="megamenu-group megamenu-group--brands">
-                                        <div className="megamenu-group__title">
-                                          Brands
-                                        </div>
+                                        <div className="megamenu-group__title">Brands</div>
                                         <ul className="megamenu-group__list">
                                           {(vanBrands || []).map((brand) => {
                                             const slug = brand
                                               .toLowerCase()
-                                              .replace(/\s+/g, "-")
-                                              .replace(/--+/g, "-");
+                                              .replace(/\s+/g, '-')
+                                              .replace(/--+/g, '-');
                                             return (
                                               <li key={brand}>
                                                 <Link to={`/used/vans/${slug}`}>
@@ -649,9 +639,9 @@ const Navbar = () => {
                         </li>
                         <li
                           className={
-                            "megamenu__listitem sub" +
-                            (isServicesActive ? " active" : "") +
-                            (activeDropdown === "services" ? " open" : "")
+                            'megamenu__listitem sub' +
+                            (isServicesActive ? ' active' : '') +
+                            (activeDropdown === 'services' ? ' open' : '')
                           }
                           id="listitem__services--parent"
                           itemProp="name"
@@ -665,17 +655,15 @@ const Navbar = () => {
                             role="menuitem"
                             onClick={(e) => {
                               e.preventDefault();
-                              toggleDropdown("services");
+                              toggleDropdown('services');
                             }}
                           >
-                            {" "}
+                            {' '}
                             Services <i className="ci ci-angle-down-l"></i>
                           </a>
                           <div
                             className={
-                              activeDropdown === "services"
-                                ? "megasubmenu open"
-                                : "megasubmenu"
+                              activeDropdown === 'services' ? 'megasubmenu open' : 'megasubmenu'
                             }
                             itemScope=""
                             itemType="http://www.schema.org/SiteNavigationElement"
@@ -683,68 +671,56 @@ const Navbar = () => {
                           >
                             <div className="container">
                               <ul className="megasubmenu__list">
-                                <li
-                                  className="megasubmenu__listitem"
-                                  id="listitem__sell-your-car"
-                                >
+                                <li className="megasubmenu__listitem" id="listitem__sell-your-car">
                                   <NavLink
                                     to="/sellcar"
                                     className={
-                                      pathname === "/sellcar"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/sellcar'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                   >
-                                    {" "}
-                                    Sell Your Car{" "}
+                                    {' '}
+                                    Sell Your Car{' '}
                                   </NavLink>
                                 </li>
-                                <li
-                                  className="megasubmenu__listitem"
-                                  id="listitem__part-exchange"
-                                >
+                                <li className="megasubmenu__listitem" id="listitem__part-exchange">
                                   <NavLink
                                     to="/part-exchange"
                                     className={
-                                      pathname === "/part-exchange"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/part-exchange'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                   >
-                                    {" "}
-                                    Part Exchange{" "}
+                                    {' '}
+                                    Part Exchange{' '}
                                   </NavLink>
                                 </li>
-                                <li
-                                  className="megasubmenu__listitem"
-                                  id="listitem__customisation"
-                                >
+                                <li className="megasubmenu__listitem" id="listitem__customisation">
                                   <NavLink
                                     to="/customization"
                                     className={
-                                      pathname === "/customization"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/customization'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                   >
-                                    {" "}
-                                    Customisation{" "}
+                                    {' '}
+                                    Customisation{' '}
                                   </NavLink>
                                 </li>
-                                <li
-                                  className="megasubmenu__listitem"
-                                  id="listitem__complaints"
-                                >
+                                <li className="megasubmenu__listitem" id="listitem__complaints">
                                   <NavLink
                                     to="/complaints"
                                     className={
-                                      pathname === "/complaints"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/complaints'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                   >
-                                    {" "}
-                                    Complaints{" "}
+                                    {' '}
+                                    Complaints{' '}
                                   </NavLink>
                                 </li>
                               </ul>
@@ -761,13 +737,13 @@ const Navbar = () => {
                             itemProp="url"
                             className={({ isActive }) =>
                               isActive
-                                ? "megamenu__listitem__link active"
-                                : "megamenu__listitem__link"
+                                ? 'megamenu__listitem__link active'
+                                : 'megamenu__listitem__link'
                             }
                             title="Warranty"
                             role="menuitem"
                           >
-                            {" "}
+                            {' '}
                             Warranty
                           </NavLink>
                         </li>
@@ -781,13 +757,13 @@ const Navbar = () => {
                             itemProp="url"
                             className={({ isActive }) =>
                               isActive
-                                ? "megamenu__listitem__link active"
-                                : "megamenu__listitem__link"
+                                ? 'megamenu__listitem__link active'
+                                : 'megamenu__listitem__link'
                             }
                             title="About"
                             role="menuitem"
                           >
-                            {" "}
+                            {' '}
                             About
                           </NavLink>
                         </li>
@@ -801,13 +777,13 @@ const Navbar = () => {
                             itemProp="url"
                             className={({ isActive }) =>
                               isActive
-                                ? "megamenu__listitem__link active"
-                                : "megamenu__listitem__link"
+                                ? 'megamenu__listitem__link active'
+                                : 'megamenu__listitem__link'
                             }
                             title="Contact"
                             role="menuitem"
                           >
-                            {" "}
+                            {' '}
                             Contact
                           </NavLink>
                         </li>
@@ -825,12 +801,12 @@ const Navbar = () => {
             className="megamenu-overlay dropdown-overlay"
             onClick={() => setActiveDropdown(null)}
             style={{
-              position: "fixed",
+              position: 'fixed',
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              background: "rgba(0,0,0,0.5)",
+              background: 'rgba(0,0,0,0.5)',
               zIndex: 5,
             }}
           ></div>
@@ -847,8 +823,8 @@ const Navbar = () => {
                   end
                   className={({ isActive }) =>
                     isActive
-                      ? "megamenu__listitem__link megamenu__listitem__link--current"
-                      : "megamenu__listitem__link"
+                      ? 'megamenu__listitem__link megamenu__listitem__link--current'
+                      : 'megamenu__listitem__link'
                   }
                   title="Home"
                   role="menuitem"
@@ -860,9 +836,9 @@ const Navbar = () => {
 
               {/* Showroom with Dropdown */}
               <li
-                className={`megamenu__listitem sub ${
-                  isShowroomActive ? "active" : ""
-                } ${activeDropdown === "showroom" ? "open" : ""}`}
+                className={`megamenu__listitem sub ${isShowroomActive ? 'active' : ''} ${
+                  activeDropdown === 'showroom' ? 'open' : ''
+                }`}
                 id="listitem__used-cars--parent"
                 data-menu-dropdown="cars"
               >
@@ -873,13 +849,13 @@ const Navbar = () => {
                   role="menuitem"
                   onClick={(e) => {
                     e.preventDefault();
-                    toggleDropdown("showroom");
+                    toggleDropdown('showroom');
                   }}
                 >
                   Showroom
                   <i className="ci ci-angle-down-l"></i>
                 </a>
-                {activeDropdown === "showroom" && (
+                {activeDropdown === 'showroom' && (
                   <div className="megasubmenu">
                     <div className="l-megamenu">
                       <div className="wrapper">
@@ -887,38 +863,36 @@ const Navbar = () => {
                           <div className="o-megamenu">
                             <div className="column-1">
                               <div className="megamenu-group megamenu-group--brands">
-                                <div className="megamenu-group__title">
-                                  Brands
-                                </div>
+                                <div className="megamenu-group__title">Brands</div>
                                 <ul className="megamenu-group__list">
-                                  {(brands && brands.length > 0
-                                    ? brands
+                                  {(showroomBrands && showroomBrands.length > 0
+                                    ? showroomBrands
                                     : [
-                                        "Audi",
-                                        "BMW",
-                                        "Cupra",
-                                        "Ford",
-                                        "Mercedes-Benz",
-                                        "Nissan",
-                                        "Porsche",
-                                        "Skoda",
-                                        "Toyota",
-                                        "Volkswagen",
-                                        "Volvo",
+                                        'Audi',
+                                        'BMW',
+                                        'Cupra',
+                                        'Ford',
+                                        'Mercedes-Benz',
+                                        'Nissan',
+                                        'Porsche',
+                                        'Skoda',
+                                        'Toyota',
+                                        'Volkswagen',
+                                        'Volvo',
                                       ]
                                   ).map((brand) => {
                                     const slug = brand
                                       .toLowerCase()
-                                      .replace(/\s+/g, "-")
-                                      .replace(/--+/g, "-");
+                                      .replace(/\s+/g, '-')
+                                      .replace(/--+/g, '-');
                                     return (
                                       <li key={brand}>
                                         <NavLink
                                           to={`/used/cars/${slug}`}
                                           className={
                                             pathname === `/used/cars/${slug}`
-                                              ? "megasubmenu__listitem__link active"
-                                              : "megasubmenu__listitem__link"
+                                              ? 'megasubmenu__listitem__link active'
+                                              : 'megasubmenu__listitem__link'
                                           }
                                           onClick={closeMenu}
                                         >
@@ -933,9 +907,9 @@ const Navbar = () => {
                                     to="/used-cars"
                                     title="View all cars"
                                     className={
-                                      pathname === "/used-cars"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/used-cars'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                     onClick={closeMenu}
                                   >
@@ -954,9 +928,9 @@ const Navbar = () => {
 
               {/* Used Vans with Dropdown */}
               <li
-                className={`megamenu__listitem sub ${
-                  isVansActive ? "active" : ""
-                } ${activeDropdown === "vans" ? "open" : ""}`}
+                className={`megamenu__listitem sub ${isVansActive ? 'active' : ''} ${
+                  activeDropdown === 'vans' ? 'open' : ''
+                }`}
                 id="listitem__used-vans--parent"
                 data-menu-dropdown="vans"
               >
@@ -967,13 +941,13 @@ const Navbar = () => {
                   role="menuitem"
                   onClick={(e) => {
                     e.preventDefault();
-                    toggleDropdown("vans");
+                    toggleDropdown('vans');
                   }}
                 >
                   Used Vans
                   <i className="ci ci-angle-down-l"></i>
                 </a>
-                {activeDropdown === "vans" && (
+                {activeDropdown === 'vans' && (
                   <div className="megasubmenu">
                     <div className="l-megamenu">
                       <div className="wrapper">
@@ -981,21 +955,16 @@ const Navbar = () => {
                           <div className="o-megamenu">
                             <div className="column-1">
                               <div className="megamenu-group megamenu-group--brands">
-                                <div className="megamenu-group__title">
-                                  Brands
-                                </div>
+                                <div className="megamenu-group__title">Brands</div>
                                 <ul className="megamenu-group__list">
                                   {(vanBrands || []).map((brand) => {
                                     const slug = brand
                                       .toLowerCase()
-                                      .replace(/\s+/g, "-")
-                                      .replace(/--+/g, "-");
+                                      .replace(/\s+/g, '-')
+                                      .replace(/--+/g, '-');
                                     return (
                                       <li key={brand}>
-                                        <Link
-                                          to={`/used/vans/${slug}`}
-                                          onClick={closeMenu}
-                                        >
+                                        <Link to={`/used/vans/${slug}`} onClick={closeMenu}>
                                           <span>{brand}</span>
                                         </Link>
                                       </li>
@@ -1007,9 +976,9 @@ const Navbar = () => {
                                     to="/used-vans"
                                     title="View all vans"
                                     className={
-                                      pathname === "/used-vans"
-                                        ? "megasubmenu__listitem__link active"
-                                        : "megasubmenu__listitem__link"
+                                      pathname === '/used-vans'
+                                        ? 'megasubmenu__listitem__link active'
+                                        : 'megasubmenu__listitem__link'
                                     }
                                     onClick={closeMenu}
                                   >
@@ -1028,9 +997,9 @@ const Navbar = () => {
 
               {/* Services with Simple Dropdown */}
               <li
-                className={`megamenu__listitem sub ${
-                  isServicesActive ? "active" : ""
-                } ${activeDropdown === "services" ? "open" : ""}`}
+                className={`megamenu__listitem sub ${isServicesActive ? 'active' : ''} ${
+                  activeDropdown === 'services' ? 'open' : ''
+                }`}
                 id="listitem__services--parent"
                 data-menu-dropdown="services"
               >
@@ -1041,13 +1010,13 @@ const Navbar = () => {
                   role="menuitem"
                   onClick={(e) => {
                     e.preventDefault();
-                    toggleDropdown("services");
+                    toggleDropdown('services');
                   }}
                 >
                   Services
                   <i className="ci ci-angle-down-l"></i>
                 </a>
-                {activeDropdown === "services" && (
+                {activeDropdown === 'services' && (
                   <div className="megasubmenu mobile-simple-submenu">
                     <div className="container">
                       <ul className="megasubmenu__list">
@@ -1055,9 +1024,9 @@ const Navbar = () => {
                           <NavLink
                             to="/sellcar"
                             className={
-                              pathname === "/sellcar"
-                                ? "megasubmenu__listitem__link active"
-                                : "megasubmenu__listitem__link"
+                              pathname === '/sellcar'
+                                ? 'megasubmenu__listitem__link active'
+                                : 'megasubmenu__listitem__link'
                             }
                             onClick={closeMenu}
                           >
@@ -1068,9 +1037,9 @@ const Navbar = () => {
                           <NavLink
                             to="/part-exchange"
                             className={
-                              pathname === "/part-exchange"
-                                ? "megasubmenu__listitem__link active"
-                                : "megasubmenu__listitem__link"
+                              pathname === '/part-exchange'
+                                ? 'megasubmenu__listitem__link active'
+                                : 'megasubmenu__listitem__link'
                             }
                             onClick={closeMenu}
                           >
@@ -1081,9 +1050,9 @@ const Navbar = () => {
                           <NavLink
                             to="/customization"
                             className={
-                              pathname === "/customization"
-                                ? "megasubmenu__listitem__link active"
-                                : "megasubmenu__listitem__link"
+                              pathname === '/customization'
+                                ? 'megasubmenu__listitem__link active'
+                                : 'megasubmenu__listitem__link'
                             }
                             onClick={closeMenu}
                           >
@@ -1094,9 +1063,9 @@ const Navbar = () => {
                           <NavLink
                             to="/complaints"
                             className={
-                              pathname === "/complaints"
-                                ? "megasubmenu__listitem__link active"
-                                : "megasubmenu__listitem__link"
+                              pathname === '/complaints'
+                                ? 'megasubmenu__listitem__link active'
+                                : 'megasubmenu__listitem__link'
                             }
                             onClick={closeMenu}
                           >
@@ -1110,16 +1079,11 @@ const Navbar = () => {
               </li>
 
               {/* Warranty */}
-              <li
-                className="megamenu__listitem"
-                id="listitem__warranty--parent"
-              >
+              <li className="megamenu__listitem" id="listitem__warranty--parent">
                 <NavLink
                   to="/warranty"
                   className={({ isActive }) =>
-                    isActive
-                      ? "megamenu__listitem__link active"
-                      : "megamenu__listitem__link"
+                    isActive ? 'megamenu__listitem__link active' : 'megamenu__listitem__link'
                   }
                   title="Warranty"
                   role="menuitem"
@@ -1134,9 +1098,7 @@ const Navbar = () => {
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
-                    isActive
-                      ? "megamenu__listitem__link active"
-                      : "megamenu__listitem__link"
+                    isActive ? 'megamenu__listitem__link active' : 'megamenu__listitem__link'
                   }
                   title="About"
                   role="menuitem"
@@ -1151,9 +1113,7 @@ const Navbar = () => {
                 <NavLink
                   to="/contact"
                   className={({ isActive }) =>
-                    isActive
-                      ? "megamenu__listitem__link active"
-                      : "megamenu__listitem__link"
+                    isActive ? 'megamenu__listitem__link active' : 'megamenu__listitem__link'
                   }
                   title="Contact"
                   role="menuitem"
@@ -1168,11 +1128,7 @@ const Navbar = () => {
 
         {/* Mobile Search Dropdown */}
         {isSearchOpen && (
-          <div
-            id="dropdown-search"
-            className="dropdown-search toggled"
-            data-menu="dropdown-search"
-          >
+          <div id="dropdown-search" className="dropdown-search toggled" data-menu="dropdown-search">
             <div className="search-wrapper">
               <em className="dropdown-search__title">Search for a vehicle</em>
               <form
@@ -1190,7 +1146,7 @@ const Navbar = () => {
                     name="vehtype"
                     id="dropdown-search__vehtype--cars"
                     value="cars"
-                    checked={mobileSearchForm.vehtype === "cars"}
+                    checked={mobileSearchForm.vehtype === 'cars'}
                     onChange={handleMobileSearchChange}
                     required
                     data-search-toggle="dropdown-search__select--make"
@@ -1207,7 +1163,7 @@ const Navbar = () => {
                     name="vehtype"
                     id="dropdown-search__vehtype--vans"
                     value="vans"
-                    checked={mobileSearchForm.vehtype === "vans"}
+                    checked={mobileSearchForm.vehtype === 'vans'}
                     onChange={handleMobileSearchChange}
                     required
                     data-search-toggle="dropdown-search__select--make"
@@ -1221,9 +1177,7 @@ const Navbar = () => {
                 </div>
 
                 <div className="formgroup">
-                  <label className="dropdown-search__label">
-                    Choose a make:
-                  </label>
+                  <label className="dropdown-search__label">Choose a make:</label>
                   <select
                     name="make"
                     id="dropdown-search__select--make"
@@ -1232,9 +1186,7 @@ const Navbar = () => {
                     disabled={loadingMobileBrands}
                     data-search-make="dropdown-search__select--model"
                   >
-                    <option value="">
-                      {loadingMobileBrands ? "Loading..." : "Any make"}
-                    </option>
+                    <option value="">{loadingMobileBrands ? 'Loading...' : 'Any make'}</option>
                     {mobileBrands.map((brand) => (
                       <option key={brand._id} value={brand._id}>
                         {brand.name}
@@ -1243,9 +1195,7 @@ const Navbar = () => {
                   </select>
                 </div>
                 <div className="formgroup last">
-                  <label className="dropdown-search__label">
-                    Choose a model:
-                  </label>
+                  <label className="dropdown-search__label">Choose a model:</label>
                   <select
                     name="model"
                     id="dropdown-search__select--model"
@@ -1254,9 +1204,7 @@ const Navbar = () => {
                     disabled={!mobileSearchForm.make || loadingMobileModels}
                     data-search-model=""
                   >
-                    <option value="">
-                      {loadingMobileModels ? "Loading..." : "Any model"}
-                    </option>
+                    <option value="">{loadingMobileModels ? 'Loading...' : 'Any model'}</option>
                     {mobileModels.map((model) => (
                       <option key={model._id} value={model._id}>
                         {model.model}
@@ -1280,7 +1228,7 @@ const Navbar = () => {
               className="search-overlay"
               onClick={() => setIsSearchOpen(false)}
               style={{
-                position: "fixed",
+                position: 'fixed',
                 top: 0,
                 left: 0,
                 right: 0,
@@ -1296,11 +1244,7 @@ const Navbar = () => {
           <div className="app">
             <em>
               <Link to="/compare">
-                <i
-                  className={
-                    favoritesCount > 0 ? "fas fa-heart" : "far fa-heart"
-                  }
-                ></i>
+                <i className={favoritesCount > 0 ? 'fas fa-heart' : 'far fa-heart'}></i>
                 <span className="favourites-count">{favoritesCount}</span>
               </Link>
             </em>
