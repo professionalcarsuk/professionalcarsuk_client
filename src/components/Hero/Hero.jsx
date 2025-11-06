@@ -36,13 +36,13 @@ const Hero = () => {
     {
       id: 2,
       image:
-        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1714348938110-d3692bc3716a?w=1920&h=1080&fit=crop&crop=center",
       alt: "Luxury Car 2",
     },
     {
       id: 3,
       image:
-        "https://images.unsplash.com/photo-1549399735-cef2e2c3f638?w=1920&h=1080&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1677339059244-8c6cefec8415?w=1920&h=1080&fit=crop&crop=center",
       alt: "Luxury Car 3",
     },
     {
