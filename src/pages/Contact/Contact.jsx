@@ -119,7 +119,7 @@ const Contact = () => {
   return (
     <PageWithSidebarLayout
       pageClass="contact-pg"
-      headerTitle="Contact S James Prestige Limited"
+      headerTitle="Contact Professional Cars Limited"
       headerClass="page-hdr--contact"
       showSidebar={false}
     >
@@ -138,18 +138,18 @@ const Contact = () => {
                       Address
                     </h3>
                     <p>
-                      <strong>S James Prestige Limited</strong>
+                      <strong>Professional Cars Limited</strong>
                     </p>
                     <address>
-                      Wakeley Works
+                      Rear Yard 2
                       <br />
-                      Bourne Road
+                      College Road Business Park
                       <br />
-                      Essendine
+                      Aston Clinton, Aylesbury
                       <br />
-                      Rutland
+                      Buckinghamshire
                       <br />
-                      PE9 4LT
+                      HP22 5EZ
                       <br />
                     </address>
                   </div>
@@ -175,14 +175,14 @@ const Contact = () => {
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:01780435024">01780 435024</a>
+                          <a href="tel:07788929755">07788929755</a>
                         </li>
                         <li className="desktop-hidden">
                           <span
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:01780435024">01780435024</a>
+                          <a href="tel:07788929755">07788929755</a>
                         </li>
                         <li className="mobile-hidden">
                           <span aria-hidden="true"></span>{" "}
@@ -201,7 +201,7 @@ const Contact = () => {
                             className="icon icon-mail"
                           ></span>{" "}
                           <a
-                            href="mailto:enquiries@sjamesprestige.com"
+                            href="mailto:info@professionalcars.co.uk"
                             title="Email Us"
                           >
                             Email Us
@@ -233,7 +233,7 @@ const Contact = () => {
                           ></span>{" "}
                           Mon
                         </div>
-                        <div className="open-times">09:00 - 17:30</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -243,7 +243,7 @@ const Contact = () => {
                           ></span>{" "}
                           Tue
                         </div>
-                        <div className="open-times">09:00 - 17:30</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -253,7 +253,7 @@ const Contact = () => {
                           ></span>{" "}
                           Wed
                         </div>
-                        <div className="open-times">09:00 - 17:30</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -263,7 +263,7 @@ const Contact = () => {
                           ></span>{" "}
                           Thu
                         </div>
-                        <div className="open-times">09:00 - 17:30</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -273,7 +273,7 @@ const Contact = () => {
                           ></span>{" "}
                           Fri
                         </div>
-                        <div className="open-times">09:00 - 17:30</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -283,7 +283,7 @@ const Contact = () => {
                           ></span>{" "}
                           Sat
                         </div>
-                        <div className="open-times">09:00 - 17:00</div>
+                        <div className="open-times">10:00 - 18:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -293,7 +293,7 @@ const Contact = () => {
                           ></span>{" "}
                           Sun
                         </div>
-                        <div className="open-times">09:00 - 16:00</div>
+                        <div className="open-times">Closed</div>
                       </li>
                       <li className="twelvecol bank-holiday-not-set">
                         <div className="open-day">

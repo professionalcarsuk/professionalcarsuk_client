@@ -17,7 +17,7 @@ const PartExchange = () => {
         to provide you with a free, no-obligation quote.
       </p>
       <p>
-        Please contact one of our Sales Consultants on 01780 435024 or complete
+        Please contact one of our Sales Consultants on 07788929755 or complete
         our valuation form below.
       </p>
       <p>

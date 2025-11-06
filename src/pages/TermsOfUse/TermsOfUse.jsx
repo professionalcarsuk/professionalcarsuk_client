@@ -117,24 +117,24 @@ const TermsOfUse = () => {
         <h3>Who we are and how to contact us</h3>
         <p>
           <strong>https://car-listing-frontend-peach.vercel.app</strong> is a
-          site operated by S James Prestige Limited.{" "}
+          site operated by Professional Cars Limited.{" "}
           <span>
             We are a limited company registered in England and Wales under
-            company number 08921181 and have our registered office at Wakeley
-            Works, Bourne Road, Essendine, Lincolnshire PE9 4LT. Our main
-            trading address is Wakeley Works, Bourne Road, Essendine,
-            Lincolnshire PE9 4LT.
+            company number 08763622 and have our registered office at College Road Business Park
+            Works, College Road Business Park, Aston Clinton, Aylesbury, Buckinghamshire HP22 5EZ. Our main
+            trading address is Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury,
+            Buckinghamshire HP22 5EZ.
           </span>
         </p>
         <p>
           To contact us, please email{" "}
-          <a href="mailto:enquiries@sjamesprestige.com">
-            enquiries@sjamesprestige.com
+          <a href="mailto:info@professionalcars.co.uk">
+            info@professionalcars.co.uk
           </a>{" "}
           or telephone our customer service line on{" "}
-          <strong>01780 435024</strong> or write to us at{" "}
+          <strong>07788929755</strong> or write to us at{" "}
           <strong>
-            Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT
+            Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, Buckinghamshire HP22 5EZ
           </strong>
           .
         </p>
@@ -175,7 +175,7 @@ const TermsOfUse = () => {
         </p>
         <ul className="bullets">
           <li>
-            Our terms and conditions of sale (available from S James Prestige
+            Our terms and conditions of sale (available from Professional Cars
             Limited), which set out the terms of any contract for the purchase
             of a vehicle.
           </li>
@@ -390,7 +390,7 @@ const TermsOfUse = () => {
           <li>
             Nothing in these terms limits or affects the exclusions and
             limitations set out in our Terms and Conditions of Sale (available
-            from S James Prestige Limited).
+            from Professional Cars Limited).
           </li>
           <li>
             This section will survive the termination of any contract between
@@ -486,8 +486,8 @@ const TermsOfUse = () => {
         <p>
           If you wish to link to or make any use of content on our site other
           than that set out above, please contact{" "}
-          <a href="mailto:enquiries@sjamesprestige.com">
-            enquiries@sjamesprestige.com
+          <a href="mailto:info@professionalcars.co.uk">
+            info@professionalcars.co.uk
           </a>
           .
         </p>
@@ -524,7 +524,7 @@ const TermsOfUse = () => {
         <p>
           <strong>Complaints:</strong> If a problem arises or you are
           dissatisfied with the Services, we have a comprehensive complaints
-          policy (available from S James Prestige Limited).
+          policy (available from Professional Cars Limited).
         </p>
         <p>
           <strong>Alternative dispute resolution:</strong> Alternative dispute
