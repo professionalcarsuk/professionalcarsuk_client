@@ -219,7 +219,7 @@ const Footer = ({ noMargin = false }) => {
                   decline third party lenders. <br />
                   <br />
                   Registered in England &amp; Wales: 08763622 <br />
-                  Registered Office: Address: Rear Yard 2 College Road North Business Park, College Road North, Aylesbury, England, HP22 5EZ <br />
+                  Registered Office: Address: Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, England, HP22 5EZ <br />
                    
                 </div>
               </div>

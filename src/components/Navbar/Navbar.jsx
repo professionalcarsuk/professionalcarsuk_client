@@ -240,7 +240,7 @@ const Navbar = () => {
               </a>
               <div className="mobile-logo">
                 <a
-                  href="https://car-listing-frontend-peach.vercel.app"
+                  href="https://professionalcarsuk-client.vercel.app/"
                   title="Professional Cars Limited"
                   className="hdr-logo"
                 >
@@ -266,7 +266,7 @@ const Navbar = () => {
             <div className="header">
               <div className="header__logo">
                 <a
-                  href="https://car-listing-frontend-peach.vercel.app"
+                  href="https://professionalcarsuk-client.vercel.app"
                   title="Professional Cars Limited"
                   className="hdr-logo"
                 >
@@ -278,7 +278,7 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <a href="/contact">
-                        <i className="ci ci-map-marker-alt"></i> Rear Yard 2, Aston Clinton, Aylesbury, Buckinghamshire
+                        <i className="ci ci-map-marker-alt"></i> Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, HP22 5EZ
                       </a>
                     </li>
                     <li className="mobile-hidden">
