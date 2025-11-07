@@ -574,7 +574,7 @@ const Hero = () => {
               ×
             </button>
             <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/EEDKM8rYjFE"
               title="Watch Video"
               style={{ border: "none" }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
