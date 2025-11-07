@@ -122,7 +122,7 @@ const TermsOfUse = () => {
             We are a limited company registered in England and Wales under
             company number 08763622 and have our registered office at College Road Business Park
             Works, College Road Business Park, Aston Clinton, Aylesbury, Buckinghamshire HP22 5EZ. Our main
-            trading address is Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury,
+            trading address is Rear Yard 2, College Road Business Park, Aston Clinton Aylesbury,
             Buckinghamshire HP22 5EZ.
           </span>
         </p>
