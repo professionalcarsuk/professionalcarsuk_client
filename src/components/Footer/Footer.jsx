@@ -89,7 +89,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Mon
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--tue">
                   <div className="open-day">
@@ -99,7 +99,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Tue
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--wed">
                   <div className="open-day">
@@ -109,7 +109,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Wed
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--thu">
                   <div className="open-day">
@@ -119,7 +119,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Thu
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--fri">
                   <div className="open-day">
@@ -129,7 +129,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Fri
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--sat">
                   <div className="open-day">
@@ -139,7 +139,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Sat
                   </div>
-                  <div className="open-times">09:00 - 17:00</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--sun">
                   <div className="open-day">
@@ -149,7 +149,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Sun
                   </div>
-                  <div className="open-times">09:00 - 16:00</div>
+                  <div className="open-times">Closed</div>
                 </li>
                 <li className="bank-holiday-not-set">
                   <div className="open-day">

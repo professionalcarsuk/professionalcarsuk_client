@@ -486,7 +486,7 @@ const Contact = () => {
                   </h3>
                   <div className="flexible-frame">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2417.7123695721757!2d-0.45290148460173035!3d52.70128627984891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48778bd67aa6acdd%3A0xa17884ced2a5f8aa!2sS%20James%20Prestige!5e0!3m2!1sen!2suk!4v1621524565594!5m2!1sen!2suk"
+                      src="https://maps.google.com/maps?width=600&amp;height=450&amp;hl=en&amp;q=professional cars uk&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                       width="600"
                       height="450"
                       allowFullScreen
