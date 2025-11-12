@@ -189,6 +189,6 @@ export const initializeDefaultData = () => {
   }
 
   if (!CookieStorage.getWebsiteTelephone()) {
-    CookieStorage.setWebsiteTelephone("07788929755");
+    CookieStorage.setWebsiteTelephone("01780 435024");
   }
 };

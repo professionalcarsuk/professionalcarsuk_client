@@ -7,6 +7,7 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const [sortOption, setSortOption] = useState('h');
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -21,13 +22,35 @@ const Search = () => {
 
   const VEHICLES_PER_PAGE = 12;
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const sortOptions = [
+    { value: 'h', label: 'Price (high to low)' },
+    { value: 'l', label: 'Price (low to high)' },
+    { value: 'm', label: 'Make/model' },
+    { value: 'nis', label: 'Latest Arrivals' },
+    { value: 'rr', label: 'Recently Reduced' },
+  ];
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
+  };
+
+  const handleCustomSortChange = (value) => {
+    setSortOption(value);
+    setIsSortDropdownOpen(false);
+  };
+
+  const toggleSortDropdown = () => {
+    setIsSortDropdownOpen(!isSortDropdownOpen);
+  };
+
+  const getCurrentSortLabel = () => {
+    const option = sortOptions.find((opt) => opt.value === sortOption);
+    return option ? option.label : 'Price (high to low)';
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Fetch filtered vehicles from API
@@ -225,6 +248,19 @@ const Search = () => {
   useEffect(() => {
     fetchBrands();
   }, [fetchBrands]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isSortDropdownOpen && !event.target.closest('.custom-select-wrapper')) {
+        setIsSortDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSortDropdownOpen]);
 
   // Handle page changes - fetch next page of vehicles
   useEffect(() => {
@@ -470,7 +506,7 @@ const Search = () => {
               <div className="mobile-filter-header__wrapper">
                 <div className="mobile-filters">
                   <div className="mobile-filters__search">
-                    <a id="mobile-open" className="btn">
+                    <a id="mobile-open" className="btn" onClick={() => setIsDrawerOpen(true)}>
                       Refine Search
                     </a>
                   </div>
@@ -535,26 +571,12 @@ const Search = () => {
                   <em>Loading vehicles...</em>
                 </div>
                 <div className="res-filt__sortform">
-                  <form
-                    className="alpha"
-                    name="sortform"
-                    id="sortform"
-                    action="/search?"
-                    method="GET"
-                  >
-                    <select
-                      id="sort"
-                      className="select"
-                      onChange={handleSortChange}
-                      value={sortOption}
-                    >
-                      <option value="h">Price (high to low)</option>
-                      <option value="l">Price (low to high)</option>
-                      <option value="m">Make/model</option>
-                      <option value="nis">Latest Arrivals</option>
-                      <option value="rr">Recently Reduced</option>
-                    </select>
-                  </form>
+                  <div className="custom-select-wrapper">
+                    <div className="custom-select ">
+                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__arrow"></span>
+                    </div>
+                  </div>
                 </div>
                 <div className="res-filt__layout-toggle mobile-hidden"></div>
               </div>
@@ -852,10 +874,28 @@ const Search = () => {
               </div>
               <div className="res-filt__sortform">
                 <div className="custom-select-wrapper">
-                  <div className="custom-select ">
-                    <span className="custom-select__value">Price (high to low)</span>
+                  <div
+                    className={`custom-select ${isSortDropdownOpen ? 'open' : ''}`}
+                    onClick={toggleSortDropdown}
+                  >
+                    <span className="custom-select__value">{getCurrentSortLabel()}</span>
                     <span className="custom-select__arrow"></span>
                   </div>
+                  {isSortDropdownOpen && (
+                    <div className="custom-select__dropdown">
+                      {sortOptions.map((option) => (
+                        <div
+                          key={option.value}
+                          className={`custom-select__option ${
+                            option.value === sortOption ? 'selected' : ''
+                          }`}
+                          onClick={() => handleCustomSortChange(option.value)}
+                        >
+                          {option.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -916,26 +956,30 @@ const Search = () => {
                 </em>
               </div>
               <div className="res-filt__sortform">
-                <form
-                  className="alpha"
-                  name="sortform"
-                  id="sortform"
-                  action="/search?"
-                  method="GET"
-                >
-                  <select
-                    id="sort"
-                    className="select"
-                    onChange={handleSortChange}
-                    value={sortOption}
+                <div className="custom-select-wrapper">
+                  <div
+                    className={`custom-select ${isSortDropdownOpen ? 'open' : ''}`}
+                    onClick={toggleSortDropdown}
                   >
-                    <option value="h">Price (high to low)</option>
-                    <option value="l">Price (low to high)</option>
-                    <option value="m">Make/model</option>
-                    <option value="nis">Latest Arrivals</option>
-                    <option value="rr">Recently Reduced</option>
-                  </select>
-                </form>
+                    <span className="custom-select__value">{getCurrentSortLabel()}</span>
+                    <span className="custom-select__arrow"></span>
+                  </div>
+                  {isSortDropdownOpen && (
+                    <div className="custom-select__dropdown">
+                      {sortOptions.map((option) => (
+                        <div
+                          key={option.value}
+                          className={`custom-select__option ${
+                            option.value === sortOption ? 'selected' : ''
+                          }`}
+                          onClick={() => handleCustomSortChange(option.value)}
+                        >
+                          {option.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               {/* <div className="res-filt__layout-toggle mobile-hidden"></div> */}
             </div>
@@ -1414,8 +1458,8 @@ const Search = () => {
                   for your purchase, commission may be received. We are only able to offer finance
                   products from these providers. Postal Address:{' '}
                   <strong>
-                    Professional Cars Limited, Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, Buckinghamshire
-                    HP22 5EZ
+                    S James Prestige Limited, Wakeley Works, Bourne Road, Essendine, Lincolnshire
+                    PE9 4LT
                   </strong>
                   . Find contact details{' '}
                   <a href="/contact.php" title="Contact Details">

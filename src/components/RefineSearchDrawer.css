@@ -2,14 +2,12 @@
   font-family: ClickIcons;
   font-display: swap;
   src: url(/fonts/ClickIcons.eot);
-  src: url(/fonts/ClickIcons.eot?#iefix) format("eot"),
-    url(/fonts/ClickIcons.woff2) format("woff2"),
-    url(/fonts/ClickIcons.woff) format("woff"),
-    url(/fonts/ClickIcons.ttf) format("truetype"),
-    url(/fonts/ClickIcons.svg#ClickIcons) format("svg");
+  src: url(/fonts/ClickIcons.eot?#iefix) format('eot'), url(/fonts/ClickIcons.woff2) format('woff2'),
+    url(/fonts/ClickIcons.woff) format('woff'), url(/fonts/ClickIcons.ttf) format('truetype'),
+    url(/fonts/ClickIcons.svg#ClickIcons) format('svg');
 }
 
-@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap');
 
 body {
   font-size: 100%;
@@ -49,7 +47,7 @@ body {
 }
 
 .results-layout__search:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
@@ -107,7 +105,7 @@ body {
 }
 
 .o-search.o-search--results:before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   height: 100vh;
@@ -163,7 +161,7 @@ body {
   position: absolute;
   top: 0;
   right: 15px;
-  width: calc(50vw - 60px);
+  width: calc(50vw - 25px);
   padding: 15px 0;
   background: #171717;
   color: #fff;
@@ -194,7 +192,7 @@ body {
 
 .far.fa-close:before,
 .far.fa-times:before {
-  content: "\ea40";
+  content: '\ea40';
 }
 
 fieldset {
@@ -418,20 +416,20 @@ select:focus {
   font-family: Montserrat, sans-serif;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   box-sizing: border-box;
   width: 13px;
   height: 13px;
   padding: 0;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   margin: 4px 0 0;
   line-height: normal;
   cursor: pointer;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: auto;
 }
 
@@ -475,7 +473,7 @@ label {
 }
 
 .o-search .a-toggle + label::before {
-  content: " ";
+  content: ' ';
   position: absolute;
   top: 1px;
   left: 1px;
@@ -541,8 +539,7 @@ button {
   border-bottom-color: #a2a2a2;
   border-radius: 4px;
   -webkit-filter: progid:dximagetransform.microsoft.gradient(enabled=false);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .results-layout__search .form-group--make {
@@ -553,7 +550,7 @@ button {
 }
 .far.fa-close:before,
 .far.fa-times:before {
-  content: "\ea40" !important;
+  content: '\ea40' !important;
 }
 .o-search.o-search--results .button-group button {
   display: inline-block;
@@ -608,9 +605,22 @@ button:hover {
     width: 70vw;
   }
   .results-layout__search #mobile-close {
-    width: calc(100vw - 70px);
+    width: calc(70vw - 25px);
   }
 }
+@media handheld, only screen and (max-width: 739px) and (min-width: 631px) {
+  .o-search.o-search--results {
+    width: calc(100vw - 80px);
+  }
+  .results-layout__search #mobile-close {
+    width: calc(100vw - 105px);
+  }
+  .o-search.o-search--results .fieldset {
+    max-width: 260px;
+    margin-left: 3vw;
+  }
+}
+
 @media handheld, only screen and (max-width: 739px) {
   .o-search.o-search--results {
     -webkit-box-pack: start;
@@ -618,20 +628,47 @@ button:hover {
     justify-content: flex-start;
     width: calc(100vw - 60px);
   }
+  .results-layout__search #mobile-close {
+    width: calc(100vw - 85px);
+  }
+
   .o-search.o-search--results:before {
     -webkit-transform: skewX(2deg);
     -ms-transform: skewX(2deg);
     transform: skewX(2deg);
   }
+  .o-search.o-search--results .fieldset {
+    max-width: 280px;
+    margin-left: 4vw;
+  }
 }
+@media handheld, only screen and (max-width: 570px) {
+  .results-layout__search #mobile-close {
+    width: calc(100vw - 85px);
+  }
+}
+
 @media handheld, only screen and (max-width: 420px) {
   .o-search.o-search--results {
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    width: calc(100vw - 10px);
+    width: calc(100vw - 60px);
   }
   .results-layout__search #mobile-close {
-    width: calc(100vw - 20px);
+    width: calc(100vw - 85px);
+  }
+  .o-search.o-search--results .fieldset {
+    max-width: calc(100% - 30px);
+    margin-left: 15px;
+    margin-right: 15px;
+    box-sizing: border-box;
+  }
+  .o-search.o-search--results .form-group select {
+    font-size: 13px;
+    height: 32px;
+    padding: 0 15px 0 5px;
+    box-sizing: border-box;
+    width: 100%;
   }
 }

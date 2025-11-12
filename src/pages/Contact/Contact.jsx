@@ -119,7 +119,7 @@ const Contact = () => {
   return (
     <PageWithSidebarLayout
       pageClass="contact-pg"
-      headerTitle="Contact Professional Cars Limited"
+      headerTitle="Contact S James Prestige Limited"
       headerClass="page-hdr--contact"
       showSidebar={false}
     >
@@ -138,18 +138,18 @@ const Contact = () => {
                       Address
                     </h3>
                     <p>
-                      <strong>Professional Cars Limited</strong>
+                      <strong>S James Prestige Limited</strong>
                     </p>
                     <address>
-                      Rear Yard 2
+                      Wakeley Works
                       <br />
-                      College Road Business Park
+                      Bourne Road
                       <br />
-                      Aston Clinton, Aylesbury
+                      Essendine
                       <br />
-                      Buckinghamshire
+                      Rutland
                       <br />
-                      HP22 5EZ
+                      PE9 4LT
                       <br />
                     </address>
                   </div>
@@ -175,14 +175,14 @@ const Contact = () => {
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:07788929755">07788929755</a>
+                          <a href="tel:01780435024">01780 435024</a>
                         </li>
                         <li className="desktop-hidden">
                           <span
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:07788929755">07788929755</a>
+                          <a href="tel:01780435024">01780435024</a>
                         </li>
                         <li className="mobile-hidden">
                           <span aria-hidden="true"></span>{" "}
@@ -201,7 +201,7 @@ const Contact = () => {
                             className="icon icon-mail"
                           ></span>{" "}
                           <a
-                            href="mailto:info@professionalcars.co.uk"
+                            href="mailto:enquiries@sjamesprestige.com"
                             title="Email Us"
                           >
                             Email Us
@@ -233,7 +233,7 @@ const Contact = () => {
                           ></span>{" "}
                           Mon
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:30</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -243,7 +243,7 @@ const Contact = () => {
                           ></span>{" "}
                           Tue
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:30</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -253,7 +253,7 @@ const Contact = () => {
                           ></span>{" "}
                           Wed
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:30</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -263,7 +263,7 @@ const Contact = () => {
                           ></span>{" "}
                           Thu
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:30</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -273,7 +273,7 @@ const Contact = () => {
                           ></span>{" "}
                           Fri
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:30</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -283,7 +283,7 @@ const Contact = () => {
                           ></span>{" "}
                           Sat
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">09:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -293,7 +293,7 @@ const Contact = () => {
                           ></span>{" "}
                           Sun
                         </div>
-                        <div className="open-times">Closed</div>
+                        <div className="open-times">09:00 - 16:00</div>
                       </li>
                       <li className="twelvecol bank-holiday-not-set">
                         <div className="open-day">
@@ -342,7 +342,7 @@ const Contact = () => {
                     <input
                       type="hidden"
                       name="enquiry_url"
-                      value="https://car-listing-frontend-peach.vercel.app/contact"
+                      value="/contact"
                       id="captcha_enquiry_url"
                     />
                     <input
@@ -486,7 +486,7 @@ const Contact = () => {
                   </h3>
                   <div className="flexible-frame">
                     <iframe
-                      src="https://maps.google.com/maps?width=600&amp;height=450&amp;hl=en&amp;q=professional cars uk&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2417.7123695721757!2d-0.45290148460173035!3d52.70128627984891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48778bd67aa6acdd%3A0xa17884ced2a5f8aa!2sS%20James%20Prestige!5e0!3m2!1sen!2suk!4v1621524565594!5m2!1sen!2suk"
                       width="600"
                       height="450"
                       allowFullScreen

@@ -87,7 +87,7 @@ const NotFound = () => {
                         fontFamily: 'Montserrat, sans-serif',
                         fontWeight: '300'
                       }}>
-                        Explore our premium collection of Nissan, BMW, Audi, and Mercedes vehicles.
+                        Explore our premium collection of BMW, Audi, and Mercedes vehicles.
                       </p>
                       <Link
                         to="/vehicles/used-cars"
@@ -171,14 +171,14 @@ const NotFound = () => {
                         View Sitemap
                       </Link>
                       <a
-                        href="tel:07788929755"
+                        href="tel:01780435024"
                         className="inline-block px-6 py-3 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-500 transition-colors duration-300"
                         style={{
                           fontFamily: 'Montserrat, sans-serif',
                           textDecoration: 'none'
                         }}
                       >
-                        Call: 07788929755
+                        Call: 01780 435024
                       </a>
                     </div>
                   </div>

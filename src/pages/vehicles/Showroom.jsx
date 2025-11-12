@@ -765,7 +765,7 @@ const Showroom = () => {
             <div className="mobile-filter-header__wrapper">
               <div className="mobile-filters">
                 <div className="mobile-filters__search">
-                  <a id="mobile-open" className="btn">
+                  <a id="mobile-open" className="btn" onClick={handleRefineSearchOpen}>
                     Refine Search
                   </a>
                 </div>
@@ -1394,7 +1394,7 @@ const Showroom = () => {
                   ? 'Browse by Brand'
                   : isAllCarsPage
                   ? 'Browse by Brand'
-                  : `Other cars in Aston Clinton, Aylesbury`}
+                  : `Other cars in Essendine`}
               </summary>
               <ul className="makesmodels__list makesmodels__list--brand" role="menu">
                 {brands.map((brand) => (
@@ -1419,18 +1419,18 @@ const Showroom = () => {
               <summary>
                 <h1>
                   {isVansPage
-                    ? 'Used vans in Aston Clinton, Aylesbury'
+                    ? 'Used vans in Essendine'
                     : isAllCarsPage
-                    ? 'Used cars in Aston Clinton, Aylesbury'
-                    : `Used ${brandName} cars in Aston Clinton, Aylesbury`}
+                    ? 'Used cars in Essendine'
+                    : `Used ${brandName} cars in Essendine`}
                 </h1>
               </summary>
               <p>
                 {isVansPage
-                  ? 'Get the best deal on a used van for sale in Aston Clinton, Aylesbury by making your way to Professional Cars Limited today. You will find every available van model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
+                  ? 'Get the best deal on a used van for sale in Essendine by making your way to S James Prestige Limited today. You will find every available van model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
                   : isAllCarsPage
-                  ? 'Get the best deal on a used car for sale in Aston Clinton, Aylesbury by making your way to Professional Cars Limited today. You will find every available model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
-                  : `Get the best deal on a used ${brandName} for sale in Aston Clinton, Aylesbury by making your way to Professional Cars Limited today. You will find every available ${brandName} model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.`}
+                  ? 'Get the best deal on a used car for sale in Essendine by making your way to S James Prestige Limited today. You will find every available model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
+                  : `Get the best deal on a used ${brandName} for sale in Essendine by making your way to S James Prestige Limited today. You will find every available ${brandName} model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.`}
                 Take the opportunity to browse our current range online before contacting a member
                 of the showroom team to find out more. Our friendly and knowledgeable staff will be
                 more than happy to answer any questions and provide advice and guidance when
@@ -1464,8 +1464,8 @@ const Showroom = () => {
                   for your purchase, commission may be received. We are only able to offer finance
                   products from these providers. Postal Address:{' '}
                   <strong>
-                    Professional Cars Limited, Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, Buckinghamshire
-                    HP22 5EZ
+                    S James Prestige Limited, Wakeley Works, Bourne Road, Essendine, Lincolnshire
+                    PE9 4LT
                   </strong>
                   . Find contact details{' '}
                   <a href="/contact.php" title="Contact Details">
