@@ -6,12 +6,12 @@ const About = () => {
   return (
     <PageWithSidebarLayout
       pageClass="about-pg"
-      headerTitle="Professional Cars Limited"
+      headerTitle="S James Prestige Limited"
       headerClass="page-hdr--about lazy-background visible"
       showSidebar={true}
     >
       <p>
-        Professional Cars specialise in sourcing high quality, pre owned Nissan, BMW's,
+        S James Prestige specialise in sourcing high quality, pre owned BMW's,
         Audi's and Mercedes. We pride ourselves on our bespoke customisation and
         optional upgrades that we would be delighted to discuss with you.
       </p>

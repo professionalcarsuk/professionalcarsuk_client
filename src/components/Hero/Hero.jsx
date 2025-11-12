@@ -36,13 +36,13 @@ const Hero = () => {
     {
       id: 2,
       image:
-        "https://images.unsplash.com/photo-1714348938110-d3692bc3716a?w=1920&h=1080&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&h=1080&fit=crop&crop=center",
       alt: "Luxury Car 2",
     },
     {
       id: 3,
       image:
-        "https://images.unsplash.com/photo-1677339059244-8c6cefec8415?w=1920&h=1080&fit=crop&crop=center",
+        "https://images.unsplash.com/photo-1549399735-cef2e2c3f638?w=1920&h=1080&fit=crop&crop=center",
       alt: "Luxury Car 3",
     },
     {
@@ -375,7 +375,7 @@ const Hero = () => {
       <div className="hero-unit-bottom">
         <div className="hero-unit-block  sm:px-0 px-3">
           <div className="hero-unit-block__title">
-            Professional Cars
+            S JAMES PRESTIGE
             <div className="hero-unit-block__sub-head">
               Fuelled by Passion
               <br />
@@ -574,7 +574,7 @@ const Hero = () => {
               ×
             </button>
             <iframe
-              src="https://www.youtube.com/embed/EEDKM8rYjFE"
+              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
               title="Watch Video"
               style={{ border: "none" }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -6,16 +6,16 @@ const Careers = () => {
   const mainContent = (
     <div className="pad-20 overflow-hidden">
       <h2 className="snipcss0-0-0-1 tether-abutted tether-abutted-top tether-element-attached-top tether-element-attached-center tether-target-attached-top tether-target-attached-center">
-        Interested in a Career in the Motor Industry with Professional Cars?
+        Interested in a Career in the Motor Industry with S James Prestige?
       </h2>
       <p>
         Do you live in or around the Stamford area and feel you have what it
         takes to offer great levels of service? We always want to hear from
-        quality individuals who can make a difference to both Professional Cars
+        quality individuals who can make a difference to both S James Prestige
         and our customers.
       </p>
       <p>
-        Please call on <a href="tel:07788929755">07788929755</a> for an
+        Please call on <a href="tel:01780723389">01780 723389</a> for an
         informal chat.
       </p>
       <h2>Potential Roles Available:</h2>
@@ -66,7 +66,7 @@ const Careers = () => {
         quality vehicle such as the brands we represent.
       </p>
       <p>
-        At Professional Cars Ltd, we have gone out of our way to create a relaxed
+        At S James Prestige Ltd, we have gone out of our way to create a relaxed
         and welcoming atmosphere. Most importantly, we make it our business to
         listen hard to the needs of our customers and respond with the solution
         that is right for them.
@@ -118,7 +118,7 @@ const Careers = () => {
       </p>
       <p>
         Please send your CV to{" "}
-        <a href="mailto:nat@professionalcars.co.uk">nat@professionalcars.co.uk</a>
+        <a href="mailto:nat@sjamesprestige.com">nat@sjamesprestige.com</a>
       </p>
     </div>
   );

@@ -257,7 +257,7 @@ const FeaturedVehicles = () => {
                     <li key={v.id || v._id || vehicleId} className="touchcarousel-item">
                       <Link
                         to={`/vehicle/${brandSlug}/${vehicleId}`}
-                        title={`Used ${title} for sale in Aylesbury`}
+                        title={`Used ${title} for sale in Essendine`}
                       >
                         <img
                           className="home-carousel-image"

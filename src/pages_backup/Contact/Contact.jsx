@@ -1,11 +1,10 @@
-import React from "react";
-import { PageWithSidebarLayout } from "../../layouts";
+import { PageWithSidebarLayout } from '../../layouts';
 
 const Contact = () => {
   return (
     <PageWithSidebarLayout
       pageClass="contact-pg"
-      headerTitle="Contact Professional Cars Limited"
+      headerTitle="Contact S James Prestige Limited"
       headerClass="page-hdr--contact lazy-background visible"
       showSidebar={false}
     >
@@ -15,25 +14,21 @@ const Contact = () => {
             <div className="contact-widget">
               <div className="pad-20 overflow-hidden">
                 <h3>
-                  <span
-                    aria-hidden="true"
-                    className="icon icon-location"
-                  ></span>{" "}
-                  Address
+                  <span aria-hidden="true" className="icon icon-location"></span> Address
                 </h3>
                 <p>
-                  <strong>Professional Cars Limited</strong>
+                  <strong>S James Prestige Limited</strong>
                 </p>
                 <address>
-                  Rear Yard 2
+                  Wakeley Works
                   <br />
-                  College Road Business Park
+                  Bourne Road
                   <br />
-                  Aston Clinton, Aylesbury
+                  Essendine
                   <br />
-                  Buckinghamshire
+                  Rutland
                   <br />
-                  HP22 5EZ
+                  PE9 4LT
                   <br />
                 </address>
               </div>
@@ -45,25 +40,18 @@ const Contact = () => {
             <div className="contact-widget">
               <div className="pad-20 overflow-hidden">
                 <h3>
-                  <span aria-hidden="true" className="icon icon-phone"></span>{" "}
-                  Contact
+                  <span aria-hidden="true" className="icon icon-phone"></span> Contact
                 </h3>
                 <p>Why not contact us directly?</p>
                 <div className="contact-box">
                   <ul id="get-in-touch">
                     <li className="mobile-hidden">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-phone-2"
-                      ></span>{" "}
-                      <a href="/contact">07788929755</a>
+                      <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
+                      <a href="/contact">01780 435024</a>
                     </li>
                     <li className="desktop-hidden">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-phone-2"
-                      ></span>{" "}
-                      <a href="tel:07788929755">07788929755</a>
+                      <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
+                      <a href="tel:01780435024">01780435024</a>
                     </li>
                     <li className="mobile-hidden">
                       <span aria-hidden="true"></span> <a href="/contact"></a>
@@ -75,14 +63,8 @@ const Contact = () => {
                       <span aria-hidden="true"></span> <a href="tel:"></a>
                     </li>
                     <li>
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-mail"
-                      ></span>{" "}
-                      <a
-                        href="mailto:info@professionalcars.co.uk"
-                        title="Email Us"
-                      >
+                      <span aria-hidden="true" className="icon icon-mail"></span>{' '}
+                      <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
                         Email Us
                       </a>
                     </li>
@@ -97,90 +79,54 @@ const Contact = () => {
             <div className="contact-widget">
               <div className="pad-20 overflow-hidden">
                 <h3>
-                  <span
-                    aria-hidden="true"
-                    className="icon icon-calendar"
-                  ></span>{" "}
-                  Open Times
+                  <span aria-hidden="true" className="icon icon-calendar"></span> Open Times
                 </h3>
                 <ul className="row open-times">
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Mon
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Mon
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:30</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Tue
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Tue
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:30</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Wed
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Wed
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:30</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Thu
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Thu
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:30</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Fri
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Fri
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:30</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Sat
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Sat
                     </div>
-                    <div className="open-times">10:00 - 18:00</div>
+                    <div className="open-times">09:00 - 17:00</div>
                   </li>
                   <li className="twelvecol">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Sun
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Sun
                     </div>
-                    <div className="open-times">Closed</div>
+                    <div className="open-times">09:00 - 16:00</div>
                   </li>
                   <li className="twelvecol bank-holiday-not-set">
                     <div className="open-day">
-                      <span
-                        aria-hidden="true"
-                        className="icon icon-calendar"
-                      ></span>{" "}
-                      Bank Hol.
+                      <span aria-hidden="true" className="icon icon-calendar"></span> Bank Hol.
                     </div>
                     <div className="open-times"> </div>
                   </li>
@@ -195,12 +141,7 @@ const Contact = () => {
           <div className="contact-widget">
             <div className="pad-20 overflow-hidden">
               <a id="email-us"></a>
-              <form
-                action="email.php"
-                method="post"
-                id="frm_captcha_contact"
-                noValidate
-              >
+              <form action="email.php" method="post" id="frm_captcha_contact" noValidate>
                 <input
                   type="hidden"
                   name="_token"
@@ -210,21 +151,16 @@ const Contact = () => {
                 <input
                   type="text"
                   name="a_password"
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                   tabIndex={-1}
                   autoComplete="off"
                   id="captcha_a_password"
                 />
-                <input
-                  type="hidden"
-                  name="subject"
-                  value=""
-                  id="captcha_subject"
-                />
+                <input type="hidden" name="subject" value="" id="captcha_subject" />
                 <input
                   type="hidden"
                   name="enquiry_url"
-                  value="https://car-listing-frontend-peach.vercel.app/contact.php"
+                  value="/contact.php"
                   id="captcha_enquiry_url"
                 />
                 <input
@@ -235,8 +171,7 @@ const Contact = () => {
                 />
                 <fieldset title="Contact Form">
                   <h3>
-                    <span aria-hidden="true" className="icon icon-mail"></span>{" "}
-                    Email Us
+                    <span aria-hidden="true" className="icon icon-mail"></span> Email Us
                   </h3>
                   <div className="row" id="row_1">
                     <div className="twelvecol">
@@ -326,8 +261,7 @@ const Contact = () => {
           <div className="contact-widget">
             <div className="pad-20 overflow-hidden">
               <h3>
-                <span aria-hidden="true" className="icon icon-location"></span>{" "}
-                Map
+                <span aria-hidden="true" className="icon icon-location"></span> Map
               </h3>
               <div className="flexible-frame">
                 <iframe

@@ -144,7 +144,7 @@ const Warranty = () => {
       <h2>Extendable Warranty</h2>
       <p>
         There is also the option to purchase a more comprehensive product up to
-        a period of 3 years at an additional cost. Please call 07788929755 for
+        a period of 3 years at an additional cost. Please call 01780 435024 for
         a detailed overview of all products and services available.
       </p>
       <h2>Warranty Claim Form</h2>

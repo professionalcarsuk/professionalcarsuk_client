@@ -1,6 +1,5 @@
-import React from "react";
-import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
-import "./SellCar.css";
+import PageWithSidebarLayout from '../../layouts/PageWithSidebarLayout';
+import './SellCar.css';
 
 const SellCar = () => {
   const mainContent = (
@@ -10,28 +9,13 @@ const SellCar = () => {
       </p>
       <h2>We buy cars</h2>
       <p>
-        We take the hassle out of selling privately plus we have a network of
-        industry contacts looking to pay good prices for your vehicle.
+        We take the hassle out of selling privately plus we have a network of industry contacts
+        looking to pay good prices for your vehicle.
       </p>
       <p>Complete our simple to use valuation form below to get started.</p>
-      <form
-        action="sellcar.php"
-        method="post"
-        id="frm_captcha_sellcar"
-        noValidate="novalidate"
-      >
-        <input
-          type="hidden"
-          name="enquiry_url"
-          value="https://car-listing-frontend-peach.vercel.app/careers.php"
-          id="captcha_enquiry_url"
-        />
-        <input
-          type="hidden"
-          name="enquiry_form"
-          value="/sellcar.php"
-          id="captcha_enquiry_form"
-        />
+      <form action="sellcar" method="post" id="frm_captcha_sellcar" noValidate="novalidate">
+        <input type="hidden" name="enquiry_url" value="/sellcar" id="captcha_enquiry_url" />
+        <input type="hidden" name="enquiry_form" value="/sellcar" id="captcha_enquiry_form" />
         <h3>Car Valuation</h3>
         <div className="row" id="row_1">
           <div className="sixcol">
@@ -113,7 +97,7 @@ const SellCar = () => {
         <div className="row" id="row_6">
           <div className="sixcol">
             <label>
-              Name{" "}
+              Name{' '}
               <span className="required" aria-required="true">
                 *
               </span>
@@ -133,7 +117,7 @@ const SellCar = () => {
         <div className="row" id="row_7">
           <div className="sixcol">
             <label>
-              Email{" "}
+              Email{' '}
               <span className="required" aria-required="true">
                 *
               </span>
@@ -186,12 +170,7 @@ const SellCar = () => {
                 </div>
               </div>
             </div>
-            <input
-              type="submit"
-              value="Submit"
-              className="button green"
-              id="captcha_submit"
-            />
+            <input type="submit" value="Submit" className="button green" id="captcha_submit" />
           </div>
         </div>
         <input type="hidden" name="active_status" value="active" />

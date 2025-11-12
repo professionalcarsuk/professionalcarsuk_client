@@ -62,10 +62,6 @@
   font-size: 12px;
 }
 
-.custom-select__arrow::before {
-  content: "\ea47";
-}
-
 .custom-select.open .custom-select__arrow {
   transform: rotate(180deg);
 }
@@ -136,4 +132,11 @@
 
 .results-layout__search .custom-select__arrow {
   color: #fff;
+}
+
+/* Show icon-font arrow on desktop/tablet (keep mobile triangle in page CSS) */
+@media (min-width: 769px) {
+  .custom-select__arrow::before {
+    content: '\ea47';
+  }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import FavoriteButton from '../../components/FavoriteButton';
@@ -20,6 +20,7 @@ const VehicleDetail = () => {
   const [thumbnailWidth, setThumbnailWidth] = useState(106);
   const [loadingBrochure, setLoadingBrochure] = useState(false);
   const [vehicle, setVehicle] = useState(null);
+  const [userInteracted, setUserInteracted] = useState(false);
 
   // Find the vehicle by ID
   useEffect(() => {
@@ -33,8 +34,11 @@ const VehicleDetail = () => {
           // Load favorites from localStorage
           dispatch(loadFavorites());
         } catch (err) {
-          setError('Failed to load vehicle. Please try again.');
-          console.error('Error fetching vehicle:', err);
+          const errorMessage =
+            typeof err === 'string'
+              ? err
+              : err?.message || 'Failed to load vehicle. Please try again.';
+          setError(errorMessage);
         } finally {
           setLoading(false);
         }
@@ -56,57 +60,95 @@ const VehicleDetail = () => {
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+    setUserInteracted(true);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
+    setUserInteracted(true);
   };
 
   const selectImage = (index) => {
     setCurrentImageIndex(index);
+    setUserInteracted(true);
   };
 
-  const scrollToThumbnail = (index) => {
-    const container = document.querySelector('.rsThumbsContainer');
-    if (container) {
-      const containerWidth = container.offsetWidth;
-      const visibleThumbnails = Math.floor(containerWidth / thumbnailWidth);
-      const scrollPosition = index * thumbnailWidth;
+  const scrollToThumbnail = useCallback(
+    (index) => {
+      const container = document.querySelector('.rsThumbsContainer');
+      if (container) {
+        const containerWidth = container.offsetWidth;
+        const visibleThumbnails = Math.floor(containerWidth / thumbnailWidth);
+        const scrollPosition = index * thumbnailWidth;
 
-      // Calculate if the thumbnail is visible
-      const currentScroll = container.scrollLeft;
-      const thumbnailLeft = scrollPosition;
-      const thumbnailRight = scrollPosition + thumbnailWidth;
+        // Calculate if the thumbnail is visible
+        const currentScroll = container.scrollLeft;
+        const thumbnailLeft = scrollPosition;
+        const thumbnailRight = scrollPosition + thumbnailWidth;
 
-      // If thumbnail is not fully visible, scroll to center it
-      if (thumbnailLeft < currentScroll || thumbnailRight > currentScroll + containerWidth) {
-        const centerPosition = scrollPosition - containerWidth / 2 + thumbnailWidth / 2;
-        container.scrollTo({
-          left: Math.max(0, centerPosition),
-          behavior: 'smooth',
-        });
+        // If thumbnail is not fully visible, scroll to center it
+        if (thumbnailLeft < currentScroll || thumbnailRight > currentScroll + containerWidth) {
+          const centerPosition = scrollPosition - containerWidth / 2 + thumbnailWidth / 2;
+          container.scrollTo({
+            left: Math.max(0, centerPosition),
+            behavior: 'smooth',
+          });
+        }
       }
-    }
-  };
+    },
+    [thumbnailWidth]
+  );
 
   const scrollThumbnailsLeft = () => {
     const container = document.querySelector('.rsThumbsContainer');
     if (container) {
-      container.scrollBy({ left: -100, behavior: 'smooth' });
+      // Scroll 3 thumbnails at a time (approximately 330px including spacing)
+      container.scrollBy({ left: -330, behavior: 'smooth' });
     }
   };
 
   const scrollThumbnailsRight = () => {
     const container = document.querySelector('.rsThumbsContainer');
     if (container) {
-      container.scrollBy({ left: 100, behavior: 'smooth' });
+      // Scroll 3 thumbnails at a time (approximately 330px including spacing)
+      container.scrollBy({ left: 330, behavior: 'smooth' });
     }
   };
 
   // Scroll to current thumbnail when image index changes
   useEffect(() => {
     scrollToThumbnail(currentImageIndex);
-  }, [currentImageIndex]);
+  }, [currentImageIndex, scrollToThumbnail]);
+
+  // Auto-play slideshow - only run when vehicle is loaded and user hasn't interacted recently
+  useEffect(() => {
+    if (!vehicle || !vehicle.images || userInteracted) return;
+
+    const images = vehicle.images || ['/images/default-vehicle.jpg'];
+    const imageUrls = images
+      .map((img) => (typeof img === 'string' ? img : img.url))
+      .filter((url) => url && url !== '/images/default-vehicle.jpg');
+    const displayImages = imageUrls.length > 0 ? imageUrls : ['/images/default-vehicle.jpg'];
+
+    if (displayImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [vehicle, userInteracted]);
+
+  // Reset user interaction after 10 seconds of inactivity
+  useEffect(() => {
+    if (!userInteracted) return;
+
+    const timeout = setTimeout(() => {
+      setUserInteracted(false);
+    }, 10000); // Resume auto-play after 10 seconds of inactivity
+
+    return () => clearTimeout(timeout);
+  }, [userInteracted]);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -409,6 +451,10 @@ const VehicleDetail = () => {
             className=""
             onError={(e) => (e.target.style.display = 'none')}
             alt="Vehicle"
+            style={{
+              WebkitFilter: 'blur(10px)',
+              filter: 'blur(10px)',
+            }}
           />
         </div>
         <div className="detail-header__breadcrumb">
@@ -563,6 +609,11 @@ const VehicleDetail = () => {
                       src={displayImages[currentImageIndex]}
                       alt="Vehicle"
                       className="main-vehicle-image"
+                      style={{
+                        transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                        opacity: 1,
+                        transform: 'scale(1)',
+                      }}
                     />
                     <button
                       className="slider-arrow slider-arrow-left"
@@ -595,12 +646,23 @@ const VehicleDetail = () => {
                             index === currentImageIndex ? 'active' : ''
                           }`}
                           onClick={() => selectImage(index)}
+                          style={{
+                            position: 'relative',
+                            cursor: 'pointer',
+                            ...(index === currentImageIndex && {
+                              background: '#171717',
+                            }),
+                          }}
                         >
                           <img
                             src={image}
                             alt={`Vehicle view ${index + 1}`}
                             width="96"
                             height="72"
+                            style={{
+                              filter: index === currentImageIndex ? 'brightness(0.6)' : 'none',
+                              transition: 'filter 0.3s ease',
+                            }}
                           />
                         </div>
                       ))}
@@ -740,20 +802,20 @@ const VehicleDetail = () => {
                     <ul className="detail-contact-list">
                       <li>
                         T:{' '}
-                        <a href="tel:07788929755" title="Call Us">
-                          07788929755
+                        <a href="tel:01780435024" title="Call Us">
+                          01780 435024
                         </a>
                       </li>
                       <li>
                         M:{' '}
-                        <a href="tel:07788929755" title="Call Us">
-                          07788929755
+                        <a href="tel:01780435024" title="Call Us">
+                          01780435024
                         </a>
                       </li>
                       <li>
                         E:{' '}
-                        <a href="mailto:info@professionalcars.co.uk" title="Email Us">
-                          info@professionalcars.co.uk
+                        <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
+                          enquiries@sjamesprestige.com
                         </a>
                       </li>
                     </ul>
@@ -1271,7 +1333,7 @@ const VehicleDetail = () => {
               ) : null}
               {/* More details will be added here */}
               <div className="detail-disclaimer">
-                <p>For more info on this vehicle call our showroom on 07788929755</p>
+                <p>For more info on this vehicle call our showroom on 01780 435024</p>
                 <p>
                   Every effort has been made to ensure the accuracy of the above information but
                   errors may occur. Please check with a salesperson.

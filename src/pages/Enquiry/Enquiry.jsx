@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -21,6 +21,11 @@ const Enquiry = () => {
   const { formData, isSubmitting, submitSuccess, submitError } = useSelector(
     (state) => state.contact
   );
+  const [phoneError, setPhoneError] = React.useState('');
+  const [nameError, setNameError] = React.useState('');
+  const [emailError, setEmailError] = React.useState('');
+  const [questionError, setQuestionError] = React.useState('');
+  const [captchaError, setCaptchaError] = React.useState('');
   const currentVehicle = useSelector(selectCurrentVehicle);
 
   // Pre-fill subject from query param or default; don't force it in UI
@@ -66,6 +71,54 @@ const Enquiry = () => {
     if (name === 'telephone') {
       const filteredValue = value.replace(/[^\d\s\-+()]/g, '');
       dispatch(updateFormField({ field: name, value: filteredValue }));
+      // Live UK phone validation
+      if (filteredValue.trim()) {
+        const ukPhoneRegex =
+          /^(\+44|0044)\s?7\d{3}\s?\d{6}$|^(\+44|0044)\s?\d{4}\s?\d{6}$|^(\+44|0044)\s?\d{3}\s?\d{7}$|^(\+44|0044)\s?\d{2}\s?\d{8}$|^(\+44|0044)\s?\d{1}\s?\d{9}$/;
+        if (!ukPhoneRegex.test(filteredValue.replace(/[-\s]/g, ''))) {
+          setPhoneError('Please enter a valid UK telephone number with country code (+44)');
+        } else {
+          setPhoneError('');
+        }
+      } else {
+        setPhoneError('');
+      }
+    } else if (name === 'name') {
+      dispatch(updateFormField({ field: name, value }));
+      // Live name validation
+      if (!value.trim()) {
+        setNameError('Your name is required');
+      } else {
+        setNameError('');
+      }
+    } else if (name === 'email') {
+      dispatch(updateFormField({ field: name, value }));
+      // Live email validation
+      if (!value.trim()) {
+        setEmailError('Your email is required');
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        setEmailError('Please enter a valid email address');
+      } else {
+        setEmailError('');
+      }
+    } else if (name === 'question') {
+      dispatch(updateFormField({ field: name, value }));
+      // Live question validation
+      if (!value.trim()) {
+        setQuestionError('Your enquiry message is required');
+      } else {
+        setQuestionError('');
+      }
+    } else if (name === 'captchaResponse') {
+      dispatch(updateFormField({ field: name, value }));
+      // Live captcha validation
+      if (!value.trim()) {
+        setCaptchaError('Please answer the captcha');
+      } else if (value.trim() !== '2') {
+        setCaptchaError('Incorrect captcha answer. Please try again.');
+      } else {
+        setCaptchaError('');
+      }
     } else {
       dispatch(updateFormField({ field: name, value }));
     }
@@ -75,6 +128,12 @@ const Enquiry = () => {
     e.preventDefault();
 
     dispatch(clearError());
+
+    // Check for live validation errors
+    if (nameError || emailError || phoneError || questionError || captchaError) {
+      toast.error('Please correct the errors in the form before submitting.');
+      return;
+    }
 
     // Required validations for this page
     if (!formData.name || !formData.name.trim()) {
@@ -115,11 +174,13 @@ const Enquiry = () => {
       return;
     }
 
-    // Phone number validation (basic)
+    // UK phone number validation (with country code)
     if (formData.telephone && formData.telephone.trim()) {
-      const phoneRegex = /^[\d\s\-+()]+$/;
-      if (!phoneRegex.test(formData.telephone.trim())) {
-        toast.error('Please enter a valid telephone number');
+      // Accepts +44 followed by 10 digits, optional spaces/hyphens, or 0044
+      const ukPhoneRegex =
+        /^(\+44|0044)\s?7\d{3}\s?\d{6}$|^(\+44|0044)\s?\d{4}\s?\d{6}$|^(\+44|0044)\s?\d{3}\s?\d{7}$|^(\+44|0044)\s?\d{2}\s?\d{8}$|^(\+44|0044)\s?\d{1}\s?\d{9}$/;
+      if (!ukPhoneRegex.test(formData.telephone.replace(/[-\s]/g, ''))) {
+        toast.error('Please enter a valid UK telephone number with country code (+44)');
         return;
       }
     }
@@ -251,6 +312,22 @@ const Enquiry = () => {
                             aria-required="true"
                             required
                           />
+                          {nameError && (
+                            <label
+                              id="captcha_name-error"
+                              className="error"
+                              htmlFor="captcha_name"
+                              style={{
+                                display: 'inline-block',
+                                color: 'red',
+                                fontSize: '13px',
+                                padding: 0,
+                                margin: 0,
+                              }}
+                            >
+                              {nameError}
+                            </label>
+                          )}
                         </div>
                       </div>
 
@@ -275,6 +352,22 @@ const Enquiry = () => {
                             aria-required="true"
                             required
                           />
+                          {phoneError && (
+                            <label
+                              id="captcha_telephone-error"
+                              className="error"
+                              htmlFor="captcha_telephone"
+                              style={{
+                                display: 'inline-block',
+                                color: 'red',
+                                fontSize: '13px',
+                                padding: 0,
+                                margin: 0,
+                              }}
+                            >
+                              {phoneError}
+                            </label>
+                          )}
                         </div>
                       </div>
 
@@ -299,6 +392,22 @@ const Enquiry = () => {
                             aria-required="true"
                             required
                           />
+                          {emailError && (
+                            <label
+                              id="captcha_email-error"
+                              className="error"
+                              htmlFor="captcha_email"
+                              style={{
+                                display: 'inline-block',
+                                color: 'red',
+                                fontSize: '13px',
+                                padding: 0,
+                                margin: 0,
+                              }}
+                            >
+                              {emailError}
+                            </label>
+                          )}
                         </div>
                       </div>
 
@@ -323,6 +432,22 @@ const Enquiry = () => {
                             aria-required="true"
                             required
                           />
+                          {questionError && (
+                            <label
+                              id="captcha_question-error"
+                              className="error"
+                              htmlFor="captcha_question"
+                              style={{
+                                display: 'inline-block',
+                                color: 'red',
+                                fontSize: '13px',
+                                padding: 0,
+                                margin: 0,
+                              }}
+                            >
+                              {questionError}
+                            </label>
+                          )}
                         </div>
                       </div>
 
@@ -332,8 +457,8 @@ const Enquiry = () => {
                         </div>
                         <div className="sixcol">
                           <div id="recaptcha_widget">
-                            <div>
-                              <div className="twelvecol">
+                            <div style={{ padding: '0 4px' }}>
+                              <div className="twelvecol" style={{ padding: '0 4px' }}>
                                 <label id="captchaText">What is : 1 + 1 </label>
                               </div>
                               <input
@@ -347,6 +472,22 @@ const Enquiry = () => {
                                 type="text"
                                 aria-required="true"
                               />
+                              {captchaError && (
+                                <label
+                                  id="captchaResponse-error"
+                                  className="error"
+                                  htmlFor="captchaResponse"
+                                  style={{
+                                    display: 'inline-block',
+                                    color: 'red',
+                                    fontSize: '13px',
+                                    padding: 0,
+                                    margin: 0,
+                                  }}
+                                >
+                                  {captchaError}
+                                </label>
+                              )}
                             </div>
                           </div>
 

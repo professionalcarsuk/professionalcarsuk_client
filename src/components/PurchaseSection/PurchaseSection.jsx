@@ -19,8 +19,8 @@ const PurchaseSection = () => {
                       <br />
                       If you have purchased a vehicle from us and the car was
                       registered from March 2017 onwards, please contact{" "}
-                      <a href="mailto:info@professionalcars.co.uk">
-                        info@professionalcars.co.uk
+                      <a href="mailto:michael@sjamesprestige.com">
+                        michael@sjamesprestige.com
                       </a>{" "}
                       for a FREE valuation.
                     </strong>

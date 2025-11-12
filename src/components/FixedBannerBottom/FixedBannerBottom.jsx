@@ -9,7 +9,9 @@ const FixedBannerBottom = () => {
       </div>
       <div className="covid-banner__right">
         <marquee>
-          PLEASE NOTE WE CAN DROP AND COLLECT - CALL US ON 07788929755 OR EMAIL info@professionalcars.co.uk FOR MORE INFORMATION.
+          PLEASE NOTE WE ARE ONLINE BASED ONLY AND CONTINUE TO OPERATE AS 'CLICK
+          AND COLLECT' - CALL US ON 01780 435024 OR EMAIL
+          ENQUIRIES@SJAMESPRESTIGE.COM FOR MORE INFORMATION.
         </marquee>
       </div>
     </div>

@@ -5,7 +5,7 @@ import "./Customization.css";
 const Customization = () => {
   const mainContent = (
     <div className="pad-20 overflow-hidden">
-      <h2> Professional Cars Where Style Meets Performance </h2>
+      <h2> SJP Where Style Meets Performance </h2>
       <p>
         {" "}
         Elevate your vehicle's style with our bespoke kit and wheels packages.
@@ -17,14 +17,14 @@ const Customization = () => {
       </p>
       <p>
         {" "}
-        At Professional Cars, we go beyond just offering the styling parts for
+        At S James Prestige, we go beyond just offering the styling parts for
         your vehicle. We provide a comprehensive package that includes the
         fitment and a 12 month back to base warranty as part of the overall kit.
         Contact us through WhatsApp for pricing and details.{" "}
       </p>
       <p>
         {" "}
-        Are you one of Professional Cars's valued customers and purchased a vehicle from us in
+        Are you one of SJP's valued customers and purchased a vehicle from us in
         the past? If so, why not take advantage of our styling rejuvenation
         service. We can upgrade your old parts for new ones at a discounted
         price. Give your vehicle a fresh new look and feel while enjoying

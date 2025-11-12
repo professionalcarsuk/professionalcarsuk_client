@@ -34,21 +34,21 @@ const Complaints = () => {
       </p>
       <p>Our complaints contact details are:</p>
       <p>
-        Online at https://car-listing-frontend-peach.vercel.app
+        Online at <a className="underline" href="/">Website</a>
         <br />
-        By telephone on 07788929755
+        By telephone on 01780435024
       </p>
       <p>By letter to</p>
       <p>
-        Professional Cars
+        S James Prestige
         <br />
         Wackerly Works
         <br />
-        College Road Business Park
+        Bourne Road
         <br />
-        Aston Clinton, Aylesbury
+        Essendine
         <br />
-        HP22 5EZ
+        PE9 4LT
       </p>
       <h3>What information do we need to address your complaint?</h3>
       <p>
@@ -117,7 +117,7 @@ const Complaints = () => {
       </ul>
       <p>Eligibility</p>
       <p>
-        It is Professional Cars Ltd policy to treat all complainants the same,
+        It is S James Prestige Ltd policy to treat all complainants the same,
         however, certain types of complaints fall within the scope of FCA rules
         and consequently within the jurisdiction of the Financial Ombudsman
         Service.

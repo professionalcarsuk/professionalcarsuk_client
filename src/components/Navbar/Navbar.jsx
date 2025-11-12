@@ -17,7 +17,7 @@ const Navbar = () => {
 
   // Mobile search states
   const [mobileSearchForm, setMobileSearchForm] = useState({
-    vehtype: '',
+    vehtype: 'cars',
     make: '',
     model: '',
   });
@@ -82,12 +82,21 @@ const Navbar = () => {
     fetchVanBrands();
   }, []);
 
-  // Fetch brands for mobile search on component mount
+  // Fetch brands for mobile search based on selected vehicle type
   useEffect(() => {
     const fetchMobileBrands = async () => {
+      if (!mobileSearchForm.vehtype) {
+        setMobileBrands([]);
+        setLoadingMobileBrands(false);
+        return;
+      }
+
+      setLoadingMobileBrands(true);
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands`
+          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands?type=${
+            mobileSearchForm.vehtype
+          }`
         );
         const result = await response.json();
         if (result.success) {
@@ -101,13 +110,14 @@ const Navbar = () => {
     };
 
     fetchMobileBrands();
-  }, []);
+  }, [mobileSearchForm.vehtype]);
 
   // Fetch models when mobile make changes
   useEffect(() => {
     const fetchMobileModels = async () => {
-      if (!mobileSearchForm.make) {
+      if (!mobileSearchForm.make || !mobileSearchForm.vehtype) {
         setMobileModels([]);
+        setLoadingMobileModels(false);
         return;
       }
 
@@ -116,7 +126,7 @@ const Navbar = () => {
         const response = await fetch(
           `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/models?brand=${
             mobileSearchForm.make
-          }`
+          }&type=${mobileSearchForm.vehtype}`
         );
         const result = await response.json();
         if (result.success) {
@@ -130,7 +140,7 @@ const Navbar = () => {
     };
 
     fetchMobileModels();
-  }, [mobileSearchForm.make]);
+  }, [mobileSearchForm.make, mobileSearchForm.vehtype]);
 
   // Prevent body scroll when mobile menu or search is open
   useEffect(() => {
@@ -152,7 +162,6 @@ const Navbar = () => {
   const isServicesActive = ['/sellcar', '/part-exchange', '/customization', '/complaints'].some(
     (p) => pathname.startsWith(p)
   );
-  const isAboutActive = ['/about', '/about-us'].some((p) => pathname.startsWith(p));
 
   // Dropdowns will stay open during navigation to child routes naturally
   // No need for useEffect to manage this
@@ -178,6 +187,12 @@ const Navbar = () => {
 
       // Reset model when make changes
       if (name === 'make') {
+        updated.model = '';
+      }
+
+      // Reset make and model when vehicle type changes
+      if (name === 'vehtype') {
+        updated.make = '';
         updated.model = '';
       }
 
@@ -239,12 +254,8 @@ const Navbar = () => {
                 <i className="fa fa-bars"></i> Menu
               </a>
               <div className="mobile-logo">
-                <a
-                  href="https://professionalcarsuk-client.vercel.app/"
-                  title="Professional Cars Limited"
-                  className="hdr-logo"
-                >
-                  <img src="/logo.png" alt="Professional Cars Limited" className="responsive-img" />
+                <a href="/" title="S James Prestige Limited" className="hdr-logo">
+                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
                 </a>
               </div>
               <a
@@ -265,12 +276,8 @@ const Navbar = () => {
             {/* Desktop Nav: Hidden at <=1024px */}
             <div className="header">
               <div className="header__logo">
-                <a
-                  href="https://professionalcarsuk-client.vercel.app"
-                  title="Professional Cars Limited"
-                  className="hdr-logo"
-                >
-                  <img src="/logo.png" alt="Professional Cars Limited" className="responsive-img" />
+                <a href="/" title="S James Prestige Limited" className="hdr-logo">
+                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
                 </a>
               </div>
               <div className="header__nav">
@@ -278,26 +285,26 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <a href="/contact">
-                        <i className="ci ci-map-marker-alt"></i> Rear Yard 2, College Road Business Park, Aston Clinton, Aylesbury, HP22 5EZ
+                        <i className="ci ci-map-marker-alt"></i> Wakeley Works, Essendine, Rutland
                       </a>
                     </li>
                     <li className="mobile-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:07788929755">07788929755</a>
+                      <a href="tel:01780435024">017804 35024</a>
                     </li>
                     <li className="desktop-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:07788929755">07788929755</a>
+                      <a href="tel:01780435024">01780435024</a>
                     </li>
                     <li>
                       <span aria-hidden="true" className="icon icon-mail"></span>{' '}
-                      <a href="mailto:info@professionalcars.co.uk" title="Email Us">
+                      <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
                         Email Us
                       </a>
                     </li>
                     <li>
                       <a
-                        href="https://www.instagram.com/?hl=en"
+                        href="https://www.instagram.com/sjamesprestige/?hl=en"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -306,7 +313,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <a
-                        href="https://www.facebook.com/"
+                        href="https://www.facebook.com/S-James-Prestige-Finance-1554962181444200/?ref=page_internal"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
