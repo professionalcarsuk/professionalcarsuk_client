@@ -7,7 +7,7 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const [sortOption, setSortOption] = useState('h');
-  
+  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -22,13 +22,31 @@ const Search = () => {
 
   const VEHICLES_PER_PAGE = 12;
 
-  
+  const sortOptions = [
+    { value: 'h', label: 'Price (high to low)' },
+    { value: 'l', label: 'Price (low to high)' },
+    { value: 'm', label: 'Make/model' },
+    { value: 'nis', label: 'Latest Arrivals' },
+    { value: 'rr', label: 'Recently Reduced' },
+  ];
 
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
 
-  
+  const handleCustomSortChange = (value) => {
+    setSortOption(value);
+    setIsSortDropdownOpen(false);
+  };
+
+  const toggleSortDropdown = () => {
+    setIsSortDropdownOpen(!isSortDropdownOpen);
+  };
+
+  const getCurrentSortLabel = () => {
+    const option = sortOptions.find((opt) => opt.value === sortOption);
+    return option ? option.label : 'Price (high to low)';
+  };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -231,7 +249,18 @@ const Search = () => {
     fetchBrands();
   }, [fetchBrands]);
 
-  // removed custom select dropdown logic in favor of native <select>
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isSortDropdownOpen && !event.target.closest('.custom-select-wrapper')) {
+        setIsSortDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSortDropdownOpen]);
 
   // Handle page changes - fetch next page of vehicles
   useEffect(() => {
@@ -483,15 +512,12 @@ const Search = () => {
                   </div>
                 </div>
                 <div className="res-filt__sortform">
-                  <form className="alpha" name="sortform" id="sortform" action="/search?" method="GET">
-                    <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
-                      <option value="h">Price (high to low)</option>
-                      <option value="l">Price (low to high)</option>
-                      <option value="m">Make/model</option>
-                      <option value="nis">Latest Arrivals</option>
-                      <option value="rr">Recently Reduced</option>
-                    </select>
-                  </form>
+                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                    <div className="custom-select ">
+                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__arrow"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -545,15 +571,12 @@ const Search = () => {
                   <em>Loading vehicles...</em>
                 </div>
                 <div className="res-filt__sortform">
-                  <form className="alpha" name="sortform" id="sortform" action="/search?" method="GET">
-                    <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
-                      <option value="h">Price (high to low)</option>
-                      <option value="l">Price (low to high)</option>
-                      <option value="m">Make/model</option>
-                      <option value="nis">Latest Arrivals</option>
-                      <option value="rr">Recently Reduced</option>
-                    </select>
-                  </form>
+                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                    <div className="custom-select ">
+                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__arrow"></span>
+                    </div>
+                  </div>
                 </div>
                 <div className="res-filt__layout-toggle mobile-hidden"></div>
               </div>
@@ -769,15 +792,12 @@ const Search = () => {
                   </div>
                 </div>
                 <div className="res-filt__sortform">
-                  <form className="alpha" name="sortform" id="sortform" action="/search?" method="GET">
-                    <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
-                      <option value="h">Price (high to low)</option>
-                      <option value="l">Price (low to high)</option>
-                      <option value="m">Make/model</option>
-                      <option value="nis">Latest Arrivals</option>
-                      <option value="rr">Recently Reduced</option>
-                    </select>
-                  </form>
+                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                    <div className="custom-select ">
+                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__arrow"></span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -853,15 +873,12 @@ const Search = () => {
                 </div>
               </div>
               <div className="res-filt__sortform">
-                <form className="alpha" name="sortform" id="sortform" action="/search?" method="GET">
-                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
-                    <option value="h">Price (high to low)</option>
-                    <option value="l">Price (low to high)</option>
-                    <option value="m">Make/model</option>
-                    <option value="nis">Latest Arrivals</option>
-                    <option value="rr">Recently Reduced</option>
-                  </select>
-                </form>
+                <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                  <div className="custom-select ">
+                    <span className="custom-select__value">Price (high to low)</span>
+                    <span className="custom-select__arrow"></span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -921,15 +938,12 @@ const Search = () => {
                 </em>
               </div>
               <div className="res-filt__sortform">
-                <form className="alpha" name="sortform" id="sortform" action="/search?" method="GET">
-                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
-                    <option value="h">Price (high to low)</option>
-                    <option value="l">Price (low to high)</option>
-                    <option value="m">Make/model</option>
-                    <option value="nis">Latest Arrivals</option>
-                    <option value="rr">Recently Reduced</option>
-                  </select>
-                </form>
+                <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                  <div className="custom-select ">
+                    <span className="custom-select__value">Price (high to low)</span>
+                    <span className="custom-select__arrow"></span>
+                  </div>
+                </div>
               </div>
               {/* <div className="res-filt__layout-toggle mobile-hidden"></div> */}
             </div>
@@ -1067,117 +1081,116 @@ const Search = () => {
                                   >
                                     <path
                                       d="M21.28,36.235,20.247,33.9a.693.693,0,0,0-.634-.413H17.9a.693.693,0,0,0-.693.693v1.092h-.532v-.9a.693.693,0,0,0-.693-.693H14.139V31.787a.693.693,0,0,0-.693-.693H10.038v-.66h3.409a.693.693,0,0,0,0-1.386h-8.2a.693.693,0,0,0,0,1.386H8.652v.66H5.244a.693.693,0,0,0-.693.693v.576H3.031a.693.693,0,0,0-.693.693v3.718H1.386V33.055a.693.693,0,1,0-1.386,0v8.823a.693.693,0,0,0,1.386,0V38.159h.952v3.718a.693.693,0,0,0,.693.693H5.723l2.735,2.288a.693.693,0,0,0,.445.161h7.082a.693.693,0,0,0,.693-.693V42.438h.532V43.53a.693.693,0,0,0,.693.693h1.711a.693.693,0,0,0,.634-.413l1.033-2.338a.693.693,0,0,0,.059-.28V36.515A.692.692,0,0,0,21.28,36.235Zm-1.327,4.811-.791,1.792H18.6V41.745a.693.693,0,0,0-.693-.693H15.984a.693.693,0,0,0-.693.693v1.889H9.154L6.419,41.346a.693.693,0,0,0-.445-.161H3.724V33.748h1.52a.693.693,0,0,0,.693-.693v-.576h6.817V34.37a.693.693,0,0,0,.693.693h1.845v.9a.693.693,0,0,0,.693.693H17.9a.693.693,0,0,0,.693-.693V34.87h.567l.791,1.792Z"
-                                      transform="translate(0 -29.048)"
-                                      opacity="0.498"
+                                    transform="translate(0 -29.048)"
+                                    opacity="0.498"
+                                  ></path>
+                                </svg>
+                              </span>
+                              <span className="vehicle-spec__stat">
+                                {vehicle.engineSize || 'N/A'}
+                              </span>
+                            </li>
+                            <li>
+                              <span className="vehicle-spec__icon">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20.248"
+                                  height="19.317"
+                                  viewBox="0 0 20.248 19.317"
+                                >
+                                  <g transform="translate(0 0)" opacity="0.504">
+                                    <path
+                                      d="M55.663,194.85a2.191,2.191,0,1,0,2.191,2.191A2.193,2.193,0,0,0,55.663,194.85Zm0,3.19a1,1,0,1,1,1-1A1,1,0,0,1,55.663,198.04Z"
+                                      transform="translate(-51.349 -187.58)"
                                     ></path>
-                                  </svg>
-                                </span>
-                                <span className="vehicle-spec__stat">
-                                  {vehicle.engineSize || 'N/A'}
-                                </span>
-                              </li>
-                              <li>
-                                <span className="vehicle-spec__icon">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20.248"
-                                    height="19.317"
-                                    viewBox="0 0 20.248 19.317"
-                                  >
-                                    <g transform="translate(0 0)" opacity="0.504">
-                                      <path
-                                        d="M55.663,194.85a2.191,2.191,0,1,0,2.191,2.191A2.193,2.193,0,0,0,55.663,194.85Zm0,3.19a1,1,0,1,1,1-1A1,1,0,0,1,55.663,198.04Z"
-                                        transform="translate(-51.349 -187.58)"
-                                      ></path>
-                                      <path
-                                        d="M153.373,325.171a2.191,2.191,0,1,0,2.191,2.191A2.193,2.193,0,0,0,153.373,325.171Zm0,3.19a1,1,0,1,1,1-1A1,1,0,0,1,153.373,328.361Z"
-                                        transform="translate(-145.18 -312.727)"
-                                      ></path>
-                                      <path
-                                        d="M19.7,24.155l-.012-.012L17.625,22.2a3.47,3.47,0,0,0,1.2-3.847,9.664,9.664,0,1,0-3.889,11.123,2.143,2.143,0,0,0-1.168-3.937,1.323,1.323,0,0,1-.355-2.6l3.633,3.85.012.012a1.867,1.867,0,1,0,2.64-2.64ZM12,26.025a2.556,2.556,0,0,0,1.765.7.95.95,0,0,1,.516,1.749,8.459,8.459,0,1,1,3.41-9.752,2.273,2.273,0,0,1-.956,2.637l-3.308-3.121a3.015,3.015,0,0,0,.62-.62L18.863,25A.675.675,0,0,1,18.858,25.955Z"
-                                        transform="translate(0 -11.73)"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </span>
-                                <span className="vehicle-spec__stat">{vehicle.color || 'N/A'}</span>
-                              </li>
-                              <li>
-                                <span className="vehicle-spec__icon">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="15.937"
-                                    height="17"
-                                    viewBox="0 0 15.937 17"
-                                  >
-                                    <g transform="translate(0)" opacity="0.501">
-                                      <path
-                                        d="M85.708,57.2a.531.531,0,0,0-.531-.531H79.865a.531.531,0,0,0-.531.531v4.25a.531.531,0,0,0,.531.531h5.313a.531.531,0,0,0,.531-.531Zm-1.062,3.719H80.4V57.729h4.25Z"
-                                        transform="translate(-76.146 -54.01)"
-                                        fill="#2c2c2c"
-                                      ></path>
-                                      <path
-                                        d="M26.99,3.767,24.871,2.7a.53.53,0,1,0-.47.95l.807.4a.536.536,0,0,0-.05.184,1.708,1.708,0,0,0,1.05,1.5v6.473a.531.531,0,0,1-1.063,0V7.961a2.821,2.821,0,0,0-2.125-2.6V2.117A2.1,2.1,0,0,0,20.921,0H14.546A2.143,2.143,0,0,0,12.4,2.117v11.89l-.769.384a.531.531,0,0,0-.294.475v1.594A.56.56,0,0,0,11.89,17H23.577a.517.517,0,0,0,.506-.539V14.867a.531.531,0,0,0-.294-.475l-.769-.384V6.465a1.72,1.72,0,0,1,1.063,1.5v4.25a1.594,1.594,0,1,0,3.188,0V4.242A.52.52,0,0,0,26.99,3.767ZM23.021,15.937H12.4V15.2l.769-.384a.531.531,0,0,0,.294-.475V2.117a1.079,1.079,0,0,1,1.088-1.055h6.375a1.036,1.036,0,0,1,1.037,1.055V14.336a.531.531,0,0,0,.294.475l.769.384Z"
-                                        transform="translate(-11.333)"
-                                        fill="#2c2c2c"
-                                      ></path>
-                                    </g>
-                                  </svg>
-                                </span>
-                                <span className="vehicle-spec__stat">
-                                  {vehicle.fuelType || 'N/A'}
-                                </span>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="listing__info">
-                            <div className="listing__wrapper">
-                              <div className="listing__header">
-                                <div className="listing__heading listing__heading--title">
-                                  {getVehicleTitle(vehicle)}
-                                </div>
-                                <div className="listing__heading listing__heading--subtitle">
-                                  {getVehicleVariant(vehicle)}
-                                </div>
+                                    <path
+                                      d="M153.373,325.171a2.191,2.191,0,1,0,2.191,2.191A2.193,2.193,0,0,0,153.373,325.171Zm0,3.19a1,1,0,1,1,1-1A1,1,0,0,1,153.373,328.361Z"
+                                      transform="translate(-145.18 -312.727)"
+                                    ></path>
+                                    <path
+                                      d="M19.7,24.155l-.012-.012L17.625,22.2a3.47,3.47,0,0,0,1.2-3.847,9.664,9.664,0,1,0-3.889,11.123,2.143,2.143,0,0,0-1.168-3.937,1.323,1.323,0,0,1-.355-2.6l3.633,3.85.012.012a1.867,1.867,0,1,0,2.64-2.64ZM12,26.025a2.556,2.556,0,0,0,1.765.7.95.95,0,0,1,.516,1.749,8.459,8.459,0,1,1,3.41-9.752,2.273,2.273,0,0,1-.956,2.637l-3.308-3.121a3.015,3.015,0,0,0,.62-.62L18.863,25A.675.675,0,0,1,18.858,25.955Z"
+                                      transform="translate(0 -11.73)"
+                                    ></path>
+                                  </g>
+                                </svg>
+                              </span>
+                              <span className="vehicle-spec__stat">{vehicle.color || 'N/A'}</span>
+                            </li>
+                            <li>
+                              <span className="vehicle-spec__icon">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="15.937"
+                                  height="17"
+                                  viewBox="0 0 15.937 17"
+                                >
+                                  <g transform="translate(0)" opacity="0.501">
+                                    <path
+                                      d="M85.708,57.2a.531.531,0,0,0-.531-.531H79.865a.531.531,0,0,0-.531.531v4.25a.531.531,0,0,0,.531.531h5.313a.531.531,0,0,0,.531-.531Zm-1.062,3.719H80.4V57.729h4.25Z"
+                                      transform="translate(-76.146 -54.01)"
+                                      fill="#2c2c2c"
+                                    ></path>
+                                    <path
+                                      d="M26.99,3.767,24.871,2.7a.53.53,0,1,0-.47.95l.807.4a.536.536,0,0,0-.05.184,1.708,1.708,0,0,0,1.05,1.5v6.473a.531.531,0,0,1-1.063,0V7.961a2.821,2.821,0,0,0-2.125-2.6V2.117A2.1,2.1,0,0,0,20.921,0H14.546A2.143,2.143,0,0,0,12.4,2.117v11.89l-.769.384a.531.531,0,0,0-.294.475v1.594A.56.56,0,0,0,11.89,17H23.577a.517.517,0,0,0,.506-.539V14.867a.531.531,0,0,0-.294-.475l-.769-.384V6.465a1.72,1.72,0,0,1,1.063,1.5v4.25a1.594,1.594,0,1,0,3.188,0V4.242A.52.52,0,0,0,26.99,3.767ZM23.021,15.937H12.4V15.2l.769-.384a.531.531,0,0,0,.294-.475V2.117a1.079,1.079,0,0,1,1.088-1.055h6.375a1.036,1.036,0,0,1,1.037,1.055V14.336a.531.531,0,0,0,.294.475l.769.384Z"
+                                      transform="translate(-11.333)"
+                                      fill="#2c2c2c"
+                                    ></path>
+                                  </g>
+                                </svg>
+                              </span>
+                              <span className="vehicle-spec__stat">
+                                {vehicle.fuelType || 'N/A'}
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="listing__info">
+                          <div className="listing__wrapper">
+                            <div className="listing__header">
+                              <div className="listing__heading listing__heading--title">
+                                {getVehicleTitle(vehicle)}
                               </div>
-                              <div className="listing__prices">
-                                <div className="listing__price listing__price--total">
-                                  <em className="figure">{formatPrice(vehicle.price)}</em>
-                                </div>
-                                {vehicle.financeMonthly && (
-                                  <Link
-                                    to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
-                                      vehicle.id || index
-                                    }#finance-section`}
-                                  >
-                                    <div className="listing__price listing__price--finance finance-available">
-                                      Per month{' '}
-                                      <em className="figure">
-                                        {formatFinance(vehicle.financeMonthly)}
-                                        <span>p/m*.</span>
-                                      </em>
-                                    </div>
-                                  </Link>
-                                )}
+                              <div className="listing__heading listing__heading--subtitle">
+                                {getVehicleVariant(vehicle)}
                               </div>
-                              <div className="listing__ctas">
+                            </div>
+                            <div className="listing__prices">
+                              <div className="listing__price listing__price--total">
+                                <em className="figure">{formatPrice(vehicle.price)}</em>
+                              </div>
+                              {vehicle.financeMonthly && (
                                 <Link
                                   to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
                                     vehicle.id || index
-                                  }`}
-                                  className="btn"
+                                  }#finance-section`}
                                 >
-                                  View Details
+                                  <div className="listing__price listing__price--finance finance-available">
+                                    Per month{' '}
+                                    <em className="figure">
+                                      {formatFinance(vehicle.financeMonthly)}
+                                      <span>p/m*.</span>
+                                    </em>
+                                  </div>
                                 </Link>
-                                <Link to="/contact" className="btn btn--bordered finance-available">
-                                  Finance Me
-                                </Link>
-                              </div>
+                              )}
+                            </div>
+                            <div className="listing__ctas">
+                              <Link
+                                to={`/vehicle/${vehicle.brand?.toLowerCase()}/${
+                                  vehicle.id || index
+                                }`}
+                                className="btn"
+                              >
+                                View Details
+                              </Link>
+                              <Link to="/contact" className="btn btn--bordered finance-available">
+                                Finance Me
+                              </Link>
                             </div>
                           </div>
                         </div>
                       </div>
-                    );
+                    </div>
                   })
                 ) : (
                   <div
@@ -1381,6 +1394,43 @@ const Search = () => {
                 advice and guidance when necessary. Alternatively, why not pay a visit to our
                 showroom in person and take a closer look at the selection of vehicles for sale.
               </p>
+        </div>
+      </div>
+      <div className="results-accordion-block">
+        <div className="wrapper">
+          <div className="container">
+            <details className="results-accordion results-accordion--vehicles" open="">
+              <summary>Search Results</summary>
+              <ul className="makesmodels__list makesmodels__list--brand" role="menu">
+                {brands.map((brand) => (
+                  <li
+                    key={brand._id}
+                    className="makesmodels__listitem makesmodels__listitem--brand"
+                  >
+                    <a
+                      href={`/used/cars/${brand.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="makesmodels__listitem__link"
+                      title={`Used ${brand.name}`}
+                      role="menuitem"
+                    >
+                      {' '}
+                      Used {brand.name}{' '}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+            <details className="results-accordion results-accordion--webzation" open="">
+              <summary>
+                <h1>{getSearchTitle()}</h1>
+              </summary>
+              <p>
+                {getSearchSubtitle()}. Take the opportunity to browse our current range online
+                before contacting a member of the showroom team to find out more. Our friendly and
+                knowledgeable staff will be more than happy to answer any questions and provide
+                advice and guidance when necessary. Alternatively, why not pay a visit to our
+                showroom in person and take a closer look at the selection of vehicles for sale.
+              </p>
               <p></p>
               <p>
                 Every effort has been made to ensure the accuracy of the above vehicles information
@@ -1427,3 +1477,4 @@ const Search = () => {
 };
 
 export default Search;
+
