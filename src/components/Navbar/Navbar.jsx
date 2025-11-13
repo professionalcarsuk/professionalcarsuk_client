@@ -209,7 +209,7 @@ const Navbar = () => {
 
     // Only add vehicle type if explicitly selected
     if (mobileSearchForm.vehtype === 'vans') {
-      params.append('type', 'van');
+      params.append('type', 'vans');
     } else if (mobileSearchForm.vehtype === 'cars') {
       params.append('type', 'cars');
     }
