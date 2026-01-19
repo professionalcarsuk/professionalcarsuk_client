@@ -38,14 +38,10 @@ const Finance = () => {
         {" "}
         So, whatever your credit history, Professional Cars are in a position to create the perfect finance solution for you. Get in touch with a member of our friendly team to find out what your options are. {" "}
       </p>
- 
+        
       <br />
       <br />
-      <img
-        className="responsive-img"
-        src="/images/mod-img.1749717714.jpg"
-        alt="Vehicle Customization"
-      />
+
       <br />
       <br />
     </div>

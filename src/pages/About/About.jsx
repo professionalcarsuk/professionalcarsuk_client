@@ -11,7 +11,7 @@ const About = () => {
       showSidebar={true}
     >
       <p>
-        Professional Cars specialise in sourcing high quality, pre owned BMW's,
+        Professional Cars specialise in sourcing high quality, pre owned Nissan's, BMW's,
         Audi's and Mercedes. We pride ourselves on our bespoke customisation and
         optional upgrades that we would be delighted to discuss with you.
       </p>

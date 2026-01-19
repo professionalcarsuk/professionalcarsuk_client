@@ -532,117 +532,24 @@ const Navbar = () => {
                           </div>
                         </li>
                         <li
-                          className={
-                            'megamenu__listitem sub' +
-                            (isVansActive ? ' active' : '') +
-                            (activeDropdown === 'vans' ? ' open' : '')
-                          }
-                          id="listitem__used-vans--parent"
+                          className="megamenu__listitem"
+                          id="listitem__finance--parent"
                           itemProp="name"
-                          data-menu-dropdown="vans"
                         >
-                          <a
-                            href="#"
+                          <NavLink
+                            to="/finance"
                             itemProp="url"
-                            className="megamenu__listitem__link megamenu__listitem__link--parent"
-                            title="Used Vans"
+                            className={({ isActive }) =>
+                              isActive
+                                ? 'megamenu__listitem__link active'
+                                : 'megamenu__listitem__link'
+                            }
+                            title="Finance"
                             role="menuitem"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              toggleDropdown('vans');
-                            }}
                           >
                             {' '}
-                            Used Vans <i className="ci ci-angle-down-l"></i>
-                          </a>
-                          <div
-                            className={
-                              activeDropdown === 'vans' ? 'megasubmenu open' : 'megasubmenu'
-                            }
-                            itemScope=""
-                            itemType="http://www.schema.org/SiteNavigationElement"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <div className="l-megamenu">
-                              <div className="wrapper">
-                                <div className="container">
-                                  <div className="o-megamenu">
-                                    <div className="column-1">
-                                      <div className="megamenu-group megamenu-group--used-vans">
-                                        <div className="megamenu-group__title">Used Vans</div>
-                                        <ul className="megamenu-group__list">
-                                          <li>
-                                            <NavLink
-                                              to="/used-vans"
-                                              title="View all vans"
-                                              className={
-                                                pathname === '/used-vans'
-                                                  ? 'megasubmenu__listitem__link active'
-                                                  : 'megasubmenu__listitem__link'
-                                              }
-                                            >
-                                              View all vans
-                                            </NavLink>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="column-2">
-                                      <div className="megamenu-group megamenu-group--finance">
-                                        <div className="megamenu-group__title">Finance</div>
-                                        <ul className="megamenu-group__list">
-                                          <li>
-                                            <a
-                                              href="/search?type=vans&budgetswitch=1&budgetmax=150"
-                                              rel="nofollow"
-                                            >
-                                              Upto £150 p/m
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a
-                                              href="/search?type=vans&budgetswitch=1&budgetmax=250"
-                                              rel="nofollow"
-                                            >
-                                              Upto £250 p/m
-                                            </a>
-                                          </li>
-                                          <li>
-                                            <a
-                                              href="/search?type=vans&budgetswitch=1&budgetmin=250"
-                                              rel="nofollow"
-                                            >
-                                              £250 p/m &amp; Over
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                    <div className="column-3">
-                                      <div className="megamenu-group megamenu-group--brands">
-                                        <div className="megamenu-group__title">Brands</div>
-                                        <ul className="megamenu-group__list">
-                                          {(vanBrands || []).map((brand) => {
-                                            const slug = brand
-                                              .toLowerCase()
-                                              .replace(/\s+/g, '-')
-                                              .replace(/--+/g, '-');
-                                            return (
-                                              <li key={brand}>
-                                                <Link to={`/used/vans/${slug}`}>
-                                                  <span>{brand}</span>
-                                                </Link>
-                                              </li>
-                                            );
-                                          })}
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                            Finance
+                          </NavLink>
                         </li>
                         <li
                           className={
@@ -933,73 +840,19 @@ const Navbar = () => {
                 )}
               </li>
 
-              {/* Used Vans with Dropdown */}
-              <li
-                className={`megamenu__listitem sub ${isVansActive ? 'active' : ''} ${
-                  activeDropdown === 'vans' ? 'open' : ''
-                }`}
-                id="listitem__used-vans--parent"
-                data-menu-dropdown="vans"
-              >
-                <a
-                  href="#"
-                  className="megamenu__listitem__link megamenu__listitem__link--parent"
-                  title="Used Vans"
+              {/* Used Finance without Dropdown */}
+              <li className="megamenu__listitem" id="listitem__finance--parent">
+                <NavLink
+                  to="/finance"
+                  className={({ isActive }) =>
+                    isActive ? 'megamenu__listitem__link active' : 'megamenu__listitem__link'
+                  }
+                  title="Finance"
                   role="menuitem"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    toggleDropdown('vans');
-                  }}
+                  onClick={closeMenu}
                 >
-                  Used Vans
-                  <i className="ci ci-angle-down-l"></i>
-                </a>
-                {activeDropdown === 'vans' && (
-                  <div className="megasubmenu">
-                    <div className="l-megamenu">
-                      <div className="wrapper">
-                        <div className="container">
-                          <div className="o-megamenu">
-                            <div className="column-1">
-                              <div className="megamenu-group megamenu-group--brands">
-                                <div className="megamenu-group__title">Brands</div>
-                                <ul className="megamenu-group__list">
-                                  {(vanBrands || []).map((brand) => {
-                                    const slug = brand
-                                      .toLowerCase()
-                                      .replace(/\s+/g, '-')
-                                      .replace(/--+/g, '-');
-                                    return (
-                                      <li key={brand}>
-                                        <Link to={`/used/vans/${slug}`} onClick={closeMenu}>
-                                          <span>{brand}</span>
-                                        </Link>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                                <div className="megamenu-group__view-all">
-                                  <NavLink
-                                    to="/used-vans"
-                                    title="View all vans"
-                                    className={
-                                      pathname === '/used-vans'
-                                        ? 'megasubmenu__listitem__link active'
-                                        : 'megasubmenu__listitem__link'
-                                    }
-                                    onClick={closeMenu}
-                                  >
-                                    View all vans
-                                  </NavLink>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                  Finance
+                </NavLink>
               </li>
 
               {/* Services with Simple Dropdown */}
