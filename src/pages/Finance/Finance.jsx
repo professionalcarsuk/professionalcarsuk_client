@@ -36,7 +36,7 @@ const Finance = () => {
 
       <p>
         {" "}
-        So, whatever your credit history, we are in a position to create the perfect finance solution for you. Get in touch with a member of our friendly team to find out what your options are. {" "}
+        So, whatever your credit history, Professional Cars are in a position to create the perfect finance solution for you. Get in touch with a member of our friendly team to find out what your options are. {" "}
       </p>
  
       <br />
