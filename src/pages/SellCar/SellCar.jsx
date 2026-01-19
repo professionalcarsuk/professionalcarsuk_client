@@ -164,7 +164,7 @@ const SellCar = () => {
               value={formData.make}
               onChange={handleInputChange}
               id="captcha_make"
-              placeholder="e.g. BMW, Audi, Mercedes"
+              placeholder="e.g. Nissan, BMW, Audi, Mercedes"
               required
               aria-required="true"
             />

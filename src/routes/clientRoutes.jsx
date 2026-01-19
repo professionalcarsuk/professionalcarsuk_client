@@ -241,7 +241,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: '/customisation',
+    path: '/customization',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">

@@ -254,8 +254,8 @@ const Navbar = () => {
                 <i className="fa fa-bars"></i> Menu
               </a>
               <div className="mobile-logo">
-                <a href="/" title="S James Prestige Limited" className="hdr-logo">
-                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
+                <a href="/" title="Professional Cars LTD" className="hdr-logo">
+                  <img src="/logo.png" alt="Professional Cars LTD" className="responsive-img" />
                 </a>
               </div>
               <a
@@ -276,8 +276,8 @@ const Navbar = () => {
             {/* Desktop Nav: Hidden at <=1024px */}
             <div className="header">
               <div className="header__logo">
-                <a href="/" title="S James Prestige Limited" className="hdr-logo">
-                  <img src="/logo.png" alt="S James Prestige Limited" className="responsive-img" />
+                <a href="/" title="Professional Cars LTD" className="hdr-logo">
+                  <img src="/logo.png" alt="Professional Cars LTD" className="responsive-img" />
                 </a>
               </div>
               <div className="header__nav">
@@ -285,26 +285,26 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <a href="/contact">
-                        <i className="ci ci-map-marker-alt"></i> Wakeley Works, Essendine, Rutland
+                        <i className="ci ci-map-marker-alt"></i> Rear Yard 2, College Road Business Park, Aylesbury, HP22 5EZ
                       </a>
                     </li>
                     <li className="mobile-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:01780435024">017804 35024</a>
+                      <a href="tel:07788929755">07788929755</a>
                     </li>
                     <li className="desktop-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:01780435024">01780435024</a>
+                      <a href="tel:07788929755">07788929755</a>
                     </li>
                     <li>
                       <span aria-hidden="true" className="icon icon-mail"></span>{' '}
-                      <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
+                      <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">
                         Email Us
                       </a>
                     </li>
                     <li>
                       <a
-                        href="https://www.instagram.com/sjamesprestige/?hl=en"
+                        href="https://www.instagram.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -313,7 +313,7 @@ const Navbar = () => {
                     </li>
                     <li>
                       <a
-                        href="https://www.facebook.com/S-James-Prestige-Finance-1554962181444200/?ref=page_internal"
+                        href="https://www.facebook.com/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >

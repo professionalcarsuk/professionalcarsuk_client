@@ -53,7 +53,7 @@ const Sitemap = () => {
               </a>
             </li>
             <li>
-              <a href="/customisation" title="Customisation">
+              <a href="/customization" title="Customisation">
                 Customisation
               </a>
             </li>

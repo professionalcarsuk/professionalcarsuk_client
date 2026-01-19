@@ -21,7 +21,7 @@ const PrivacyPolicyPage = () => {
                   </div>
                   <p>
                     {' '}
-                    S James Prestige Limited are committed to protecting and respecting your
+                    Professional Cars Limited are committed to protecting and respecting your
                     privacy.{' '}
                   </p>
                   <p>
@@ -35,8 +35,8 @@ const PrivacyPolicyPage = () => {
                   <p>
                     {' '}
                     For the purpose of the Data Protection Act 2018 (the Act), the data controller
-                    is <strong>S James Prestige Limited</strong> of{' '}
-                    <strong>Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT</strong>.{' '}
+                    is <strong>Professional Cars Limited</strong> of{' '}
+                    <strong>Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire, HP22 5EZ</strong>.{' '}
                   </p>
                 </section>
                 <section className="written-content">
@@ -138,11 +138,11 @@ const PrivacyPolicyPage = () => {
                           if you have consented to this. You may withdraw your consent at any time
                           by contacting us directly at{' '}
                           <strong>
-                            Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT
+                            Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire, HP22 5EZ
                           </strong>{' '}
                           or{' '}
-                          <a href="mailto:enquiries@sjamesprestige.com">
-                            enquiries@sjamesprestige.com
+                          <a href="mailto:professionalcarsltd@gmail.com">
+                            professionalcarsltd@gmail.com
                           </a>
                           .{' '}
                         </li>
@@ -250,7 +250,7 @@ const PrivacyPolicyPage = () => {
                       </li>
                       <li>
                         {' '}
-                        If S James Prestige Limited or substantially all of its assets are acquired
+                        If Professional Cars Limited or substantially all of its assets are acquired
                         by a third party, in which case personal data held by it about its customers
                         will be one of the transferred assets.{' '}
                       </li>
@@ -259,8 +259,8 @@ const PrivacyPolicyPage = () => {
                         If we are under a duty to disclose or share your personal data in order to
                         comply with any legal obligation, or in order to enforce or apply our{' '}
                         <a href="/terms-of-use">Terms of Use</a> or terms and conditions of supply
-                        (available from S James Prestige Limited) and other agreements; or to
-                        protect the rights, property, or safety of S James Prestige Limited, our
+                        (available from Professional Cars Limited) and other agreements; or to
+                        protect the rights, property, or safety of Professional Cars Limited, our
                         customers, or others. This includes exchanging information with other
                         companies and organisations for the purposes of fraud protection and credit
                         risk reduction.{' '}
@@ -291,7 +291,7 @@ const PrivacyPolicyPage = () => {
                     our suppliers. This includes staff engaged in, among other things, the
                     fulfilment of your order, the processing of your payment details and the
                     provision of support services. By submitting your personal data, you agree to
-                    this transfer, storing or processing. S James Prestige Limited will take all
+                    this transfer, storing or processing. Professional Cars Limited will take all
                     steps reasonably necessary to ensure that your data is treated securely and in
                     accordance with this privacy policy.{' '}
                   </p>
@@ -368,9 +368,9 @@ const PrivacyPolicyPage = () => {
                     {' '}
                     You can exercise any of the above rights at any time by contacting us at{' '}
                     <strong>
-                      Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT
+                      Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire, HP22 5EZ
                     </strong> or{' '}
-                    <a href="mailto:enquiries@sjamesprestige.com">enquiries@sjamesprestige.com</a>.{' '}
+                    <a href="mailto:professionalcarsltd@gmail.com">professionalcarsltd@gmail.com</a>.{' '}
                   </p>
                   <p>
                     {' '}
@@ -411,9 +411,9 @@ const PrivacyPolicyPage = () => {
                     Questions, comments and requests regarding this privacy policy are welcomed and
                     should be addressed to{' '}
                     <strong>
-                      Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT
+                      Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire, HP22 5EZ
                     </strong> or{' '}
-                    <a href="mailto:enquiries@sjamesprestige.com">enquiries@sjamesprestige.com</a>.{' '}
+                    <a href="mailto:professionalcarsltd@gmail.com">professionalcarsltd@gmail.com</a>.{' '}
                   </p>
                 </section>
                 <section className="written-content">
@@ -423,9 +423,9 @@ const PrivacyPolicyPage = () => {
                     If you have any complaints about how we process your personal data, please
                     contact us at{' '}
                     <strong>
-                      Wakeley Works, Bourne Road, Essendine, Lincolnshire PE9 4LT
+                      Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire, HP22 5EZ
                     </strong> or{' '}
-                    <a href="mailto:enquiries@sjamesprestige.com">enquiries@sjamesprestige.com</a>,
+                    <a href="mailto:professionalcarsltd@gmail.com">professionalcarsltd@gmail.com</a>,
                     and we will do our best to resolve them.{' '}
                   </p>
                   <p>

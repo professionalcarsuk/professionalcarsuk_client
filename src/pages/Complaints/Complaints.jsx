@@ -38,19 +38,19 @@ const Complaints = () => {
             Website
           </a>
           <br />
-          By telephone on 01780435024
+          By telephone on 07788929755
         </p>
         <p>By letter to</p>
         <p>
-          S James Prestige
+          Professional Cars
           <br />
           Wackerly Works
           <br />
-          Bourne Road
+          Rear Yard 2, College Road Business Park
           <br />
-          Essendine
+          Aston Clinton, Aylesbury
           <br />
-          PE9 4LT
+          HP22 5EZ
         </p>
         <h3>What information do we need to address your complaint?</h3>
         <p>
@@ -107,7 +107,7 @@ const Complaints = () => {
         </ul>
         <p>Eligibility</p>
         <p>
-          It is S James Prestige Ltd policy to treat all complainants the same, however, certain
+          It is Professional Cars Ltd policy to treat all complainants the same, however, certain
           types of complaints fall within the scope of FCA rules and consequently within the
           jurisdiction of the Financial Ombudsman Service.
         </p>

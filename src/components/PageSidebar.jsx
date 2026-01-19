@@ -309,11 +309,11 @@ const PageSidebar = () => {
             <ul id="get-in-touch">
               <li className="mobile-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="/contact">01780 435024</a>
+                <a href="/contact">07788929755</a>
               </li>
               <li className="desktop-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="tel:01780435024">01780435024</a>
+                <a href="tel:07788929755">07788929755</a>
               </li>
               <li className="mobile-hidden">
                 <span
@@ -338,7 +338,7 @@ const PageSidebar = () => {
               </li>
               <li>
                 <span aria-hidden="true" className="icon icon-mail"></span>{" "}
-                <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
+                <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">
                   Email Us
                 </a>
               </li>
@@ -362,15 +362,16 @@ const PageSidebar = () => {
           <blockquote>
             <div className="quote">
               <div className="pad-15">
-                The crew at S James Prestige were great, and could easily deal
-                with all our questions. The service was brilliant and we are
-                very happy with our new car. Will definitely be returning!
+                The dealers were very helpful and the vehicle was being cleaned when I arrived.
+                The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it.
+                The vehicle itself drives very well and is in showroom condition.
+                No problems with it so far. Would recommend the company.
               </div>
             </div>
-            <cite>Craig T</cite>
+            <cite>R. Fielding</cite>
           </blockquote>
           <a
-            href="https://uk.trustpilot.com/review/sjamesprestige.com"
+            href="https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305"
             className="btn"
             target="_blank"
             rel="noopener noreferrer"

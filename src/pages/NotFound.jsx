@@ -171,14 +171,14 @@ const NotFound = () => {
                         View Sitemap
                       </Link>
                       <a
-                        href="tel:01780435024"
+                        href="tel:07788929755"
                         className="inline-block px-6 py-3 bg-gray-600 text-white font-medium rounded-md hover:bg-gray-500 transition-colors duration-300"
                         style={{
                           fontFamily: 'Montserrat, sans-serif',
                           textDecoration: 'none'
                         }}
                       >
-                        Call: 01780 435024
+                        Call: 07788929755
                       </a>
                     </div>
                   </div>

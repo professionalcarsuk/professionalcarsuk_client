@@ -1427,10 +1427,10 @@ const Showroom = () => {
               </summary>
               <p>
                 {isVansPage
-                  ? 'Get the best deal on a used van for sale in Essendine by making your way to S James Prestige Limited today. You will find every available van model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
+                  ? 'Get the best deal on a used van for sale in Aston Clinton, Aylesburyby making your way to Professional Cars Limited today. You will find every available van model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
                   : isAllCarsPage
-                  ? 'Get the best deal on a used car for sale in Essendine by making your way to S James Prestige Limited today. You will find every available model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
-                  : `Get the best deal on a used ${brandName} for sale in Essendine by making your way to S James Prestige Limited today. You will find every available ${brandName} model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.`}
+                  ? 'Get the best deal on a used car for sale in Aston Clinton, Aylesburyby making your way to Professional Cars Limited today. You will find every available model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.'
+                  : `Get the best deal on a used ${brandName} for sale in Aston Clinton, Aylesburyby making your way to Professional Cars Limited today. You will find every available ${brandName} model listed here on the website, and as all our stock is competitively priced you should have no problem sourcing a pre-owned to suit your budget.`}
                 Take the opportunity to browse our current range online before contacting a member
                 of the showroom team to find out more. Our friendly and knowledgeable staff will be
                 more than happy to answer any questions and provide advice and guidance when
@@ -1464,8 +1464,8 @@ const Showroom = () => {
                   for your purchase, commission may be received. We are only able to offer finance
                   products from these providers. Postal Address:{' '}
                   <strong>
-                    S James Prestige Limited, Wakeley Works, Bourne Road, Essendine, Lincolnshire
-                    PE9 4LT
+                    Professional Cars Limited, Rear Yard 2, College Road North Business Park, Aston Clinton, Aylesbury, Buckinghamshire
+                    HP22 5EZ
                   </strong>
                   . Find contact details{' '}
                   <a href="/contact.php" title="Contact Details">
