@@ -141,9 +141,9 @@ const Contact = () => {
                       <strong>Professional Cars Limited</strong>
                     </p>
                     <address>
-                      Wakeley Works
+                      Rear Yard 2
                       <br />
-                      Rear Yard 2, College Road Business Park
+                      College Road Business Park
                       <br />
                       Essendine
                       <br />
@@ -486,7 +486,7 @@ const Contact = () => {
                   </h3>
                   <div className="flexible-frame">
                     <iframe
-                      src="https://maps.google.com/maps?width=600&amp;height=450&amp;hl=en&amp;q=professional cars uk&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                      src="https://maps.google.com/maps?width=600&amp;height=450&amp;hl=en&amp;q=Professional Cars LTD HP22 5EZ&amp;t=&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                       width="600"
                       height="450"
                       allowFullScreen

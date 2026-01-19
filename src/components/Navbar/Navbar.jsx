@@ -159,7 +159,7 @@ const Navbar = () => {
   // Determine if parent menus should be marked active based on current path
   const isShowroomActive = pathname.startsWith('/used-cars') || pathname.startsWith('/used/cars');
   const isVansActive = pathname.startsWith('/used-vans') || pathname.startsWith('/used/vans');
-  const isServicesActive = ['/sellcar', '/part-exchange', '/customization', '/complaints'].some(
+  const isServicesActive = ['/sellcar', '/part-exchange', '/finance', '/complaints'].some(
     (p) => pathname.startsWith(p)
   );
 
@@ -706,9 +706,9 @@ const Navbar = () => {
                                 </li>
                                 <li className="megasubmenu__listitem" id="listitem__customisation">
                                   <NavLink
-                                    to="/customization"
+                                    to="/finance"
                                     className={
-                                      pathname === '/customization'
+                                      pathname === '/finance'
                                         ? 'megasubmenu__listitem__link active'
                                         : 'megasubmenu__listitem__link'
                                     }
@@ -1055,9 +1055,9 @@ const Navbar = () => {
                         </li>
                         <li className="megasubmenu__listitem">
                           <NavLink
-                            to="/customization"
+                            to="/finance"
                             className={
-                              pathname === '/customization'
+                              pathname === '/finance'
                                 ? 'megasubmenu__listitem__link active'
                                 : 'megasubmenu__listitem__link'
                             }
