@@ -38,16 +38,16 @@ const Finance = () => {
         {" "}
         So, whatever your credit history, Professional Cars are in a position to create the perfect finance solution for you. Get in touch with a member of our friendly team to find out what your options are. {" "}
       </p>
- 
-      <br />
-      <br />
-      <ul>
+       <ul>
             <li><p><strong>Why Finance Through a Dealership?</strong> <iframe src="https://player.vimeo.com/video/102311026" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
 
 <li><p><strong>What is Hire Purchase?</strong> <iframe src="https://player.vimeo.com/video/106279545" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
 
 <li><p><strong>What is Personal Contract Purchase?</strong> <iframe src="https://player.vimeo.com/video/105355895" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
 </ul>
+      <br />
+      <br />
+
       <br />
       <br />
     </div>
