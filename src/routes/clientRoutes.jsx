@@ -5,7 +5,7 @@ import {
   Complaints,
   Contact,
   CookiePolicy,
-  Customization,
+  Finance,
   Enquiry,
   Home,
   NotFound,
@@ -89,10 +89,10 @@ export const clientRoutes = [
     ),
   },
   {
-    path: '/customization',
+    path: '/finance',
     element: (
       <MainLayout>
-        <Customization />
+        <Finance />
       </MainLayout>
     ),
   },
@@ -241,7 +241,7 @@ export const clientRoutes = [
     ),
   },
   {
-    path: '/customization',
+    path: '/finance',
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">

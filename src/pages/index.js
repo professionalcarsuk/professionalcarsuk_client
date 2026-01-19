@@ -2,7 +2,7 @@ export { default as About } from './About/About';
 export { default as Careers } from './Careers/Careers';
 export { default as Complaints } from './Complaints/Complaints';
 export { default as Contact } from './Contact/Contact';
-export { default as Customization } from './Customization/Customization';
+export { default as Finance } from './Finance/Finance';
 export { default as Home } from './Home';
 export { default as NotFound } from './NotFound';
 export { default as PartExchange } from './PartExchange/PartExchange';
