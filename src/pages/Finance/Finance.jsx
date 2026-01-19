@@ -40,13 +40,12 @@ const Finance = () => {
       </p>
  
       <br />
-      <ul className="space-y-2">
-                  <li><p><strong>Why Finance Through a Dealership?</strong> <iframe src="https://player.vimeo.com/video/102311026" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-
-      <li><p><strong>What is Hire Purchase?</strong> <iframe src="https://player.vimeo.com/video/106279545" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-
-      <li><p><strong>What is Personal Contract Purchase?</strong> <iframe src="https://player.vimeo.com/video/105355895" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-      </ul>
+      <br />
+      <img
+        className="responsive-img"
+        src="/images/mod-img.1749717714.jpg"
+        alt="Vehicle Customization"
+      />
       <br />
       <br />
     </div>
@@ -54,9 +53,9 @@ const Finance = () => {
 
   return (
     <PageWithSidebarLayout
-      pageClass="customisation-pg"
-      headerTitle="Customisation"
-      headerClass="page-hdr--customisation"
+      pageClass="finance-pg"
+      headerTitle="Finance"
+      headerClass="page-hdr--finance"
       showSidebar={false}
     >
       {mainContent}
