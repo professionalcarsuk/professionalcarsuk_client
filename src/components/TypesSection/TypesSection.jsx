@@ -26,13 +26,13 @@ const TypesSection = () => {
       id: 4,
       title: "About Us",
       href: "/about",
-      alt: "Find out more about S James Prestige Limited",
+      alt: "Find out more about Professional Cars Limited",
     },
     {
       id: 5,
       title: "Reviews",
-      href: "https://uk.trustpilot.com/review/sjamesprestige.com",
-      alt: "S James Prestige Limited's reviews",
+      href: "https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305",
+      alt: "Professional Cars Limited's reviews",
       target: "_blank",
     },
     {

@@ -802,20 +802,20 @@ const VehicleDetail = () => {
                     <ul className="detail-contact-list">
                       <li>
                         T:{' '}
-                        <a href="tel:01780435024" title="Call Us">
-                          01780 435024
+                        <a href="tel:07788929755" title="Call Us">
+                          07788929755
                         </a>
                       </li>
                       <li>
                         M:{' '}
-                        <a href="tel:01780435024" title="Call Us">
-                          01780435024
+                        <a href="tel:07788929755" title="Call Us">
+                          07788929755
                         </a>
                       </li>
                       <li>
                         E:{' '}
-                        <a href="mailto:enquiries@sjamesprestige.com" title="Email Us">
-                          enquiries@sjamesprestige.com
+                        <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">
+                          professionalcarsltd@gmail.com
                         </a>
                       </li>
                     </ul>
@@ -1333,7 +1333,7 @@ const VehicleDetail = () => {
               ) : null}
               {/* More details will be added here */}
               <div className="detail-disclaimer">
-                <p>For more info on this vehicle call our showroom on 01780 435024</p>
+                <p>For more info on this vehicle call our showroom on 07788929755</p>
                 <p>
                   Every effort has been made to ensure the accuracy of the above information but
                   errors may occur. Please check with a salesperson.

@@ -12,34 +12,34 @@ const Footer = ({ noMargin = false }) => {
               <div className="footer__title">Get In Touch</div>
               <address className="footer__address">
                 <span className="footer__addressline footer__addressline--name">
-                  S James Prestige Limited
+                  Professional Cars Limited
                 </span>
                 <span className="footer__addressline footer__addressline--line-1">
-                  Wakeley Works
+                  Park Rear Yard 2
                 </span>
                 <span className="footer__addressline footer__addressline--line-2">
-                  Bourne Road
+                  College Road North Business Park
                 </span>
                 <span className="footer__addressline footer__addressline--town">
-                  Essendine
+                  Aston Clinton 
                 </span>
                 <span className="footer__addressline footer__addressline--county">
-                  Rutland
+                  Aylesbury
                 </span>
                 <span className="footer__addressline footer__addressline--postcode">
-                  PE9 4LT
+                  HP22 5EZ
                 </span>
               </address>
               <ul className="footer__numbers">
                 <li className="footer__telephone">
                   <i className="fa fa-phone" aria-hidden="true"></i>
-                  <a href="tel:01780435024">01780 435024</a>
+                  <a href="tel:07788929755">07788929755</a>
                 </li>
                 <li className="footer__email">
                   <i className="fa fa-envelope-o" aria-hidden="true"></i>
                   <a
-                    href="mailto:enquiries@sjamesprestige.com"
-                    title="Email S James Prestige Limited"
+                    href="mailto:professionalcarsltd@gmail.com"
+                    title="Email Professional Cars Limited"
                   >
                     Email us
                   </a>
@@ -48,7 +48,7 @@ const Footer = ({ noMargin = false }) => {
               <ul className="footer__social">
                 <li>
                   <a
-                    href="https://www.facebook.com/S-James-Prestige-Finance-1554962181444200/?ref=page_internal"
+                    href="https://www.facebook.com/search/top?q=professional%20cars%20limited"
                     title="Like us on Facebook"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -58,7 +58,7 @@ const Footer = ({ noMargin = false }) => {
                 </li>
                 <li>
                   <a
-                    href="https://twitter.com/share?url=https://car-listing-frontend-peach.vercel.app"
+                    href="https://twitter.com"
                     title="Share us on Twitter"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -68,7 +68,7 @@ const Footer = ({ noMargin = false }) => {
                 </li>
                 <li>
                   <a
-                    href="https://www.instagram.com/sjamesprestige/?hl=en"
+                    href="https://www.instagram.com/"
                     title="Follow us on Instagram"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -89,7 +89,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Mon
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--tue">
                   <div className="open-day">
@@ -99,7 +99,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Tue
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--wed">
                   <div className="open-day">
@@ -109,7 +109,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Wed
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--thu">
                   <div className="open-day">
@@ -119,7 +119,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Thu
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--fri">
                   <div className="open-day">
@@ -129,7 +129,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Fri
                   </div>
-                  <div className="open-times">09:00 - 17:30</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--sat">
                   <div className="open-day">
@@ -139,7 +139,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Sat
                   </div>
-                  <div className="open-times">09:00 - 17:00</div>
+                  <div className="open-times">10:00 - 18:00</div>
                 </li>
                 <li className="footer__open-times--sun">
                   <div className="open-day">
@@ -149,7 +149,7 @@ const Footer = ({ noMargin = false }) => {
                     ></span>{" "}
                     Sun
                   </div>
-                  <div className="open-times">09:00 - 16:00</div>
+                  <div className="open-times">Closed</div>
                 </li>
                 <li className="bank-holiday-not-set">
                   <div className="open-day">
@@ -189,12 +189,12 @@ const Footer = ({ noMargin = false }) => {
             <div className="footer__widget footer__widget--legal">
               <div className="footer__title">Company Info</div>
               <ul className="footer__legal-list">
-                <li>Company No. 08921181</li>
-                <li>FCA No. 655032</li>
+                <li>Company No. 08763622</li>
+                <li>FCA No. 1022311</li>
               </ul>
               <div className="footer__fca-para">
                 <div id="fca-disclaimer">
-                  S James Prestige Limited are a credit broker and not a lender.
+                  Professional Cars Limited are a credit broker and not a lender.
                   We are Authorised and Regulated by the Financial Conduct
                   Authority. FCA No: Finance is Subject to status. Other offers
                   may be available but cannot be used in conjunction with this
@@ -219,10 +219,8 @@ const Footer = ({ noMargin = false }) => {
                   lender under your credit agreement. We have the right to
                   decline third party lenders. <br />
                   <br />
-                  Registered in England &amp; Wales: 08921181 <br />
-                  Registered Office: Address: Meadow Park Industrial Estate
-                  Bourne Road, Essendine, Stamford, England, PE9 4LT <br />
-                  Data Protection No: ZA285887
+                  Registered in England &amp; Wales: 08763622 <br />
+                  Registered Office: Address: Professional Cars, Rear Yard 2, College Road North Business Park, Aylesbury, HP22 5EZ <br />                  
                 </div>
               </div>
             </div>
@@ -258,25 +256,8 @@ const Footer = ({ noMargin = false }) => {
                     Sitemap
                   </Link>
                 </li>
-                <li>
-                  <a
-                    href="/pdfs/IDD.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Initial Disclosure Document
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/pdfs/SAF-Certificate-New.pdf"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    SAF Certificate
-                  </a>
-                </li>
-                <li className="footer__list-links--copyright">© 2025</li>
+                
+                <li className="footer__list-links--copyright">© 2026</li>
               </ul>
               <div className="footer__powered-by">
                 {/* <div className="footer__powered-text">
@@ -292,20 +273,7 @@ const Footer = ({ noMargin = false }) => {
                   </a>
                 </div> */}
                 <div className="footer__click-logo">
-                  <a
-                    rel="external nofollow noopener noreferrer"
-                    target="_blank"
-                    href="https://www.clickdealer.co.uk/"
-                    title="Click Dealer"
-                  >
-                    <img
-                      data-src="/assets/images/themev2/theme/click_dealer_logo.1749717714.png"
-                      data-srcset=""
-                      src={clickDealerLogo}
-                      alt="Powered by Click Dealer"
-                      className="footer__click-logo"
-                    />
-                  </a>
+
                 </div>
               </div>
             </div>
