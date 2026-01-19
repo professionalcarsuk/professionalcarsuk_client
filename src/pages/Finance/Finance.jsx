@@ -5,48 +5,44 @@ import "./Finance.css";
 const Finance = () => {
   const mainContent = (
     <div className="pad-20 overflow-hidden">
-      <h1> Finance </h1>
+      <h2> Professional Cars Where Style Meets Performance </h2>
       <p>
         {" "}
-        At Professional Cars, We know that purchasing a vehicle is a big investment for most people and we’re dedicated to making the buying process as straightforward and hassle-free for our customers as possible. We can help you create a finance package that could get you behind the wheel of your dream car.
-        Finance is often a major part of our customers’ car buying journeys, so we have taken the necessary steps to offer some great packages as well as peace of mind. As a Financial Conduct Authority (FCA) registered dealership, we have developed relationships with a wide range of lenders nationwide for your convenience.{" "}
+        Elevate your vehicle's style with our bespoke kit and wheels packages.
+        Explore our selection of styling parts designed to transform your car
+        into a true reflection of your personality, with options including
+        wheels, front splitters, side skirts, rear diffusers, spoilers, brake
+        calliper painting, tinting, ceramic coating and more! Open a world of
+        customisation possibilities for your car.{" "}
       </p>
-      <h2> Car Finance Explained </h2>
       <p>
         {" "}
-        There are three main types of finance deals that you might want to consider:{" "}
+        At Professional Cars, we go beyond just offering the styling parts for
+        your vehicle. We provide a comprehensive package that includes the
+        fitment and a 12 month back to base warranty as part of the overall kit.
+        Contact us through WhatsApp for pricing and details.{" "}
       </p>
-      <h3> Hire Purchase </h3>
       <p>
         {" "}
-        Sometimes just referred to as HP, this is a loan secured against the vehicle itself. This is a great choice for people who want to spread out the cost of their car. Typical HP deals involve a deposit and the rest of the balance is paid in instalments, plus interest. Once you’ve paid your final instalment, you own the car outright.{" "}
+        Are you one of Professional Cars's valued customers and purchased a vehicle from us in
+        the past? If so, why not take advantage of our styling rejuvenation
+        service. We can upgrade your old parts for new ones at a discounted
+        price. Give your vehicle a fresh new look and feel while enjoying
+        exclusive savings as a token of our appreciation for your continued
+        loyalty.{" "}
       </p>
-
-      <h3> Personal Contract Purchase (PCP) </h3>
       <p>
         {" "}
-        This is a good option for those who like to change their car every few years but don’t want to fork out a big sum each time. You will typically be asked to pay a deposit followed by monthly payments. At the end of the agreed period, for example, three years, you will have the option of paying the rest of balance, returning the vehicle or using any residual value on a deal with your next car.{" "}
+        Don't miss out on this opportunity to enhance our vehicle's aesthetic
+        appeal. Contact us today to learn more about how you can benefit from
+        our services tailored specifically for you.{" "}
       </p>
-
-      <h3> Personal Leasing (Contract Hire) </h3>
-      <p>
-        {" "}
-        Contract Hire deals are very much like the PCP deals described above, however, you won’t have an option to buy the car outright at the end of the deal. {" "}
-      </p>
-
-      <p>
-        {" "}
-        So, whatever your credit history, Professional Cars are in a position to create the perfect finance solution for you. Get in touch with a member of our friendly team to find out what your options are. {" "}
-      </p>
- 
       <br />
-      <ul className="space-y-2">
-                  <li><p><strong>Why Finance Through a Dealership?</strong> <iframe src="https://player.vimeo.com/video/102311026" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-
-      <li><p><strong>What is Hire Purchase?</strong> <iframe src="https://player.vimeo.com/video/106279545" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-
-      <li><p><strong>What is Personal Contract Purchase?</strong> <iframe src="https://player.vimeo.com/video/105355895" width="500" height="281" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" style="max-width:100%;"></iframe></p></li>
-      </ul>
+      <img
+        className="responsive-img"
+        src="/images/mod-img.1749717714.jpg"
+        alt="Vehicle Customization"
+      />
       <br />
       <br />
     </div>
@@ -54,9 +50,9 @@ const Finance = () => {
 
   return (
     <PageWithSidebarLayout
-      pageClass="customisation-pg"
-      headerTitle="Customisation"
-      headerClass="page-hdr--customisation"
+      pageClass="finance-pg"
+      headerTitle="Finance"
+      headerClass="page-hdr--finance"
       showSidebar={false}
     >
       {mainContent}

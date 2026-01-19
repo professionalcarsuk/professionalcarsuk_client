@@ -245,7 +245,7 @@ export const clientRoutes = [
     element: (
       <MainLayout>
         <div className="container mx-auto p-4">
-          <h1 className="text-3xl font-bold">Customisation</h1>
+          <h1 className="text-3xl font-bold">Finance</h1>
           <p>Coming soon...</p>
         </div>
       </MainLayout>

@@ -704,7 +704,7 @@ const Navbar = () => {
                                     Part Exchange{' '}
                                   </NavLink>
                                 </li>
-                                <li className="megasubmenu__listitem" id="listitem__customisation">
+                                <li className="megasubmenu__listitem" id="listitem__finance">
                                   <NavLink
                                     to="/finance"
                                     className={
@@ -714,7 +714,7 @@ const Navbar = () => {
                                     }
                                   >
                                     {' '}
-                                    Customisation{' '}
+                                    Finance{' '}
                                   </NavLink>
                                 </li>
                                 <li className="megasubmenu__listitem" id="listitem__complaints">
@@ -1063,7 +1063,7 @@ const Navbar = () => {
                             }
                             onClick={closeMenu}
                           >
-                            Customisation
+                            Finance
                           </NavLink>
                         </li>
                         <li className="megasubmenu__listitem">
