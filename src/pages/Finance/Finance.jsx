@@ -44,8 +44,8 @@ const Finance = () => {
                 <strong>Why Finance Through a Dealership?</strong>
                 <iframe
                   src="https://player.vimeo.com/video/102311026"
-                  width="500"
-                  height="281"
+                  width="400"
+                  height="250"
                   frameBorder="0"
                   allowFullScreen
                   style={{ maxWidth: "100%" }}
@@ -58,8 +58,8 @@ const Finance = () => {
                 <strong>What is Hire Purchase?</strong>
                 <iframe
                   src="https://player.vimeo.com/video/106279545"
-                  width="500"
-                  height="281"
+                  width="400"
+                  height="250"
                   frameBorder="0"
                   allowFullScreen
                   style={{ maxWidth: "100%" }}
@@ -72,8 +72,8 @@ const Finance = () => {
                 <strong>What is Personal Contract Purchase?</strong>
                 <iframe
                   src="https://player.vimeo.com/video/105355895"
-                  width="500"
-                  height="281"
+                  width="400"
+                  height="250"
                   frameBorder="0"
                   allowFullScreen
                   style={{ maxWidth: "100%" }}
