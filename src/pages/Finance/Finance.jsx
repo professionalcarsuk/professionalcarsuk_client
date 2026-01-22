@@ -81,9 +81,7 @@ const Finance = () => {
               </p>
             </li>
         </ul>
-      <br />
-      <br />
-
+      
       <br />
       <br />
     </div>
