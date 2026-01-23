@@ -150,6 +150,63 @@ const VehicleDetail = () => {
     return () => clearTimeout(timeout);
   }, [userInteracted]);
 
+  // Load Codeweavers finance plugin script
+  useEffect(() => {
+    if (!window.codeweavers) {
+      const script = document.createElement('script');
+      script.src = 'https://services.codeweavers.net/v2/script/FinancePlugin?key=6GOBON6Bqpj53x87j7';
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, []);
+
+  // Initialize finance calculator when vehicle data is available
+  useEffect(() => {
+    if (window.codeweavers && vehicle) {
+      const images = vehicle.images || ['/images/default-vehicle.jpg'];
+      const imageUrls = images
+        .map((img) => (typeof img === 'string' ? img : img.url))
+        .filter((url) => url && url !== '/images/default-vehicle.jpg');
+      const displayImages = imageUrls.length > 0 ? imageUrls : ['/images/default-vehicle.jpg'];
+
+      window.codeweavers.main({
+        pluginContentDivId: 'codeweavers_finance_calculator',
+        vehicle: {
+          type: 'car',
+          identifier: vehicle.registration || '',
+          isFranchiseApproved: false,
+          identifierType: 'Vrm',
+          isNew: false,
+          cashPrice: vehicle.price ? vehicle.price.toString() : '',
+          imageUrl: displayImages[0] || '',
+          linkBackUrl: window.location.href,
+          mileage: vehicle.mileage ? vehicle.mileage.toString() : '',
+          stockId: vehicle.id || vehicle._id || '',
+          registration: {
+            date: '2020-01-01',
+            number: vehicle.registration || ''
+          }
+        },
+        dealer: '',
+        defaultParameters: {
+          deposit: {
+            defaultValue: vehicle.price ? Math.round(vehicle.price * 4) : 0,
+            defaultType: 'Amount'
+          },
+          term: {
+            defaultValue: 60,
+            minimumValue: 12,
+            maximumValue: 60
+          },
+          annualMileage: {
+            defaultValue: 10000
+          }
+        },
+        utm: { source: "direct", medium: "", campaign: "" }
+      });
+    }
+  }, [vehicle]);
+
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
@@ -1331,7 +1388,13 @@ const VehicleDetail = () => {
                   </div>
                 </details>
               ) : null}
+              
               {/* More details will be added here */}
+              <div id="detail-filters" className="row section4">
+                <div className="twelvecol">
+                  <div id="codeweavers_finance_calculator"></div>
+                </div>
+              </div>
               <div className="detail-disclaimer">
                 <p>For more info on this vehicle call our showroom on 07788929755</p>
                 <p>
