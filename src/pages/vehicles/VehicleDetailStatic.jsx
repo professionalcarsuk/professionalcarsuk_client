@@ -190,7 +190,7 @@ const VehicleDetail = () => {
         dealer: '',
         defaultParameters: {
           deposit: {
-            defaultValue: vehicle.price ? Math.round(vehicle.price * 4) : 0,
+            defaultValue: vehicle.price ? Math.round(vehicle.price * 0.1) : 1000,
             defaultType: 'Amount'
           },
           term: {
@@ -844,7 +844,7 @@ const VehicleDetail = () => {
                       <li className="detail-main-cta">
                         <div className="dt-buy-button">
                           <Link
-                            to="/contact"
+                            to={vehicle.financeMonthly ? "#finance-section" : "/contact"}
                             rel="nofollow"
                             title="Apply For Finance"
                             className="finance-available btn btn--engage btn--large style-ELfdD"
@@ -1390,11 +1390,13 @@ const VehicleDetail = () => {
               ) : null}
               
               {/* More details will be added here */}
-              <div id="detail-filters" className="row section4">
-                <div className="twelvecol">
-                  <div id="codeweavers_finance_calculator"></div>
+              {vehicle.financeMonthly && (
+                <div id="finance-section" className="row section4">
+                  <div className="twelvecol">
+                    <div id="codeweavers_finance_calculator"></div>
+                  </div>
                 </div>
-              </div>
+              )}
               <div className="detail-disclaimer">
                 <p>For more info on this vehicle call our showroom on 07788929755</p>
                 <p>
