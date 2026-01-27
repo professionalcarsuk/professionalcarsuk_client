@@ -233,7 +233,7 @@ const Contact = () => {
                           ></span>{" "}
                           Mon
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -243,7 +243,7 @@ const Contact = () => {
                           ></span>{" "}
                           Tue
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -253,7 +253,7 @@ const Contact = () => {
                           ></span>{" "}
                           Wed
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -263,7 +263,7 @@ const Contact = () => {
                           ></span>{" "}
                           Thu
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -273,7 +273,7 @@ const Contact = () => {
                           ></span>{" "}
                           Fri
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
@@ -283,7 +283,7 @@ const Contact = () => {
                           ></span>{" "}
                           Sat
                         </div>
-                        <div className="open-times">10:00 - 18:00</div>
+                        <div className="open-times">10:00 - 17:00</div>
                       </li>
                       <li className="twelvecol">
                         <div className="open-day">
