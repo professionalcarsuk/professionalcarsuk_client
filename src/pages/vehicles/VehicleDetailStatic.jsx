@@ -170,7 +170,7 @@ const VehicleDetail = () => {
       const displayImages = imageUrls.length > 0 ? imageUrls : ['/images/default-vehicle.jpg'];
 
       window.codeweavers.main({
-        pluginContentDivId: 'codeweavers_finance_calculator',
+        pluginContentDivId: 'codeweavers-plugin',
         vehicle: {
           type: 'car',
           identifier: vehicle.registration || '',
