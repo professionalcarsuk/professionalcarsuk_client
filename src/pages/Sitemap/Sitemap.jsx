@@ -162,16 +162,16 @@ const Sitemap = () => {
           </ul>
           <ul style={{ marginTop: "10px" }}>
             <li>
-              <a href="/used-vans" title="Used Vans">
+              {/* <a href="/used-vans" title="Used Vans">
                 Used Vans
-              </a>
+              </a> */}
             </li>
             <li>
               <ul>
                 <li>
-                  <a href="/used/vans/ford" title="Ford">
+                  {/* <a href="/used/vans/ford" title="Ford">
                     Ford
-                  </a>
+                  </a> */}
                 </li>
               </ul>
             </li>
