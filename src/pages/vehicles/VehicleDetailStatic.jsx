@@ -1404,9 +1404,15 @@ const VehicleDetail = () => {
               
               {/* More details will be added here */}
 
-              <div id="finance-section" className="detail-disclaimer">
-                <p></p>                 
-              </div>
+ 
+
+            <div id="finance-section" className="container">
+              {vehicle.financeMonthly && (
+                <em className="row-block__heading">
+                Finance <span>This Car</span>
+                </em>
+              )}            
+            </div>
               {vehicle.financeMonthly && (
                 <div className="row section4">
                   <div className="twelvecol">
