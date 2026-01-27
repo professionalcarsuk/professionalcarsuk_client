@@ -154,7 +154,7 @@ const VehicleDetail = () => {
   useEffect(() => {
     if (!window.codeweavers) {
       const script = document.createElement('script');
-      script.src = 'https://services.codeweavers.net/v2/script/FinancePlugin?key=dDJnmv65xrQ11ze6xC';
+      script.src = 'https://plugins.codeweavers.app/scripts/v1/platform/finance?ApiKey=dDJnmv65xrQ11ze6xC';
       script.async = true;
       document.head.appendChild(script);
     }
