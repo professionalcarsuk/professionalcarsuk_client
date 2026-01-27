@@ -1138,7 +1138,20 @@ const Showroom = () => {
                                 >
                                   View Details
                                 </Link>
-                                <Link to="/contact" className="btn btn--bordered finance-available">
+                                <Link
+                                  to={
+                                    vehicle.financeMonthly &&
+                                    vehicle.financeMonthly !== 0 &&
+                                    vehicle.financeMonthly !== '0' &&
+                                    vehicle.financeMonthly !== 'null' &&
+                                    vehicle.financeMonthly !== ''
+                                      ? `/vehicle/${vehicle.brand?.toLowerCase()}/${
+                                          vehicle.id || index
+                                        }#finance-section`
+                                      : '/contact'
+                                  }
+                                  className="btn btn--bordered finance-available"
+                                >
                                   Finance Me
                                 </Link>
                               </div>
