@@ -1403,6 +1403,10 @@ const VehicleDetail = () => {
               ) : null}
               
               {/* More details will be added here */}
+
+              <div id="finance-section" className="detail-disclaimer">
+                <p></p>                 
+              </div>
               {vehicle.financeMonthly && (
                 <div id="finance-section" className="row section4">
                   <div className="twelvecol">
