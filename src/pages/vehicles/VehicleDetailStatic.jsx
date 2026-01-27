@@ -843,16 +843,29 @@ const VehicleDetail = () => {
                       </li> */}
                       <li className="detail-main-cta">
                         <div className="dt-buy-button">
-                          <Link
-                            to={vehicle.financeMonthly ? "#finance-section" : "/contact"}
-                            rel="nofollow"
-                            title="Apply For Finance"
-                            className="finance-available btn btn--engage btn--large style-ELfdD"
-                            id="style-ELfdD"
-                          >
-                            Apply For Finance{' '}
-                            <i className="far fa-chevron-right" aria-hidden="true"></i>
-                          </Link>
+                          {vehicle.financeMonthly ? (
+                            <a
+                              href="#finance-section"
+                              rel="nofollow"
+                              title="Apply For Finance"
+                              className="finance-available btn btn--engage btn--large style-ELfdD"
+                              id="style-ELfdD"
+                            >
+                              Apply For Finance{' '}
+                              <i className="far fa-chevron-right" aria-hidden="true"></i>
+                            </a>
+                          ) : (
+                            <Link
+                              to="/contact"
+                              rel="nofollow"
+                              title="Apply For Finance"
+                              className="finance-available btn btn--engage btn--large style-ELfdD"
+                              id="style-ELfdD"
+                            >
+                              Apply For Finance{' '}
+                              <i className="far fa-chevron-right" aria-hidden="true"></i>
+                            </Link>
+                          )}
                         </div>
                       </li>
                     </ul>
