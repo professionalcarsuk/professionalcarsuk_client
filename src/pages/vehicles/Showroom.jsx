@@ -1407,7 +1407,7 @@ const Showroom = () => {
                   ? 'Browse by Brand'
                   : isAllCarsPage
                   ? 'Browse by Brand'
-                  : `Other cars in Essendine`}
+                  : `Other cars in Aylesbury`}
               </summary>
               <ul className="makesmodels__list makesmodels__list--brand" role="menu">
                 {brands.map((brand) => (
@@ -1432,10 +1432,10 @@ const Showroom = () => {
               <summary>
                 <h1>
                   {isVansPage
-                    ? 'Used vans in Essendine'
+                    ? 'Used vans in Aylesbury'
                     : isAllCarsPage
-                    ? 'Used cars in Essendine'
-                    : `Used ${brandName} cars in Essendine`}
+                    ? 'Used cars in Aylesbury'
+                    : `Used ${brandName} cars in Aylesbury`}
                 </h1>
               </summary>
               <p>

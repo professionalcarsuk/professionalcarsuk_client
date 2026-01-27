@@ -8,19 +8,19 @@ const TypesSection = () => {
       id: 1,
       title: "SELECT YOUR NEXT VEHICLE",
       href: "/used-cars",
-      alt: "Used car sales of Essendine",
+      alt: "Used car sales of Aylesbury",
     },
     {
       id: 2,
       title: "Part Exchange",
       href: "/part-exchange",
-      alt: "Used car valuation of Essendine",
+      alt: "Used car valuation of Aylesbury",
     },
     {
       id: 3,
       title: "Finance",
       href: "/contact",
-      alt: "Used car finance of Essendine",
+      alt: "Used car finance of Aylesbury",
     },
     {
       id: 4,

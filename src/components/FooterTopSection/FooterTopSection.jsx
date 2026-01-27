@@ -52,10 +52,10 @@ const FooterTopSection = () => {
             </ul>
           </div>
           <div className="footer__used-vehicles footer__used-vehicles--vans">
-            <div className="footer__title">Used Vans</div>
-            <ul className="footer__used-list">
+            {/* <div className="footer__title">Used Vans</div> */}
+            {/* <ul className="footer__used-list">
               {renderList(vanBrands || [], "vans")}
-            </ul>
+            </ul> */}
           </div>
         </div>
       </div>
