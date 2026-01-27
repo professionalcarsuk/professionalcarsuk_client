@@ -1408,7 +1408,7 @@ const VehicleDetail = () => {
                 <p></p>                 
               </div>
               {vehicle.financeMonthly && (
-                <div id="finance-section" className="row section4">
+                <div className="row section4">
                   <div className="twelvecol">
                     <div id="codeweavers_finance_calculator"></div>
                   </div>
