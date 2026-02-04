@@ -194,7 +194,9 @@ const Delivery = () => {
         currentVehicle?.title || currentVehicle
           ? `${currentVehicle.brand || ''} ${currentVehicle.model || ''}`.trim()
           : '',
-      vehicle_subtitle: currentVehicle?.subTitle || '',
+      vehicle_subtitle: currentVehicle?.subTitle && currentVehicle?.registration 
+        ? `${currentVehicle?.subTitle} (${currentVehicle?.registration})`
+        : currentVehicle?.subTitle || '',
     };
 
     dispatch(submitContactForm(submissionData));
