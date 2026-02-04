@@ -1139,6 +1139,12 @@ const Showroom = () => {
                                   View Details
                                 </Link>
                                 <Link
+                                  to={`/delivery?about=${encodeURIComponent(getVehicleTitle(vehicle))}&vehicle_id=${encodeURIComponent(vehicle.id || index)}`}
+                                  className="btn btn--ghost"
+                                >
+                                  Request Delivery
+                                </Link>
+                                <Link
                                   to={
                                     vehicle.financeMonthly &&
                                     vehicle.financeMonthly !== 0 &&

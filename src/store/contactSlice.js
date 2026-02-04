@@ -40,6 +40,11 @@ const contactSlice = createSlice({
       email: "",
       question: "",
       captchaResponse: "",
+      // Delivery-specific fields
+      address_line1: "",
+      address_line2: "",
+      postcode: "",
+      preferred_delivery_datetime: "",
     },
     isSubmitting: false,
     submitSuccess: false,
@@ -58,10 +63,16 @@ const contactSlice = createSlice({
         email: "",
         question: "",
         captchaResponse: "",
+        // Delivery-specific fields
+        address_line1: "",
+        address_line2: "",
+        postcode: "",
+        preferred_delivery_datetime: "",
       };
       state.submitSuccess = false;
       state.submitError = null;
     },
+
     clearError: (state) => {
       state.submitError = null;
     },
@@ -83,6 +94,11 @@ const contactSlice = createSlice({
           email: "",
           question: "",
           captchaResponse: "",
+          // Delivery-specific fields
+          address_line1: "",
+          address_line2: "",
+          postcode: "",
+          preferred_delivery_datetime: "",
         };
       })
       .addCase(submitContactForm.rejected, (state, action) => {

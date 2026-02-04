@@ -1169,6 +1169,12 @@ const Search = () => {
                                 >
                                   View Details
                                 </Link>
+                                <Link
+                                  to={`/delivery?about=${encodeURIComponent(getVehicleTitle(vehicle))}&vehicle_id=${encodeURIComponent(vehicle.id || index)}`}
+                                  className="btn btn--ghost"
+                                >
+                                  Request Delivery
+                                </Link>
                                 <Link to="/contact" className="btn btn--bordered finance-available">
                                   Finance Me
                                 </Link>
@@ -1285,67 +1291,7 @@ const Search = () => {
           </div>
         </div>
       </div>
-      <div className="results-finance-section">
-        <div className="wrapper">
-          <div className="container">
-            <div className="results-finance-example vehicle-7261668">
-              <div className="results-finance-example__title">Finance Representative</div>
-              <div className="results-finance-figure results-finance-figure--product">
-                <span className="label">Product</span>
-                <span className="stat">HP</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--price">
-                <span className="label">Cash Price</span>
-                <span className="stat">£6,990.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--deposit">
-                <span className="label">Deposit</span>
-                <span className="stat">£699.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--credit-amount">
-                <span className="label">Total Amount of Credit</span>
-                <span className="stat">£6,291.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--total-payable">
-                <span className="label">Total Amount Payable</span>
-                <span className="stat">£8,962.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--acceptance-fee">
-                <span className="label">Administration Fee</span>
-                <span className="stat">£0.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--option-fee">
-                <span className="label">Option to Purchase Fee</span>
-                <span className="stat">£1.00</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--interest_-rate">
-                <span className="label">Fixed Rate</span>
-                <span className="stat">11.29%</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--term">
-                <span className="label">Duration of Agreement</span>
-                <span className="stat">60</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--first-payment">
-                <span className="label">Initial Payment</span>
-                <span className="stat">£137.70</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--monthly-payment">
-                <span className="label">Monthly Payment</span>
-                <span className="stat">£137.70 x 58</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--final-payment">
-                <span className="label">Final Payment</span>
-                <span className="stat">£138.70</span>
-              </div>
-              <div className="results-finance-figure results-finance-figure--apr">
-                <span className="label">APR Representative</span>
-                <span className="stat">11.9%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div className="results-accordion-block">
         <div className="wrapper">
           <div className="container">
