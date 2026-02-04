@@ -37,7 +37,7 @@ const Delivery = () => {
     // Only set subject if not already set to avoid clobbering typing if user navigates within app
     if (!formData.subject) {
       const fallbackSubject = about
-        ? `Delivery about: ${about}`
+        ? `Delivery request for: ${about}`
         : subjectFromQuery || 'Vehicle Delivery';
       dispatch(updateFormField({ field: 'subject', value: fallbackSubject }));
     }
@@ -174,7 +174,7 @@ const Delivery = () => {
       subject:
         (formData.subject && formData.subject.trim()) ||
         subjectFromQuery ||
-        (about ? `Delivery about: ${about}` : 'Vehicle Delivery'),
+        (about ? `Delivery request for: ${about}` : 'Vehicle Delivery'),
       telephone: formData.telephone ? formData.telephone.trim() : '',
       email: formData.email.trim(),
       message: messageParts.join('\n') || 'Vehicle delivery request',
@@ -221,7 +221,7 @@ const Delivery = () => {
 
                   {(about || subjectFromQuery) && (
                     <p>
-                      <strong>Delivery about:</strong>
+                      <strong>Delivery request for:</strong>
                       <br />
                       {about || subjectFromQuery}
                       <br />
@@ -249,7 +249,7 @@ const Delivery = () => {
                         value={
                           (formData.subject && formData.subject) ||
                           subjectFromQuery ||
-                          (about ? `Delivery about: ${about}` : 'Vehicle Delivery')
+                          (about ? `Delivery request for: ${about}` : 'Vehicle Delivery')
                         }
                         id="captcha_subject"
                       />
