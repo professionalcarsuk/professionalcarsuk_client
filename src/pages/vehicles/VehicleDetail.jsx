@@ -344,13 +344,13 @@ const VehicleDetail = () => {const VehicleDetail = () => {
 
                       <li>M: <a href="tel:" title="Call Us"></a></li>                    </ul>
 
-                      <li>E: <a href="mailto:info@professionalcars.co.uk" title="Email Us">info@professionalcars.co.uk</a></li>                    <ul className="detail-contact-list">
+                      <li>E: <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">professionalcarsltd@gmail.com</a></li>                    <ul className="detail-contact-list">
 
                     </ul>                      <li>T: <a href="tel:07788929755" title="Call Us">07788929755</a></li>
 
                   </div>                      <li>M: <a href="tel:" title="Call Us"></a></li>
 
-                </div>                      <li>E: <a href="mailto:info@professionalcars.co.uk" title="Email Us">info@professionalcars.co.uk</a></li>
+                </div>                      <li>E: <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">professionalcarsltd@gmail.com</a></li>
 
               </div>                    </ul>
 
