@@ -69,8 +69,7 @@ const Delivery = () => {
     const { name, value } = e.target;
 
     if (name === 'telephone') {
-      const filteredValue = value.replace(/[^
-\d\s\-+()]/g, '');
+      const filteredValue = value.replace(/[^\d\s\-+()]/g, '');
       dispatch(updateFormField({ field: name, value: filteredValue }));
       if (filteredValue.trim()) {
         setPhoneError('');
