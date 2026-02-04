@@ -224,10 +224,7 @@ const Delivery = () => {
                       {about || subjectFromQuery}
                       <br />
                       {currentVehicle?.subTitle}
-                      <br />
-                      <br />
-                      {currentVehicle?.registration}
-                      <br />                      
+                      {currentVehicle?.registration && ` (${currentVehicle?.registration})`}
                     </p>
                   )}
 
