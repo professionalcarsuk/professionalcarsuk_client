@@ -392,7 +392,8 @@ const Delivery = () => {
                             <span className="required" aria-required="true">
                               *
                             </span>
-                          </div>
+                          </label>
+                        </div>
                         <div className="sixcol">
                           <input
                             size={40}
@@ -431,7 +432,8 @@ const Delivery = () => {
                             <span className="required" aria-required="true">
                               *
                             </span>
-                          </div>
+                          </label>
+                        </div>
                         <div className="sixcol">
                           <input
                             size={40}
