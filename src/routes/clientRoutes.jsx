@@ -7,6 +7,7 @@ import {
   CookiePolicy,
   Finance,
   Enquiry,
+  Delivery,
   Home,
   NotFound,
   PartExchange,
@@ -61,6 +62,14 @@ export const clientRoutes = [
     element: (
       <MainLayout>
         <Enquiry />
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/delivery',
+    element: (
+      <MainLayout>
+        <Delivery />
       </MainLayout>
     ),
   },

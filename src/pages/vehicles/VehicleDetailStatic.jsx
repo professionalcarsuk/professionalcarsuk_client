@@ -832,6 +832,17 @@ const VehicleDetail = () => {
                           Make An Enquiry
                         </Link>
                       </li>
+                      <li>
+                        <Link
+                          to={`/delivery?about=${encodeURIComponent(
+                            vehicle.title || `${vehicle.brand} ${vehicle.model}`
+                          )}&vehicle_id=${encodeURIComponent(vehicle.id || vehicle._id || '')}`}
+                          title="Request Delivery"
+                          className="btn--ghost"
+                        >
+                          Request Delivery
+                        </Link>
+                      </li>
                       {/* <li className="finance-available">
                         <a
                           href="#finance-section"

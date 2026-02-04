@@ -14,5 +14,6 @@ export { default as Warranty } from './Warranty/Warranty';
 // Export a renamed file while keeping the public `PrivacyPolicy` name so routes and imports don't change.
 export { default as CookiePolicy } from './CookiePolicyPage/CookiePolicyPage';
 export { default as Enquiry } from './Enquiry/Enquiry';
+export { default as Delivery } from './Delivery/Delivery';
 export { default as PrivacyPolicy } from './PrivacyPolicyPage/PrivacyPolicyPage';
 export * from './vehicles';
