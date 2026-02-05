@@ -28,14 +28,14 @@ const Complaints = () => {
         <h3>How to tell us if you have a complaint</h3>
         <p>
           To help us investigate and resolve your issue as quickly as possible, you can contact us
-          by telephone or in writing. The most appropriate person will handle your complaint in the
+          by email, by telephone or in writing. The most appropriate person will handle your complaint in the
           quickest possible time.
         </p>
         <p>Our complaints contact details are:</p>
         <p>
-          Online at{' '}
-          <a className="hover:underline hover:to-blue-400" href="/">
-            Website
+          By email{' '}
+          <a className="hover:underline hover:to-blue-400" href="mailto:professionalcarsltd@gmail.com">
+            professionalcarsltd@gmail.com
           </a>
           <br />
           By telephone on 07788929755
