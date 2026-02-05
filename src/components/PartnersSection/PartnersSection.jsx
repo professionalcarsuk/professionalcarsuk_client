@@ -6,7 +6,7 @@ const PartnersSection = () => {
     {
       name: "Alphera",
       image: "/images/partner-alphera.png",
-      alt: "Partner Alphera",
+      alt: "Partner Blue Motor Finance",
     },
     {
       name: "Mann Island",
@@ -47,6 +47,9 @@ const PartnersSection = () => {
                         className="responsive-img"
                         src={partner.image}
                         alt={partner.alt}
+                        width={120}
+                        height={97}
+                        style={{ objectFit: 'contain' }}
                       />
                     </div>
                   ))}
