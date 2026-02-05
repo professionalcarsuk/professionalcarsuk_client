@@ -53,7 +53,7 @@ const Delivery = () => {
   // Handle success and error toasts
   useEffect(() => {
     if (submitSuccess) {
-      toast.success('Thank you! Your delivery request has been sent successfully.');
+      toast.success('Thank you! Your delivery request has been sent successfully. You will receive a call or WhatsApp message shortly with the delivery price.');
       dispatch(resetForm());
     }
   }, [submitSuccess, dispatch]);
