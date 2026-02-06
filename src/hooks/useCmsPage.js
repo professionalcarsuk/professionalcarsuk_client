@@ -9,7 +9,8 @@ export const useCmsPage = (slug) => {
     const fetchPage = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`/api/client/cms-pages/${slug}`);
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/client/cms-pages/${slug}`);
         if (!res.ok) {
           setContent(null);
           return;
