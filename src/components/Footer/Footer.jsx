@@ -1,8 +1,35 @@
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { useSiteSettings } from "../../contexts/SiteSettingsContext";
 import clickDealerLogo from "./images/click_dealer_logo.1749717714.png";
 
 const Footer = ({ noMargin = false }) => {
+  const { settings } = useSiteSettings();
+
+  const companyName = settings?.companyName || "Professional Cars Limited";
+  const phone = settings?.phone || "07788929755";
+  const email = settings?.email || "professionalcarsltd@gmail.com";
+  const address = settings?.address || {};
+  const social = settings?.social || {};
+  const legal = settings?.legal || {};
+
+  const openingHours = settings?.openingHours?.length
+    ? settings.openingHours
+    : [
+        { day: "Monday", label: "10:00 - 17:00" },
+        { day: "Tuesday", label: "10:00 - 17:00" },
+        { day: "Wednesday", label: "10:00 - 17:00" },
+        { day: "Thursday", label: "10:00 - 17:00" },
+        { day: "Friday", label: "10:00 - 17:00" },
+        { day: "Saturday", label: "10:00 - 17:00" },
+        { day: "Sunday", label: "Closed" },
+      ];
+
+  const companyNumber = legal.companyNumber || "08763622";
+  const fcaNumber = legal.fcaNumber || "1022311";
+  const registeredOffice =
+    legal.registeredOffice ||
+    "Professional Cars, Rear Yard 2, College Road North Business Park, Aylesbury, HP22 5EZ";
   return (
     <>
       <div className="footer__main snipcss-advvq">
@@ -12,145 +39,112 @@ const Footer = ({ noMargin = false }) => {
               <div className="footer__title">Get In Touch</div>
               <address className="footer__address">
                 <span className="footer__addressline footer__addressline--name">
-                  Professional Cars Limited
+                  {companyName}
                 </span>
-                <span className="footer__addressline footer__addressline--line-1">
-                  Park Rear Yard 2
-                </span>
-                <span className="footer__addressline footer__addressline--line-2">
-                  College Road North Business Park
-                </span>
-                <span className="footer__addressline footer__addressline--town">
-                  Aston Clinton 
-                </span>
-                <span className="footer__addressline footer__addressline--county">
-                  Aylesbury
-                </span>
-                <span className="footer__addressline footer__addressline--postcode">
-                  HP22 5EZ
-                </span>
+                {address.line1 && (
+                  <span className="footer__addressline footer__addressline--line-1">
+                    {address.line1}
+                  </span>
+                )}
+                {address.line2 && (
+                  <span className="footer__addressline footer__addressline--line-2">
+                    {address.line2}
+                  </span>
+                )}
+                {address.town && (
+                  <span className="footer__addressline footer__addressline--town">
+                    {address.town}
+                  </span>
+                )}
+                {address.county && (
+                  <span className="footer__addressline footer__addressline--county">
+                    {address.county}
+                  </span>
+                )}
+                {address.postcode && (
+                  <span className="footer__addressline footer__addressline--postcode">
+                    {address.postcode}
+                  </span>
+                )}
               </address>
               <ul className="footer__numbers">
                 <li className="footer__telephone">
                   <i className="fa fa-phone" aria-hidden="true"></i>
-                  <a href="tel:07788929755">07788929755</a>
+                  <a href={`tel:${phone}`}>{phone}</a>
                 </li>
                 <li className="footer__email">
                   <i className="fa fa-envelope-o" aria-hidden="true"></i>
                   <a
-                    href="mailto:professionalcarsltd@gmail.com"
-                    title="Email Professional Cars Limited"
+                    href={`mailto:${email}`}
+                    title={`Email ${companyName}`}
                   >
                     Email us
                   </a>
                 </li>
               </ul>
               <ul className="footer__social">
-                <li>
-                  <a
-                    href="https://www.facebook.com/search/top?q=professional%20cars%20limited"
-                    title="Like us on Facebook"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span aria-hidden="true" className="fa fa-facebook"></span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://twitter.com"
-                    title="Share us on Twitter"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span aria-hidden="true" className="ci ci-x-twitter"></span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.instagram.com/"
-                    title="Follow us on Instagram"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span aria-hidden="true" className="fa fa-instagram"></span>
-                  </a>
-                </li>
+                {social.facebook && (
+                  <li>
+                    <a
+                      href={social.facebook}
+                      title="Like us on Facebook"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span aria-hidden="true" className="fa fa-facebook"></span>
+                    </a>
+                  </li>
+                )}
+                {social.twitter && (
+                  <li>
+                    <a
+                      href={social.twitter}
+                      title="Share us on Twitter"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span aria-hidden="true" className="ci ci-x-twitter"></span>
+                    </a>
+                  </li>
+                )}
+                {social.instagram && (
+                  <li>
+                    <a
+                      href={social.instagram}
+                      title="Follow us on Instagram"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span aria-hidden="true" className="fa fa-instagram"></span>
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
             <div className="footer__widget footer__widget--opening-hours">
               <div className="footer__title">Opening Hours</div>
               <ul className="footer__open-times">
-                <li className="footer__open-times--mon">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Mon
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--tue">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Tue
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--wed">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Wed
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--thu">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Thu
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--fri">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Fri
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--sat">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Sat
-                  </div>
-                  <div className="open-times">10:00 - 17:00</div>
-                </li>
-                <li className="footer__open-times--sun">
-                  <div className="open-day">
-                    <span
-                      aria-hidden="true"
-                      className="icon icon-calendar"
-                    ></span>{" "}
-                    Sun
-                  </div>
-                  <div className="open-times">Closed</div>
-                </li>
+                {openingHours.map((item, index) => {
+                  const dayKey = item.day ? item.day.toLowerCase().slice(0, 3) : index;
+                  const label = item.label ||
+                    (item.open && item.close ? `${item.open} - ${item.close}` : "Closed");
+
+                  return (
+                    <li
+                      key={`${item.day || "day"}-${index}`}
+                      className={`footer__open-times--${dayKey}`}
+                    >
+                      <div className="open-day">
+                        <span
+                          aria-hidden="true"
+                          className="icon icon-calendar"
+                        ></span>{" "}
+                        {item.day ? item.day.slice(0, 3) : "Day"}
+                      </div>
+                      <div className="open-times">{label}</div>
+                    </li>
+                  );
+                })}
                 <li className="bank-holiday-not-set">
                   <div className="open-day">
                     <span
@@ -189,14 +183,14 @@ const Footer = ({ noMargin = false }) => {
             <div className="footer__widget footer__widget--legal">
               <div className="footer__title">Company Info</div>
               <ul className="footer__legal-list">
-                <li>Company No. 08763622</li>
-                <li>FCA No. 1022311</li>
+                <li>Company No. {companyNumber}</li>
+                <li>FCA No. {fcaNumber}</li>
               </ul>
               <div className="footer__fca-para">
                 <div id="fca-disclaimer">
-                  Professional Cars Limited are a credit broker and not a lender.
+                  {companyName} are a credit broker and not a lender.
                   We are Authorised and Regulated by the Financial Conduct
-                  Authority. FCA No: Finance is Subject to status. Other offers
+                  Authority. FCA No: {fcaNumber}. Finance is Subject to status. Other offers
                   may be available but cannot be used in conjunction with this
                   offer. We work with a number of carefully selected credit
                   providers who may be able to offer you finance for your
@@ -219,8 +213,8 @@ const Footer = ({ noMargin = false }) => {
                   lender under your credit agreement. We have the right to
                   decline third party lenders. <br />
                   <br />
-                  Registered in England &amp; Wales: 08763622 <br />
-                  Registered Office: Address: Professional Cars, Rear Yard 2, College Road North Business Park, Aylesbury, HP22 5EZ <br />                  
+                  Registered in England &amp; Wales: {companyNumber} <br />
+                  Registered Office Address: {registeredOffice} <br />
                 </div>
               </div>
             </div>

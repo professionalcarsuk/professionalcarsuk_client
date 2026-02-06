@@ -1,7 +1,9 @@
 import PageWithSidebarLayout from '../../layouts/PageWithSidebarLayout';
+import { useCmsPage } from '../../hooks/useCmsPage';
 import './PrivacyPolicyPage.css';
 
 const PrivacyPolicyPage = () => {
+  const { content: privacyPage, loading } = useCmsPage('privacy-policy');
   return (
     <PageWithSidebarLayout
       pageClass="privacy-policy-pg"
@@ -10,7 +12,12 @@ const PrivacyPolicyPage = () => {
       showSidebar={false}
       showHeading={true}
     >
-      <div className="wrapper snipcss-fCYop">
+      {loading ? (
+        <p>Loading privacy policy...</p>
+      ) : privacyPage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: privacyPage.contentHtml }} />
+      ) : (
+        <div className="wrapper snipcss-fCYop">
         <div className="container">
           <div className="row">
             <div className="block twelvecol">
@@ -448,7 +455,8 @@ const PrivacyPolicyPage = () => {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </PageWithSidebarLayout>
   );
 };

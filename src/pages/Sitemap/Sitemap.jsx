@@ -38,12 +38,12 @@ const Sitemap = () => {
               </a>
             </li>
             <li>
-              <a href="/used-vans" title="Finance">
+              <a href="/finance" title="Finance">
                 Finance
               </a>
             </li>
             <li>
-              <a href="/sell-car" title="Sell Your Car">
+              <a href="/sellcar" title="Sell Your Car">
                 Sell Your Car
               </a>
             </li>
@@ -53,7 +53,7 @@ const Sitemap = () => {
               </a>
             </li>
             <li>
-              <a href="/Finance" title="Finance">
+              <a href="/finance" title="Finance">
                 Finance
               </a>
             </li>
@@ -70,11 +70,6 @@ const Sitemap = () => {
             <li>
               <a href="/about" title="About Us">
                 About Us
-              </a>
-            </li>
-            <li>
-              <a href="/careers" title="Careers">
-                Careers
               </a>
             </li>
             <li>

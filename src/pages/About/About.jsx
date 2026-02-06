@@ -1,8 +1,10 @@
 import React from "react";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import "./About.css";
 
 const About = () => {
+  const { content: aboutPage, loading } = useCmsPage('about');
   return (
     <PageWithSidebarLayout
       pageClass="about-pg"
@@ -10,11 +12,17 @@ const About = () => {
       headerClass="page-hdr--about lazy-background visible"
       showSidebar={true}
     >
-      <p>
-        Professional Cars specialise in sourcing high quality, pre owned Nissan's, BMW's,
-        Audi's and Mercedes. We pride ourselves on our bespoke customisation and
-        optional upgrades that we would be delighted to discuss with you.
-      </p>
+      {loading ? (
+        <p>Loading about information...</p>
+      ) : aboutPage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: aboutPage.contentHtml }} />
+      ) : (
+        <>
+          <p>
+            Professional Cars specialise in sourcing high quality, pre owned Nissan's, BMW's,
+            Audi's and Mercedes. We pride ourselves on our bespoke customisation and
+            optional upgrades that we would be delighted to discuss with you.
+          </p>
       <h2>Our Process</h2>
       <ul className="list-bullets">
         <li>Select your vehicle</li>
@@ -67,7 +75,9 @@ const About = () => {
         <br />
         <li>Alloy wheel options</li>
         <br />
-      </ul>
+          </ul>
+        </>
+      )}
     </PageWithSidebarLayout>
   );
 };

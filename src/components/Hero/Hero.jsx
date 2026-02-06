@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSiteSettings } from "../../contexts/SiteSettingsContext";
 import "./Hero.css";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const { settings } = useSiteSettings();
   const [budgetSwitch, setBudgetSwitch] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
@@ -26,7 +28,7 @@ const Hero = () => {
     financeMax: 2000,
   });
 
-  const slides = [
+  const defaultSlides = [
     {
       id: 1,
       image:
@@ -50,8 +52,26 @@ const Hero = () => {
       image:
         "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1920&h=1080&fit=crop&crop=center",
       alt: "Luxury Car 4",
-    }
+    },
   ];
+
+  const slides = useMemo(() => {
+    if (settings?.hero?.slides?.length) {
+      return settings.hero.slides.map((slide, index) => ({
+        id: index + 1,
+        image: slide.image,
+        alt: slide.title || `Slide ${index + 1}`,
+      }));
+    }
+    return defaultSlides;
+  }, [settings, defaultSlides]);
+
+  const heroTitle = settings?.hero?.title || "Professional Cars";
+  const heroSubtitle =
+    settings?.hero?.subtitle ||
+    "Fuelled by Passion\n\nBespoke Customisation";
+  const heroVideoUrl =
+    settings?.hero?.videoUrl || "https://www.youtube.com/embed/EEDKM8rYjFE";
 
   useEffect(() => {
     // Preload images to prevent black screens during transitions
@@ -369,12 +389,14 @@ const Hero = () => {
       <div className="hero-unit-bottom">
         <div className="hero-unit-block  sm:px-0 px-3">
           <div className="hero-unit-block__title">
-            Professional Cars
+            {heroTitle}
             <div className="hero-unit-block__sub-head">
-              Fuelled by Passion
-              <br />
-              <br />
-              Bespoke Customisation
+              {heroSubtitle.split("\n").map((line, idx) => (
+                <span key={idx}>
+                  {line}
+                  <br />
+                </span>
+              ))}
             </div>
             <div
               id="play-video-2"
@@ -568,7 +590,7 @@ const Hero = () => {
               ×
             </button>
             <iframe
-              src="https://www.youtube.com/embed/EEDKM8rYjFE"
+              src={heroVideoUrl}
               title="Watch Video"
               style={{ border: "none" }}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -1,11 +1,19 @@
 import React from "react";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import "./Finance.css";
 
 const Finance = () => {
+  const { content: financePage, loading } = useCmsPage('finance');
   const mainContent = (
     <div className="pad-20 overflow-hidden">
-      <h1> Finance </h1>
+      {loading ? (
+        <p>Loading finance information...</p>
+      ) : financePage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: financePage.contentHtml }} />
+      ) : (
+        <>
+          <h1> Finance </h1>
       <p>
         {" "}
         At Professional Cars, We know that purchasing a vehicle is a big investment for most people and we’re dedicated to making the buying process as straightforward and hassle-free for our customers as possible. We can help you create a finance package that could get you behind the wheel of your dream car.
@@ -84,6 +92,8 @@ const Finance = () => {
       
       <br />
       <br />
+        </>
+      )}
     </div>
   );
 

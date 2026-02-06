@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import {
   updateFormField,
   submitWarrantyForm,
@@ -15,6 +16,7 @@ const Warranty = () => {
   const { formData, isSubmitting, submitSuccess, submitError } = useSelector(
     (state) => state.warranty
   );
+  const { content: warrantyPage, loading } = useCmsPage('warranty');
   // const [currentStep, setCurrentStep] = React.useState(1);
 
   // Handle success and error toasts
@@ -131,22 +133,30 @@ const Warranty = () => {
 
   const mainContent = (
     <div className="pad-20">
-      <p>
-        <strong>Drive away with complete peace of mind.</strong>
-      </p>
-      <p>
-        We pride ourselves on providing mechanically sound and robust products
-        that have been maintained in accordance with the manufacturer's service
-        schedule wherever possible. That said, as cars are after all mechanical,
-        we offer a standard, totally free 3 month parts and labour warranty on
-        all vehicles.
-      </p>
-      <h2>Extendable Warranty</h2>
-      <p>
-        There is also the option to purchase a more comprehensive product up to
-        a period of 3 years at an additional cost. Please call 07788929755 for
-        a detailed overview of all products and services available.
-      </p>
+      {loading ? (
+        <p>Loading warranty information...</p>
+      ) : warrantyPage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: warrantyPage.contentHtml }} />
+      ) : (
+        <>
+          <p>
+            <strong>Drive away with complete peace of mind.</strong>
+          </p>
+          <p>
+            We pride ourselves on providing mechanically sound and robust products
+            that have been maintained in accordance with the manufacturer's service
+            schedule wherever possible. That said, as cars are after all mechanical,
+            we offer a standard, totally free 3 month parts and labour warranty on
+            all vehicles.
+          </p>
+          <h2>Extendable Warranty</h2>
+          <p>
+            There is also the option to purchase a more comprehensive product up to
+            a period of 3 years at an additional cost. Please call 07788929755 for
+            a detailed overview of all products and services available.
+          </p>
+        </>
+      )}
       <h2>Warranty Claim Form</h2>
       {/* {currentStep === 1 && (
         <p id="pageIncrementsf1" className="pageIncrements">
@@ -159,8 +169,8 @@ const Warranty = () => {
         </p>
       )} */}
       <div className="warranty-form bg-[#f5f5f5] rounded-[5px] p-6">
-        {/* {currentStep === 1 && ( */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+            {/* {currentStep === 1 && ( */}
+            <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text=[#222]">
               Date *
@@ -332,16 +342,6 @@ const Warranty = () => {
           </form>
         )} */}
       </div>
-      {/* {currentStep === 1 && (
-        <div className="text-center mt-4">
-          <button
-            onClick={handleNext}
-            className="btn bg-green-500 text-white px-6 py-2"
-          >
-            Next
-          </button>
-        </div>
-      )} */}
     </div>
   );
 

@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSiteSettings } from "../contexts/SiteSettingsContext";
 
 const PageSidebar = () => {
   const navigate = useNavigate();
+  const { settings } = useSiteSettings();
   const [isHovered, setIsHovered] = useState(false);
+
+  const phone = settings?.phone || "07788929755";
+  const email = settings?.email || "professionalcarsltd@gmail.com";
+  const reviewText = settings?.review?.text || "The dealers were very helpful and the vehicle was being cleaned when I arrived. The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it. The vehicle itself drives very well and is in showroom condition. No problems with it so far. Would recommend the company.";
+  const reviewAuthor = settings?.review?.author || "R. Fielding";
+  const reviewLink = settings?.review?.linkUrl || "https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305";
   const [searchForm, setSearchForm] = useState({
     make: "",
     model: "",
@@ -309,36 +317,15 @@ const PageSidebar = () => {
             <ul id="get-in-touch">
               <li className="mobile-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="/contact">07788929755</a>
+                <a href="/contact">{phone}</a>
               </li>
               <li className="desktop-hidden">
                 <span aria-hidden="true" className="icon icon-phone-2"></span>{" "}
-                <a href="tel:07788929755">07788929755</a>
-              </li>
-              <li className="mobile-hidden">
-                <span
-                  aria-hidden="true"
-                  className="desktop-hidden mobile-hidden desktop-hidden"
-                ></span>{" "}
-                <a href="/contact"></a>
-              </li>
-              <li className="mobile-hidden">
-                <span
-                  aria-hidden="true"
-                  className="desktop-hidden mobile-hidden desktop-hidden"
-                ></span>{" "}
-                <a href="/contact"></a>
-              </li>
-              <li className="desktop-hidden">
-                <span
-                  aria-hidden="true"
-                  className="desktop-hidden mobile-hidden desktop-hidden"
-                ></span>{" "}
-                <a href="tel:"></a>
+                <a href={`tel:${phone}`}>{phone}</a>
               </li>
               <li>
                 <span aria-hidden="true" className="icon icon-mail"></span>{" "}
-                <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">
+                <a href={`mailto:${email}`} title="Email Us">
                   Email Us
                 </a>
               </li>
@@ -361,17 +348,12 @@ const PageSidebar = () => {
           </h3>
           <blockquote>
             <div className="quote">
-              <div className="pad-15">
-                The dealers were very helpful and the vehicle was being cleaned when I arrived.
-                The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it.
-                The vehicle itself drives very well and is in showroom condition.
-                No problems with it so far. Would recommend the company.
-              </div>
+              <div className="pad-15">{reviewText}</div>
             </div>
-            <cite>R. Fielding</cite>
+            <cite>{reviewAuthor}</cite>
           </blockquote>
           <a
-            href="https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305"
+            href={reviewLink}
             className="btn"
             target="_blank"
             rel="noopener noreferrer"

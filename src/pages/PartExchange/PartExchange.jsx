@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import PageWithSidebarLayout from '../../layouts/PageWithSidebarLayout';
+import { useCmsPage } from '../../hooks/useCmsPage';
 import {
   clearError,
   resetForm,
@@ -17,6 +18,7 @@ const PartExchange = () => {
   const { formData, currentStep, isSubmitting, submitSuccess, submitError } = useSelector(
     (state) => state.partExchange
   );
+  const { content: partExchangePage } = useCmsPage('part-exchange');
 
   // Get vehicles from Redux store - Part Exchange specific
   const allVehicles = useSelector((state) => state.vehicles.partExchangeItems || []);
@@ -145,23 +147,29 @@ const PartExchange = () => {
   }, [currentStep, dispatch]);
   const mainContent = (
     <div className="pad-20 overflow-hidden part-exchange-page">
-      <p>
-        <strong>
-          Our dedicated team of vehicle valuation experts are ready to give you an up-to-the-minute
-          market value of your car.
-        </strong>
-      </p>
-      <h2>Free Quote</h2>
+      {partExchangePage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: partExchangePage.contentHtml }} />
+      ) : (
+        <>
+          <p>
+            <strong>
+              Our dedicated team of vehicle valuation experts are ready to give you an up-to-the-minute
+              market value of your car.
+            </strong>
+          </p>
+          <h2>Free Quote</h2>
 
-      <p>
-        If you are considering part exchanging your current vehicle we are able to provide you with
-        a free, no-obligation quote.
-      </p>
-      <p>
-        Please contact one of our Sales Consultants on 07788929755 or complete our valuation form
-        below.
-      </p>
-      <p>We will contact you as soon as possible with the best possible price for your car.</p>
+          <p>
+            If you are considering part exchanging your current vehicle we are able to provide you with
+            a free, no-obligation quote.
+          </p>
+          <p>
+            Please contact one of our Sales Consultants on 07788929755 or complete our valuation form
+            below.
+          </p>
+          <p>We will contact you as soon as possible with the best possible price for your car.</p>
+        </>
+      )}
 
       {/* SSL Certificate and Header Section */}
       <div className="form-header">

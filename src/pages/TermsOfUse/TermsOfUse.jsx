@@ -1,8 +1,10 @@
 import React from "react";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import "./TermsOfUse.css";
 
 const TermsOfUse = () => {
+  const { content: termsPage, loading } = useCmsPage('terms-of-use');
   return (
     <PageWithSidebarLayout
       pageClass="terms-of-use-pg"
@@ -11,8 +13,14 @@ const TermsOfUse = () => {
       showSidebar={false}
       showHeading={true}
     >
-      <section>
-        <p>PLEASE READ THESE TERMS OF USE CAREFULLY BEFORE USING THIS SITE.</p>
+      {loading ? (
+        <p>Loading terms of use...</p>
+      ) : termsPage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: termsPage.contentHtml }} />
+      ) : (
+        <>
+        <section>
+          <p>PLEASE READ THESE TERMS OF USE CAREFULLY BEFORE USING THIS SITE.</p>
         <h3>What's in these terms?</h3>
         <p>
           These terms tell you the rules for using our website{" "}
@@ -561,7 +569,9 @@ const TermsOfUse = () => {
           governed by English law. We both agree to the exclusive jurisdiction
           of the courts of England and Wales.
         </p>
-      </section>
+        </section>
+        </>
+      )}
     </PageWithSidebarLayout>
   );
 };

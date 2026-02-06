@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useSiteSettings } from '../../contexts/SiteSettingsContext';
 import { fetchRecentVehicles, loadFavorites, selectFavoritesCount } from '../../store/vehicleSlice';
 import './Navbar.css';
 
@@ -32,6 +33,20 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const favoritesCount = useSelector(selectFavoritesCount);
+  const { settings } = useSiteSettings();
+
+  const phone = settings?.phone || '07788929755';
+  const email = settings?.email || 'professionalcarsltd@gmail.com';
+  const social = settings?.social || {};
+  const address = settings?.address || {};
+  const addressText = [
+    address.line1,
+    address.line2,
+    address.county,
+    address.postcode,
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   useEffect(() => {
     // Fetch recent vehicles once on mount to build brand lists
@@ -285,41 +300,46 @@ const Navbar = () => {
                   <ul>
                     <li>
                       <a href="/contact">
-                        <i className="ci ci-map-marker-alt"></i> Rear Yard 2, College Road Business Park, Aylesbury, HP22 5EZ
+                        <i className="ci ci-map-marker-alt"></i>{' '}
+                        {addressText || 'Rear Yard 2, College Road Business Park, Aylesbury, HP22 5EZ'}
                       </a>
                     </li>
                     <li className="mobile-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:07788929755">07788929755</a>
+                      <a href={`tel:${phone}`}>{phone}</a>
                     </li>
                     <li className="desktop-hidden">
                       <span aria-hidden="true" className="icon icon-phone-2"></span>{' '}
-                      <a href="tel:07788929755">07788929755</a>
+                      <a href={`tel:${phone}`}>{phone}</a>
                     </li>
                     <li>
                       <span aria-hidden="true" className="icon icon-mail"></span>{' '}
-                      <a href="mailto:professionalcarsltd@gmail.com" title="Email Us">
+                      <a href={`mailto:${email}`} title="Email Us">
                         Email Us
                       </a>
                     </li>
-                    <li>
-                      <a
-                        href="https://www.instagram.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <i className="ci ci-instagram header-social"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://www.facebook.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <i className="ci ci-facebook-f header-social"></i>
-                      </a>
-                    </li>
+                    {social.instagram && (
+                      <li>
+                        <a
+                          href={social.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="ci ci-instagram header-social"></i>
+                        </a>
+                      </li>
+                    )}
+                    {social.facebook && (
+                      <li>
+                        <a
+                          href={social.facebook}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="ci ci-facebook-f header-social"></i>
+                        </a>
+                      </li>
+                    )}
                     <li>
                       <div className="header__favourites">
                         <div className="favourites-badge">

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import "./CookiePolicyPage.css";
 import { CookieStorage, LocalStorage } from "../../utils/cookieStorage";
 
 const CookiePolicyPage = () => {
   const [hasConsented, setHasConsented] = useState(false);
+  const { content: cookiePage, loading } = useCmsPage('cookie-policy');
 
   useEffect(() => {
     // Check if user has already consented using utility function
@@ -48,22 +50,28 @@ const CookiePolicyPage = () => {
       showSidebar={false}
       showHeading={true}
     >
-      <div className="wrapper snipcss-YhaRV">
-        <div className="container">
-          <div className="row">
+      <div>
+        {loading ? (
+          <p>Loading cookie policy...</p>
+        ) : cookiePage?.contentHtml ? (
+          <div dangerouslySetInnerHTML={{ __html: cookiePage.contentHtml }} />
+        ) : (
+          <div className="wrapper snipcss-YhaRV">
             <div className="container">
-              <div className="row row--flex">
-                <div className="block">
-                  <div className="pad-20 overflow-hidden">
-                    <div className="page-hdr" id="page-hdr-collateral">
-                      <h1>Cookie Policy</h1>
-                    </div>
-                    <p>
-                      Our website uses cookies to distinguish you from other
-                      users of our website. This helps us to provide you with a
-                      good experience when you browse our website and also
-                      allows us to improve our site.
-                    </p>
+            <div className="row">
+              <div className="container">
+                <div className="row row--flex">
+                  <div className="block">
+                    <div className="pad-20 overflow-hidden">
+                      <div className="page-hdr" id="page-hdr-collateral">
+                        <h1>Cookie Policy</h1>
+                      </div>
+                      <p>
+                        Our website uses cookies to distinguish you from other
+                        users of our website. This helps us to provide you with a
+                        good experience when you browse our website and also
+                        allows us to improve our site.
+                      </p>
                     <h4>What are cookies?</h4>
                     <p>
                       A cookie is a small text file that a website saves on your
@@ -296,36 +304,40 @@ const CookiePolicyPage = () => {
                         </table>
                       </div>
                     </section>
-                    {!hasConsented && (
-                      <section className="cookie-consent-section">
-                        <h4>Your Cookie Preferences</h4>
-                        <p>
-                          By accepting cookies, you agree to the use of cookies
-                          as described in this policy. You can withdraw your
-                          consent at any time by managing your browser settings.
-                        </p>
-                        <button
-                          className="cookie-accept-btn"
-                          onClick={handleAccept}
-                        >
-                          I Accept Cookies
-                        </button>
-                      </section>
-                    )}
-                    {hasConsented && (
-                      <section className="cookie-consent-section">
-                        <p className="consent-confirmed">
-                          ✓ You have accepted our cookie policy. You can manage
-                          your preferences in your browser settings.
-                        </p>
-                      </section>
-                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          </div>
+          </div>
+        )}
+        
+        {/* Dynamic cookie consent section - always visible regardless of CMS content */}
+        {!hasConsented && (
+          <section className="cookie-consent-section">
+            <h4>Your Cookie Preferences</h4>
+            <p>
+              By accepting cookies, you agree to the use of cookies
+              as described in this policy. You can withdraw your
+              consent at any time by managing your browser settings.
+            </p>
+            <button
+              className="cookie-accept-btn"
+              onClick={handleAccept}
+            >
+              I Accept Cookies
+            </button>
+          </section>
+        )}
+        {hasConsented && (
+          <section className="cookie-consent-section">
+            <p className="consent-confirmed">
+              ✓ You have accepted our cookie policy. You can manage
+              your preferences in your browser settings.
+            </p>
+          </section>
+        )}
       </div>
     </PageWithSidebarLayout>
   );

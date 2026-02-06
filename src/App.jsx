@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './contexts/AuthContext';
+import { SiteSettingsProvider } from './contexts/SiteSettingsContext';
 import { clientRoutes } from './routes';
 
 function RouteContainer() {
@@ -16,11 +17,13 @@ function RouteContainer() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <RouteContainer />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AuthProvider>
+        <SiteSettingsProvider>
+          <RouteContainer />
+        </SiteSettingsProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 

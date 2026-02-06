@@ -2,6 +2,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
+import { useSiteSettings } from "../../contexts/SiteSettingsContext";
+import { useCmsPage } from "../../hooks/useCmsPage";
 import {
   updateFormField,
   submitContactForm,
@@ -15,6 +17,23 @@ const Contact = () => {
   const { formData, isSubmitting, submitSuccess, submitError } = useSelector(
     (state) => state.contact
   );
+  const { settings } = useSiteSettings();
+ 
+
+  // Get contact info from CMS or fallback to settings
+
+  const address = settings?.address || {};
+  const phone = settings?.phone || "0700000000";
+  const openTimes =  settings?.openingHours || [
+    { day: "Mon", hours: "10:00 - 17:00" },
+    { day: "Tue", hours: "10:00 - 17:00" },
+    { day: "Wed", hours: "10:00 - 17:00" },
+    { day: "Thu", hours: "10:00 - 17:00" },
+    { day: "Fri", hours: "10:00 - 17:00" },
+    { day: "Sat", hours: "10:00 - 17:00" },
+    { day: "Sun", hours: "Closed" },
+    { day: "Bank Hol.", hours: "" }
+  ];
 
   // Handle success and error toasts
   useEffect(() => {
@@ -138,19 +157,15 @@ const Contact = () => {
                       Address
                     </h3>
                     <p>
-                      <strong>Professional Cars Limited</strong>
+                      <strong>{settings?.companyName || "Professional Cars Limited"}</strong>
                     </p>
                     <address>
-                      Rear Yard 2
-                      <br />
-                      College Road Business Park
-                      <br />
-                      Aston Clinton
-                      <br />
-                      Aylesbury
-                      <br />
-                      HP22 5EZ
-                      <br />
+                      {address.line1 && <>{address.line1}<br /></>}
+                      {address.line2 && <>{address.line2}<br /></>}
+                      {address.line3 && <>{address.line3}<br /></>}
+                      {address.town && <>{address.town}<br /></>}
+                      {address.county && <>{address.county}<br /></>}
+                      {address.postcode && <>{address.postcode}<br /></>}
                     </address>
                   </div>
                 </div>
@@ -175,14 +190,14 @@ const Contact = () => {
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:07788929755">07788929755</a>
+                          <a href={`tel:${phone}`}>{phone}</a>
                         </li>
                         <li className="desktop-hidden">
                           <span
                             aria-hidden="true"
                             className="icon icon-phone-2"
                           ></span>{" "}
-                          <a href="tel:07788929755">07788929755</a>
+                          <a href={`tel:${phone}`}>{phone}</a>
                         </li>
                         <li className="mobile-hidden">
                           <span aria-hidden="true"></span>{" "}
@@ -201,7 +216,7 @@ const Contact = () => {
                             className="icon icon-mail"
                           ></span>{" "}
                           <a
-                            href="mailto:professionalcarsltd@gmail.com"
+                            href={`mailto:${settings?.email || "professionalcarsltd@gmail.com"}`}
                             title="Email Us"
                           >
                             Email Us
@@ -225,86 +240,18 @@ const Contact = () => {
                       Open Times
                     </h3>
                     <ul className="row open-times">
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Mon
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Tue
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Wed
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Thu
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Fri
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Sat
-                        </div>
-                        <div className="open-times">10:00 - 17:00</div>
-                      </li>
-                      <li className="twelvecol">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Sun
-                        </div>
-                        <div className="open-times">Closed</div>
-                      </li>
-                      <li className="twelvecol bank-holiday-not-set">
-                        <div className="open-day">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-calendar"
-                          ></span>{" "}
-                          Bank Hol.
-                        </div>
-                        <div className="open-times"> </div>
-                      </li>
+                      {openTimes.map((timeEntry, index) => (
+                        <li key={index} className="twelvecol">
+                          <div className="open-day">
+                            <span
+                              aria-hidden="true"
+                              className="icon icon-calendar"
+                            ></span>{" "}
+                            {timeEntry.day}
+                          </div>
+                          <div className="open-times">{timeEntry.hours || timeEntry.label || ""}</div>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>

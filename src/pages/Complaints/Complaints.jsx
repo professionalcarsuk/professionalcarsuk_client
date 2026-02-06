@@ -1,7 +1,9 @@
 import PageWithSidebarLayout from '../../layouts/PageWithSidebarLayout';
+import { useCmsPage } from '../../hooks/useCmsPage';
 import './Complaints.css';
 
 const Complaints = () => {
+  const { content: complaintsPage, loading } = useCmsPage('complaints');
   return (
     <PageWithSidebarLayout
       pageClass="complaints-pg"
@@ -9,7 +11,12 @@ const Complaints = () => {
       headerClass="page-hdr--complaints lazy-background visible"
       showSidebar={true}
     >
-      <div className="sm:px-unset px-[5px]">
+      {loading ? (
+        <p>Loading complaints information...</p>
+      ) : complaintsPage?.contentHtml ? (
+        <div dangerouslySetInnerHTML={{ __html: complaintsPage.contentHtml }} />
+      ) : (
+        <div className="sm:px-unset px-[5px]">
         <p>Dear Customer,</p>
         <p>
           Our aim is always to provide an exceptionally high level of service to all of our
@@ -209,7 +216,8 @@ const Complaints = () => {
         </p>
         <p>Email: complaint.info@financial-ombudsman.org.uk</p>
         <p>Website: www.financial-ombudsman.org.uk</p>
-      </div>
+        </div>
+      )}
     </PageWithSidebarLayout>
   );
 };
