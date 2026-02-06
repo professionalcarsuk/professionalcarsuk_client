@@ -13,7 +13,8 @@ export const SiteSettingsProvider = ({ children }) => {
     const fetchSettings = async () => {
       try {
         setLoading(true);
-        const res = await fetch('/api/client/site-settings');
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const res = await fetch(`${apiUrl}/api/client/site-settings`);
         if (!res.ok) throw new Error('Failed to load site settings');
         const json = await res.json();
         setSettings(json.data || null);
