@@ -113,7 +113,7 @@ const Enquiry = () => {
       dispatch(updateFormField({ field: name, value }));
       // Live captcha validation
       if (!value.trim()) {
-        setCaptchaError('Please answer the captcha');
+        setCaptchaError('Please answer the security question');
       } else if (value.trim() !== '2') {
         setCaptchaError('Incorrect captcha answer. Please try again.');
       } else {
@@ -157,7 +157,7 @@ const Enquiry = () => {
     }
 
     if (!formData.captchaResponse || !formData.captchaResponse.trim()) {
-      toast.error('Please answer the captcha');
+      toast.error('Please answer the security question');
       return;
     }
 

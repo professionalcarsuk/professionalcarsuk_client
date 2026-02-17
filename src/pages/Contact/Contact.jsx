@@ -90,7 +90,7 @@ const Contact = () => {
     }
 
     if (!formData.captchaResponse || !formData.captchaResponse.trim()) {
-      toast.error("Please answer the captcha");
+      toast.error("Please answer the security question");
       return;
     }
 

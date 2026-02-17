@@ -16,7 +16,12 @@ createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <App />
             <ToastContainer
-        position="top-right"
+        position="top-center"
+          style={{
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
         autoClose={4000}
         hideProgressBar={false}
         newestOnTop={false}

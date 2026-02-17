@@ -87,7 +87,7 @@ const SellCar = () => {
 
     // Captcha validation
     if (!formData.captchaResponse.trim()) {
-      toast.error("Please answer the captcha");
+      toast.error("Please answer the security question");
       return;
     } else if (formData.captchaResponse !== "8") {
       dispatch(updateFormField({ field: "captchaResponse", value: "" }));

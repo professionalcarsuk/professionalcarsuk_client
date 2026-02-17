@@ -944,7 +944,7 @@ const VehicleDetail = () => {
               Vehicle <span>Information</span>
             </em>
             <div className="detail-information">
-              <details className="detail-accordion detail-accordion--summary" open="">
+              <details className="detail-accordion detail-accordion--summary" open>
                 <summary>
                   Vehicle <span>Summary</span>
                 </summary>
@@ -1033,6 +1033,20 @@ const VehicleDetail = () => {
                           <span className="vehicle-stat-list__label">12 mths Road Tax</span>
                           <span className="vehicle-stat-list__stat">
                             £{vehicle.roadTax12Months}
+                          </span>
+                        </li>
+                      )}
+                       {vehicle.servicehistory && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Service History</span>
+                          <span className="vehicle-stat-list__stat">{vehicle.servicehistory}</span>
+                        </li>
+                      )}
+                       {vehicle.warrantyMonthsOnPurchase && (
+                        <li>
+                          <span className="vehicle-stat-list__label">Warranty Months on Purchase</span>
+                          <span className="vehicle-stat-list__stat">
+                            {vehicle.warrantyMonthsOnPurchase}
                           </span>
                         </li>
                       )}
