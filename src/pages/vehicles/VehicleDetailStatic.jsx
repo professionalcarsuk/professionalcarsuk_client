@@ -21,6 +21,7 @@ const VehicleDetail = () => {
   const [loadingBrochure, setLoadingBrochure] = useState(false);
   const [vehicle, setVehicle] = useState(null);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   // Find the vehicle by ID
   useEffect(() => {
@@ -152,17 +153,26 @@ const VehicleDetail = () => {
 
   // Load Codeweavers finance plugin script
   useEffect(() => {
-    if (!window.codeweavers) {
+    if (!window.codeweavers && !scriptLoaded) {
       const script = document.createElement('script');
       script.src = 'https://plugins.codeweavers.app/scripts/v1/platform/finance?ApiKey=dDJnmv65xrQ11ze6xC';
       script.async = true;
+      script.onload = () => {
+        console.log('Codeweavers script loaded successfully');
+        setScriptLoaded(true);
+      };
+      script.onerror = () => {
+        console.error('Failed to load Codeweavers script');
+      };
       document.head.appendChild(script);
+    } else if (window.codeweavers) {
+      setScriptLoaded(true);
     }
-  }, []);
+  }, [scriptLoaded]);
 
-  // Initialize finance calculator when vehicle data is available
+  // Initialize finance calculator when vehicle data is available and script is loaded
   useEffect(() => {
-    if (window.codeweavers && vehicle) {
+    if (scriptLoaded && window.codeweavers && vehicle) {
       const images = vehicle.images || ['/images/default-vehicle.jpg'];
       const imageUrls = images
         .map((img) => (typeof img === 'string' ? img : img.url))
@@ -205,7 +215,7 @@ const VehicleDetail = () => {
         utm: { source: "direct", medium: "", campaign: "" }
       });
     }
-  }, [vehicle]);
+  }, [vehicle, scriptLoaded]);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
