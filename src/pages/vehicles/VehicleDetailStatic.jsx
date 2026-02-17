@@ -1241,7 +1241,7 @@ const VehicleDetail = () => {
                   <div className="detail-accordion__content">
                     {vehicle.interiorFeatures && vehicle.interiorFeatures.length > 0 && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">Interior Features</em>
+                        <em className="detail-accordion__heading"></em>
                         <ul className="row tablist">
                           {vehicle.interiorFeatures.map((feature, index) => (
                             <li key={index} className="">
@@ -1253,7 +1253,7 @@ const VehicleDetail = () => {
                     )}
                     {vehicle.exteriorFeatures && vehicle.exteriorFeatures.length > 0 && (
                       <div className="accordion-group">
-                        <em className="detail-accordion__heading">Exterior Features</em>
+                        <em className="detail-accordion__heading"></em>
                         <ul className="row tablist">
                           {vehicle.exteriorFeatures.map((feature, index) => (
                             <li key={index} className="">
