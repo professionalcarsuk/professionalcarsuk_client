@@ -318,6 +318,17 @@ const Navbar = () => {
                         Email Us
                       </a>
                     </li>
+                    {phone && (
+                      <li>
+                        <a
+                          href={`https://wa.me/44${phone.replace(/\D/g, '').replace(/^0/, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <i className="fa fa-whatsapp header-social" aria-hidden="true"></i>
+                        </a>
+                      </li>
+                    )}
                     {social.instagram && (
                       <li>
                         <a
@@ -340,6 +351,7 @@ const Navbar = () => {
                         </a>
                       </li>
                     )}
+                    
                     <li>
                       <div className="header__favourites">
                         <div className="favourites-badge">

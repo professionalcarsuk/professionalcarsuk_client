@@ -968,6 +968,19 @@ i {
   background: #7d7d7d;
 }
 
+.header-social.fa-whatsapp {
+  color: #fff;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-social.fa-whatsapp:hover {
+  color: #fff;
+  background: #7d7d7d;
+}
+
 .ci-facebook-f:before {
   content: "\ea01";
 }
@@ -1113,6 +1126,10 @@ nav#primary-navigation li {
 
 .fa-bars:before {
   content: "\ea03";
+}
+
+.fa-whatsapp:before {
+  content: "\eaeb";
 }
 
 .fa.fa-search:before,
@@ -1748,6 +1765,19 @@ a.megasubmenu__listitem__link:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.header-social.fa-whatsapp {
+  color: #fff;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-social.fa-whatsapp:hover {
+  color: #fff;
+  background: #7d7d7d;
 }
 
 .ci-facebook-f:before {

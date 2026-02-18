@@ -192,28 +192,13 @@ const Contact = () => {
                           ></span>{" "}
                           <a href={`tel:${phone}`}>{phone}</a>
                         </li>
-                        <li className="desktop-hidden">
-                          <span
-                            aria-hidden="true"
-                            className="icon icon-phone-2"
-                          ></span>{" "}
-                          <a href={`tel:${phone}`}>{phone}</a>
-                        </li>
-                        <li className="mobile-hidden">
-                          <span aria-hidden="true"></span>{" "}
-                          <a href="/contact"></a>
-                        </li>
-                        <li className="mobile-hidden">
-                          <span aria-hidden="true"></span>{" "}
-                          <a href="/contact"></a>
-                        </li>
-                        <li className="desktop-hidden">
-                          <span aria-hidden="true"></span> <a href="tel:"></a>
-                        </li>
+                         
+ 
                         <li>
                           <span
                             aria-hidden="true"
                             className="icon icon-mail"
+                            
                           ></span>{" "}
                           <a
                             href={`mailto:${settings?.email || "professionalcarsltd@gmail.com"}`}
@@ -222,6 +207,24 @@ const Contact = () => {
                             Email Us
                           </a>
                         </li>
+                        <li>
+                          <span
+                            aria-hidden="true"
+                            className="icon icon-whatsapp"
+                          ></span>{" "}
+                          <a
+                            href={`https://wa.me/44${phone
+                              .replace(/\D/g, "")
+                              .replace(/^0/, "")}`}
+                            title="WhatsApp Us"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            WhatsApp
+                          </a>
+                        </li>
+ 
+      
                       </ul>
                     </div>
                   </div>

@@ -891,6 +891,10 @@ ul li {
   content: '\ea05';
 }
 
+.icon-whatsapp:before {
+  content: '\eaeb';
+}
+
 a:visited {
   color: #551a8b;
 }
