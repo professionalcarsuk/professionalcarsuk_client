@@ -1934,6 +1934,14 @@ img {
   opacity: 0;
 }
 
+.results-vehicleresults.grid-view .listing__image img.vehicle-img--1,
+.results-vehicleresults.grid-view .listing__image img.vehicle-img--2 {
+  -webkit-transform: scaleX(1.15);
+  transform: scaleX(1.15);
+  -webkit-transform-origin: center center;
+  transform-origin: center center;
+}
+
 .listing:hover .listing__image img.vehicle-img--2 {
   opacity: 1;
 }
@@ -1987,7 +1995,8 @@ svg:not(:root) {
 
 .results-vehicleresults.grid-view .listing__image img {
   max-height: 280px; /* Slightly smaller max height */
-  object-fit: cover; /* Ensure image fills the space nicely */
+  object-fit: contain; /* Show full image without cropping */
+  object-position: center;
 }
 
 /* Fix image spacing for large screens - ensure image container fills available height properly */
@@ -2087,7 +2096,8 @@ svg:not(:root) {
 
   .results-vehicleresults.grid-view .listing__image img {
     max-height: 280px; /* Slightly smaller max height */
-    object-fit: cover; /* Ensure image fills the space nicely */
+    object-fit: contain; /* Show full image without cropping */
+    object-position: center;
   }
 
   /* Fix image spacing - ensure image container fills available height properly */
@@ -2542,8 +2552,9 @@ svg:not(:root) {
       height: 100%;
       max-width: 100%;
       max-height: 140px;
-      -o-object-fit: cover;
-      object-fit: cover;
+      -o-object-fit: contain;
+      object-fit: contain;
+      object-position: center;
     }
 
     /* Hide vehicle spec row to save vertical space */
