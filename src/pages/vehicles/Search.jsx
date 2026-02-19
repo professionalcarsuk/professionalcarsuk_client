@@ -309,11 +309,11 @@ const Search = () => {
         });
         break;
       case 'nis': // Latest Arrivals (newest first)
-        sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        sorted.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         break;
       case 'rr': // Recently Reduced (by price change, would need backend support)
         // For now, default to latest arrivals
-        sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        sorted.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
         break;
       default:
         break;

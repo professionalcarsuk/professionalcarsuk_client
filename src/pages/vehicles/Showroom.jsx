@@ -13,7 +13,7 @@ const Showroom = () => {
   const allVehicles = useSelector(selectVehicleItems);
   const vehicleStatus = useSelector((state) => state.vehicles.status);
   const vehicleError = useSelector((state) => state.vehicles.error);
-  const [sortOption, setSortOption] = useState('h');
+  const [sortOption, setSortOption] = useState('nis');
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [brands, setBrands] = useState([]);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
@@ -57,7 +57,7 @@ const Showroom = () => {
 
   const getCurrentSortLabel = () => {
     const option = sortOptions.find((opt) => opt.value === sortOption);
-    return option ? option.label : 'Price (high to low)';
+    return option ? option.label : 'Latest Arrivals';
   };
 
   const sortVehicles = useCallback((vehicles, sortBy) => {
@@ -360,7 +360,7 @@ const Showroom = () => {
                 <div className="res-filt__sortform">
                   <div className="custom-select-wrapper">
                     <div className="custom-select ">
-                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__value">Latest Arrivals</span>
                       <span className="custom-select__arrow"></span>
                     </div>
                   </div>
@@ -445,10 +445,8 @@ const Showroom = () => {
                     action="/search?"
                     method="GET"
                   >
-                    <select id="sort" className="select" onChange={handleSortChange}>
-                      <option selected="" value="h">
-                        Price (high to low)
-                      </option>
+                    <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
+                      <option value="h">Price (high to low)</option>
                       <option value="l">Price (low to high)</option>
                       <option value="m">Make/model</option>
                       <option value="nis">Latest Arrivals</option>
@@ -672,7 +670,7 @@ const Showroom = () => {
                 <div className="res-filt__sortform">
                   <div className="custom-select-wrapper">
                     <div className="custom-select ">
-                      <span className="custom-select__value">Price (high to low)</span>
+                      <span className="custom-select__value">Latest Arrivals</span>
                       <span className="custom-select__arrow"></span>
                     </div>
                   </div>
@@ -878,7 +876,7 @@ const Showroom = () => {
                   action="/search?"
                   method="GET"
                 >
-                  <select id="sort" className="select" defaultValue="h" onChange={handleSortChange}>
+                  <select id="sort" className="select" value={sortOption} onChange={handleSortChange}>
                     <option value="h">Price (high to low)</option>
                     <option value="l">Price (low to high)</option>
                     <option value="m">Make/model</option>
