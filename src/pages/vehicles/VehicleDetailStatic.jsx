@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import FavoriteButton from '../../components/FavoriteButton';
 import '../../components/VehicleDetail-accordion.css';
 import '../../components/VehicleDetail-components.css';
@@ -11,6 +11,7 @@ import { fetchVehicleById, loadFavorites, selectCurrentVehicle } from '../../sto
 
 const VehicleDetail = () => {
   const { brand, vehicleId } = useParams();
+  const location = useLocation();
   const dispatch = useDispatch();
   const vehicleFromRedux = useSelector(selectCurrentVehicle);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -22,6 +23,7 @@ const VehicleDetail = () => {
   const [vehicle, setVehicle] = useState(null);
   const [userInteracted, setUserInteracted] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [isImageCarouselOpen, setIsImageCarouselOpen] = useState(false);
 
   // Find the vehicle by ID
   useEffect(() => {
@@ -72,6 +74,16 @@ const VehicleDetail = () => {
   const selectImage = (index) => {
     setCurrentImageIndex(index);
     setUserInteracted(true);
+  };
+
+  const openImageCarousel = (index = currentImageIndex) => {
+    setCurrentImageIndex(index);
+    setUserInteracted(true);
+    setIsImageCarouselOpen(true);
+  };
+
+  const closeImageCarousel = () => {
+    setIsImageCarouselOpen(false);
   };
 
   const scrollToThumbnail = useCallback(
@@ -150,6 +162,59 @@ const VehicleDetail = () => {
 
     return () => clearTimeout(timeout);
   }, [userInteracted]);
+
+  useEffect(() => {
+    if (!isImageCarouselOpen) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeImageCarousel();
+      }
+
+      if (event.key === 'ArrowRight') {
+        nextImage();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        prevImage();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isImageCarouselOpen]);
+
+  useEffect(() => {
+    if (!isImageCarouselOpen) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isImageCarouselOpen]);
+
+  useEffect(() => {
+    if (!location.hash || loading) return undefined;
+
+    const scrollToHashTarget = () => {
+      const hashSelector = decodeURIComponent(location.hash);
+      const target = document.querySelector(hashSelector);
+
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    requestAnimationFrame(scrollToHashTarget);
+    const timeoutId = setTimeout(scrollToHashTarget, 300);
+
+    return () => clearTimeout(timeoutId);
+  }, [location.hash, loading, scriptLoaded, vehicle?.id, vehicle?._id]);
 
   // Load Codeweavers finance plugin script
   useEffect(() => {
@@ -676,10 +741,20 @@ const VehicleDetail = () => {
                       src={displayImages[currentImageIndex]}
                       alt="Vehicle"
                       className="main-vehicle-image"
+                      onClick={() => openImageCarousel(currentImageIndex)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          openImageCarousel(currentImageIndex);
+                        }
+                      }}
                       style={{
                         transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
                         opacity: 1,
                         transform: 'scale(1)',
+                        cursor: 'zoom-in',
                       }}
                     />
                     <button
@@ -1439,9 +1514,8 @@ const VehicleDetail = () => {
               
               {/* More details will be added here */}
 
- 
 
-            <div id="finance-section" className="container">
+            <div id="finance-section" name="finance-section" className="container">
               {vehicle.financeMonthly && (
                 <em className="row-block__heading">
                 Finance <span>This Car</span>
@@ -1455,8 +1529,9 @@ const VehicleDetail = () => {
                   </div>
                 </div>
               )}
-              <div className="detail-disclaimer">
-                <p>For more info on this vehicle call our showroom on 07788929755</p>
+              <div className="detail-disclaimer">  
+                            
+                <p>For more info on this vehicle call our showroom on 07788929755</p>                           
                 <p>
                   Every effort has been made to ensure the accuracy of the above information but
                   errors may occur. Please check with a salesperson.
@@ -1466,6 +1541,61 @@ const VehicleDetail = () => {
           </div>
         </div>
       </div>
+      {isImageCarouselOpen && (
+        <div
+          className="vehicle-image-modal"
+          onClick={closeImageCarousel}
+          role="presentation"
+        >
+          <button
+            type="button"
+            className="vehicle-image-modal__close"
+            onClick={closeImageCarousel}
+            aria-label="Close image carousel"
+          >
+            ×
+          </button>
+
+          <button
+            type="button"
+            className="vehicle-image-modal__arrow vehicle-image-modal__arrow--left"
+            onClick={(event) => {
+              event.stopPropagation();
+              prevImage();
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+
+          <div
+            className="vehicle-image-modal__content"
+            onClick={(event) => event.stopPropagation()}
+            role="presentation"
+          >
+            <img
+              src={displayImages[currentImageIndex]}
+              alt={`Vehicle image ${currentImageIndex + 1}`}
+              className="vehicle-image-modal__image"
+            />
+            <div className="vehicle-image-modal__counter">
+              {currentImageIndex + 1} / {displayImages.length}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="vehicle-image-modal__arrow vehicle-image-modal__arrow--right"
+            onClick={(event) => {
+              event.stopPropagation();
+              nextImage();
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+        </div>
+      )}
       {/* Static content will be added here */}
     </div>
   );

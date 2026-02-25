@@ -6,10 +6,27 @@ import Footer from '../components/Footer/Footer';
 const MainLayout = ({ children }) => {
   const location = useLocation();
 
-  // Scroll to top on route change
+  // Scroll to top on route change, but respect hash anchors
   useEffect(() => {
+    if (location.hash) {
+      const scrollToHash = () => {
+        const hashSelector = decodeURIComponent(location.hash);
+        const target = document.querySelector(hashSelector);
+
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      requestAnimationFrame(scrollToHash);
+      const timeoutId = setTimeout(scrollToHash, 250);
+
+      return () => clearTimeout(timeoutId);
+    }
+
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+    return undefined;
+  }, [location.pathname, location.hash]);
 
   // Hide banner on showroom and search pages
   const hideBanner =
