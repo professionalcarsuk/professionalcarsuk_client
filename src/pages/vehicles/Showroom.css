@@ -1936,8 +1936,8 @@ img {
 
 .results-vehicleresults.grid-view .listing__image img.vehicle-img--1,
 .results-vehicleresults.grid-view .listing__image img.vehicle-img--2 {
-  -webkit-transform: scaleX(1.15);
-  transform: scaleX(1.15);
+  -webkit-transform: scaleX(1.05);
+  transform: scaleX(1.05);
   -webkit-transform-origin: center center;
   transform-origin: center center;
 }
