@@ -285,6 +285,20 @@ const Hero = () => {
     return brand ? brand.name : "";
   };
 
+  const formatBrandLabel = (brand) => {
+    if (typeof brand?.totalVehicles === "number") {
+      return `${brand.name} (${brand.totalVehicles})`;
+    }
+    return brand?.name || "";
+  };
+
+  const formatModelLabel = (model) => {
+    if (typeof model?.totalVehicles === "number") {
+      return `${model.model} (${model.totalVehicles})`;
+    }
+    return model?.model || "";
+  };
+
   // Helper function to generate price options
   const generatePriceOptions = (min, max, step) => {
     const options = [];
@@ -436,7 +450,7 @@ const Hero = () => {
                         </option>
                         {brands.map((brand) => (
                           <option key={brand._id} value={brand._id}>
-                            {brand.name}
+                            {formatBrandLabel(brand)}
                           </option>
                         ))}
                       </select>
@@ -457,7 +471,7 @@ const Hero = () => {
                         </option>
                         {models.map((model) => (
                           <option key={model._id} value={model._id}>
-                            {model.model}
+                            {formatModelLabel(model)}
                           </option>
                         ))}
                       </select>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import './RefineSearchDrawer.css';
 
@@ -30,6 +30,7 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
   // const [availableTrims, setAvailableTrims] = useState([]);
   const [vehicleCount, setVehicleCount] = useState(0);
   const [loadingCount, setLoadingCount] = useState(false);
+  const latestCountRequestRef = useRef(0);
   const [priceRanges, setPriceRanges] = useState({
     min: 0,
     max: 150000,
@@ -44,6 +45,12 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
   const [availableTransmissions, setAvailableTransmissions] = useState([]);
   const [availableFuelTypes, setAvailableFuelTypes] = useState([]);
   const [availableSeats, setAvailableSeats] = useState([]);
+  const [bodyStyleCounts, setBodyStyleCounts] = useState({});
+  const [doorCounts, setDoorCounts] = useState({});
+  const [colorCounts, setColorCounts] = useState({});
+  const [transmissionCounts, setTransmissionCounts] = useState({});
+  const [fuelTypeCounts, setFuelTypeCounts] = useState({});
+  const [seatCounts, setSeatCounts] = useState({});
 
   // Form state
   const [formData, setFormData] = useState({
@@ -79,49 +86,158 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
     });
   }, [searchParams]);
 
-  // Fetch unique options for dynamic fields on mount
+  // Fetch unique options for dynamic fields based on current selections
   useEffect(() => {
     const fetchUniqueOptions = async () => {
       try {
-        const params = new URLSearchParams();
+        const buildCountMap = (values) =>
+          values.reduce((acc, value) => {
+            if (!value && value !== 0) return acc;
+            const key = String(value);
+            acc[key] = (acc[key] || 0) + 1;
+            return acc;
+          }, {});
 
-        // Add type filter based on current path - this is critical for all dropdown options
-        if (currentVehicleType === 'cars') {
-          params.append('type', 'cars');
-        } else if (currentVehicleType === 'vans') {
-          params.append('type', 'vans');
-        }
+        const getParamsForFacet = (excludedField = null) => {
+          const params = new URLSearchParams();
 
-        const response = await fetch(
-          `${
-            import.meta.env.VITE_API_URL || 'http://localhost:5000'
-          }/api/client/vehicles/filter?${params.toString()}&pageSize=1000`
+          if (currentVehicleType === 'cars') {
+            params.append('type', 'cars');
+          } else if (currentVehicleType === 'vans') {
+            params.append('type', 'vans');
+          }
+
+          if (formData.make) params.append('make', formData.make);
+          if (formData.model) params.append('model', formData.model);
+          if (excludedField !== 'body' && formData.body) params.append('body_type', formData.body);
+          if (excludedField !== 'doors' && formData.doors) params.append('doors', formData.doors);
+          if (excludedField !== 'body_colour' && formData.body_colour) {
+            params.append('color', formData.body_colour);
+          }
+          if (excludedField !== 'gearbox' && formData.gearbox) {
+            params.append('transmission', formData.gearbox);
+          }
+          if (excludedField !== 'fuel_type' && formData.fuel_type) {
+            params.append('fuel_type', formData.fuel_type);
+          }
+          if (excludedField !== 'seats' && formData.seats) params.append('seats', formData.seats);
+
+          return params;
+        };
+
+        const fetchFacetVehicles = async (excludedField = null) => {
+          const params = getParamsForFacet(excludedField);
+          const response = await fetch(
+            `${
+              import.meta.env.VITE_API_URL || 'http://localhost:5000'
+            }/api/client/vehicles/filter?${params.toString()}&pageSize=1000`
+          );
+          const result = await response.json();
+          return result.success && result.data ? result.data : [];
+        };
+
+        const [
+          fullyFilteredVehicles,
+          bodyFacetVehicles,
+          doorFacetVehicles,
+          colorFacetVehicles,
+          transmissionFacetVehicles,
+          fuelFacetVehicles,
+          seatFacetVehicles,
+        ] = await Promise.all([
+          fetchFacetVehicles(),
+          fetchFacetVehicles('body'),
+          fetchFacetVehicles('doors'),
+          fetchFacetVehicles('body_colour'),
+          fetchFacetVehicles('gearbox'),
+          fetchFacetVehicles('fuel_type'),
+          fetchFacetVehicles('seats'),
+        ]);
+
+        const bodyStyleMap = buildCountMap(
+          bodyFacetVehicles.map((vehicle) => vehicle.bodyStyle).filter(Boolean)
         );
-        const result = await response.json();
-        if (result.success && result.data) {
-          const vehicles = result.data;
-          const bodyStyles = [...new Set(vehicles.map((v) => v.bodyStyle).filter(Boolean))].sort();
-          const doors = [...new Set(vehicles.map((v) => v.doors).filter(Boolean))].sort();
-          const colors = [...new Set(vehicles.map((v) => v.color).filter(Boolean))].sort();
-          const transmissions = [
-            ...new Set(vehicles.map((v) => v.transmission).filter(Boolean)),
-          ].sort();
-          const fuelTypes = [...new Set(vehicles.map((v) => v.fuelType).filter(Boolean))].sort();
-          const seats = [...new Set(vehicles.map((v) => v.seats).filter(Boolean))].sort();
-          setAvailableBodyStyles(bodyStyles);
-          setAvailableDoors(doors);
-          setAvailableColors(colors);
-          setAvailableTransmissions(transmissions);
-          setAvailableFuelTypes(fuelTypes);
-          setAvailableSeats(seats);
+        const doorMap = buildCountMap(doorFacetVehicles.map((vehicle) => vehicle.doors).filter(Boolean));
+        const colorMap = buildCountMap(colorFacetVehicles.map((vehicle) => vehicle.color).filter(Boolean));
+        const transmissionMap = buildCountMap(
+          transmissionFacetVehicles.map((vehicle) => vehicle.transmission).filter(Boolean)
+        );
+        const fuelTypeMap = buildCountMap(
+          fuelFacetVehicles.map((vehicle) => vehicle.fuelType).filter(Boolean)
+        );
+        const seatMap = buildCountMap(seatFacetVehicles.map((vehicle) => vehicle.seats).filter(Boolean));
+
+        setAvailableBodyStyles(Object.keys(bodyStyleMap).sort());
+        setAvailableDoors(Object.keys(doorMap).sort());
+        setAvailableColors(Object.keys(colorMap).sort());
+        setAvailableTransmissions(Object.keys(transmissionMap).sort());
+        setAvailableFuelTypes(Object.keys(fuelTypeMap).sort());
+        setAvailableSeats(Object.keys(seatMap).sort());
+
+        setBodyStyleCounts(bodyStyleMap);
+        setDoorCounts(doorMap);
+        setColorCounts(colorMap);
+        setTransmissionCounts(transmissionMap);
+        setFuelTypeCounts(fuelTypeMap);
+        setSeatCounts(seatMap);
+
+        if (fullyFilteredVehicles.length > 0) {
+          const prices = fullyFilteredVehicles
+            .map((v) => v.price)
+            .filter((p) => p && p > 0)
+            .sort((a, b) => a - b);
+
+          const financePrices = fullyFilteredVehicles
+            .map((v) => v.financeMonthly)
+            .filter((p) => p && p > 0)
+            .sort((a, b) => a - b);
+
+          const minPrice = prices.length > 0 ? Math.floor(prices[0] / 1000) * 1000 : 0;
+          const maxPrice =
+            prices.length > 0 ? Math.ceil(prices[prices.length - 1] / 1000) * 1000 : 150000;
+          const minFinance = financePrices.length > 0 ? Math.floor(financePrices[0] / 50) * 50 : 0;
+          const maxFinance =
+            financePrices.length > 0
+              ? Math.ceil(financePrices[financePrices.length - 1] / 50) * 50
+              : 2000;
+
+          setPriceRanges({
+            min: Math.max(0, minPrice),
+            max: Math.min(150000, maxPrice),
+            financeMin: Math.max(0, minFinance),
+            financeMax: Math.min(2000, maxFinance),
+          });
+        } else {
+          setPriceRanges({
+            min: 0,
+            max: 150000,
+            financeMin: 0,
+            financeMax: 2000,
+          });
         }
       } catch (error) {
         console.error('Error fetching unique options:', error);
+        setBodyStyleCounts({});
+        setDoorCounts({});
+        setColorCounts({});
+        setTransmissionCounts({});
+        setFuelTypeCounts({});
+        setSeatCounts({});
       }
     };
 
     fetchUniqueOptions();
-  }, [currentVehicleType]);
+  }, [
+    currentVehicleType,
+    formData.make,
+    formData.model,
+    formData.body,
+    formData.doors,
+    formData.body_colour,
+    formData.gearbox,
+    formData.fuel_type,
+    formData.seats,
+  ]);
 
   // Fetch brands on mount
   useEffect(() => {
@@ -163,88 +279,11 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
     fetchBrands();
   }, [currentVehicleType]);
 
-  // Function to update price ranges based on available vehicles
-  const updatePriceRanges = useCallback(
-    async (brandId, modelId) => {
-      try {
-        // Fetch vehicles for this brand/model combination to get price ranges
-        const params = new URLSearchParams();
-        params.append('make', brandId);
-        if (modelId) {
-          params.append('model', modelId);
-        }
-
-        // Add type filter based on current path
-        if (currentVehicleType === 'cars') {
-          params.append('type', 'cars');
-        } else if (currentVehicleType === 'vans') {
-          params.append('type', 'vans');
-        }
-
-        const response = await fetch(
-          `${
-            import.meta.env.VITE_API_URL || 'http://localhost:5000'
-          }/api/client/vehicles/recent?${params.toString()}`
-        );
-        const result = await response.json();
-
-        if (result.success && result.data && result.data.length > 0) {
-          const vehicles = result.data;
-
-          // Calculate price ranges
-          const prices = vehicles
-            .map((v) => v.price)
-            .filter((p) => p && p > 0)
-            .sort((a, b) => a - b);
-
-          const financePrices = vehicles
-            .map((v) => v.financeMonthly)
-            .filter((p) => p && p > 0)
-            .sort((a, b) => a - b);
-
-          const minPrice = prices.length > 0 ? Math.floor(prices[0] / 1000) * 1000 : 0;
-          const maxPrice =
-            prices.length > 0 ? Math.ceil(prices[prices.length - 1] / 1000) * 1000 : 150000;
-          const minFinance = financePrices.length > 0 ? Math.floor(financePrices[0] / 50) * 50 : 0;
-          const maxFinance =
-            financePrices.length > 0
-              ? Math.ceil(financePrices[financePrices.length - 1] / 50) * 50
-              : 2000;
-
-          setPriceRanges({
-            min: Math.max(0, minPrice),
-            max: Math.min(150000, maxPrice),
-            financeMin: Math.max(0, minFinance),
-            financeMax: Math.min(2000, maxFinance),
-          });
-        } else {
-          // Reset to defaults if no vehicles found
-          setPriceRanges({
-            min: 0,
-            max: 150000,
-            financeMin: 0,
-            financeMax: 2000,
-          });
-        }
-      } catch (error) {
-        console.error('Error updating price ranges:', error);
-        setPriceRanges({ min: 0, max: 150000, financeMin: 0, financeMax: 2000 });
-      }
-    },
-    [currentVehicleType]
-  );
-
   // Fetch models when brand changes
   useEffect(() => {
     const fetchModels = async () => {
       if (!formData.make) {
         setAvailableModels([]);
-        setPriceRanges({
-          min: 0,
-          max: 150000,
-          financeMin: 0,
-          financeMax: 2000,
-        });
         return;
       }
 
@@ -260,6 +299,14 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
           params.append('type', 'vans');
         }
 
+        // Cascade model options based on other selected filters (exclude model itself)
+        if (formData.body) params.append('body_type', formData.body);
+        if (formData.doors) params.append('doors', formData.doors);
+        if (formData.body_colour) params.append('color', formData.body_colour);
+        if (formData.gearbox) params.append('transmission', formData.gearbox);
+        if (formData.fuel_type) params.append('fuel_type', formData.fuel_type);
+        if (formData.seats) params.append('seats', formData.seats);
+
         const response = await fetch(
           `${
             import.meta.env.VITE_API_URL || 'http://localhost:5000'
@@ -268,19 +315,34 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
         const result = await response.json();
         if (result.success) {
           setAvailableModels(result.data);
+        } else {
+          setAvailableModels([]);
         }
-
-        // Fetch price ranges for this brand
-        await updatePriceRanges(formData.make, null);
       } catch (error) {
         console.error('Error fetching models:', error);
+        setAvailableModels([]);
       } finally {
         setLoadingModels(false);
       }
     };
 
     fetchModels();
-  }, [formData.make, currentVehicleType, updatePriceRanges]);
+  }, [
+    formData.make,
+    formData.body,
+    formData.doors,
+    formData.body_colour,
+    formData.gearbox,
+    formData.fuel_type,
+    formData.seats,
+    currentVehicleType,
+  ]);
+
+  useEffect(() => {
+    if (!formData.make && formData.model) {
+      setFormData((prev) => ({ ...prev, model: '' }));
+    }
+  }, [formData.make, formData.model]);
 
   // Fetch trims when model changes - COMMENTED OUT FOR NOW
   // useEffect(() => {
@@ -347,6 +409,8 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
 
   // Function to update vehicle count based on current filters
   const updateVehicleCount = useCallback(async () => {
+    const requestId = latestCountRequestRef.current + 1;
+    latestCountRequestRef.current = requestId;
     setLoadingCount(true);
     try {
       const params = new URLSearchParams();
@@ -388,6 +452,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
       );
       const result = await response.json();
 
+      if (requestId !== latestCountRequestRef.current) {
+        return;
+      }
+
       if (result.success) {
         setVehicleCount(result.count || 0);
       } else {
@@ -395,9 +463,13 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       console.error('Error fetching vehicle count:', error);
-      setVehicleCount(0);
+      if (requestId === latestCountRequestRef.current) {
+        setVehicleCount(0);
+      }
     } finally {
-      setLoadingCount(false);
+      if (requestId === latestCountRequestRef.current) {
+        setLoadingCount(false);
+      }
     }
   }, [formData, currentVehicleType]);
 
@@ -592,6 +664,40 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
   // Filter models based on selected make
   const filteredModels = availableModels;
 
+  const formatBrandLabel = (brand) => {
+    if (typeof brand?.totalVehicles === 'number') {
+      return `${brand.name} (${brand.totalVehicles})`;
+    }
+    return brand?.name || '';
+  };
+
+  const formatModelLabel = (model) => {
+    if (typeof model?.totalVehicles === 'number') {
+      return `${model.model} (${model.totalVehicles})`;
+    }
+    return model?.model || '';
+  };
+
+  const totalMakeVehicles = availableBrands.reduce(
+    (sum, brand) => sum + (typeof brand?.totalVehicles === 'number' ? brand.totalVehicles : 0),
+    0
+  );
+
+  const totalModelVehicles = filteredModels.reduce(
+    (sum, model) => sum + (typeof model?.totalVehicles === 'number' ? model.totalVehicles : 0),
+    0
+  );
+
+  const totalBodyStyleVehicles = Object.values(bodyStyleCounts).reduce((sum, value) => sum + value, 0);
+  const totalDoorVehicles = Object.values(doorCounts).reduce((sum, value) => sum + value, 0);
+  const totalColorVehicles = Object.values(colorCounts).reduce((sum, value) => sum + value, 0);
+  const totalTransmissionVehicles = Object.values(transmissionCounts).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+  const totalFuelTypeVehicles = Object.values(fuelTypeCounts).reduce((sum, value) => sum + value, 0);
+  const totalSeatVehicles = Object.values(seatCounts).reduce((sum, value) => sum + value, 0);
+
   return (
     <>
       <div className={`results-layout__search ${isOpen ? 'toggled' : ''}`}>
@@ -620,13 +726,13 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     <option value="">
                       {loadingBrands
                         ? 'Loading...'
-                        : availableBrands.length > 0
-                        ? `Any make (${availableBrands.length})`
+                        : totalMakeVehicles > 0
+                        ? `Any make (${totalMakeVehicles})`
                         : 'Any make'}
                     </option>
                     {availableBrands.map((brand) => (
                       <option key={brand._id} value={brand._id}>
-                        {brand.name}
+                        {formatBrandLabel(brand)}
                       </option>
                     ))}
                   </select>
@@ -645,13 +751,13 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     <option value="">
                       {loadingModels
                         ? 'Loading...'
-                        : filteredModels.length > 0
-                        ? `Any model (${filteredModels.length})`
+                        : totalModelVehicles > 0
+                        ? `Any model (${totalModelVehicles})`
                         : 'Any model'}
                     </option>
                     {filteredModels.map((model) => (
                       <option key={model._id} value={model._id}>
-                        {model.model}
+                        {formatModelLabel(model)}
                       </option>
                     ))}
                   </select>
@@ -692,10 +798,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.body}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any bodystyle (${availableBodyStyles.length})`}</option>
+                    <option value="">{`Any bodystyle (${totalBodyStyleVehicles})`}</option>
                     {availableBodyStyles.map((style) => (
                       <option key={style} value={style}>
-                        {style}
+                        {`${style} (${bodyStyleCounts[String(style)] || 0})`}
                       </option>
                     ))}
                   </select>
@@ -710,10 +816,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.doors}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any doors (${availableDoors.length})`}</option>
+                    <option value="">{`Any doors (${totalDoorVehicles})`}</option>
                     {availableDoors.map((door) => (
                       <option key={door} value={door}>
-                        {door} Doors
+                        {`${door} Doors (${doorCounts[String(door)] || 0})`}
                       </option>
                     ))}
                   </select>
@@ -728,10 +834,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.body_colour}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any colour (${availableColors.length})`}</option>
+                    <option value="">{`Any colour (${totalColorVehicles})`}</option>
                     {availableColors.map((color) => (
                       <option key={color} value={color}>
-                        {color}
+                        {`${color} (${colorCounts[String(color)] || 0})`}
                       </option>
                     ))}
                   </select>
@@ -746,10 +852,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.gearbox}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any transmission (${availableTransmissions.length})`}</option>
+                    <option value="">{`Any transmission (${totalTransmissionVehicles})`}</option>
                     {availableTransmissions.map((transmission) => (
                       <option key={transmission} value={transmission}>
-                        {transmission}
+                        {`${transmission} (${transmissionCounts[String(transmission)] || 0})`}
                       </option>
                     ))}
                   </select>
@@ -764,10 +870,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.fuel_type}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any fuel type (${availableFuelTypes.length})`}</option>
+                    <option value="">{`Any fuel type (${totalFuelTypeVehicles})`}</option>
                     {availableFuelTypes.map((fuel) => (
                       <option key={fuel} value={fuel}>
-                        {fuel}
+                        {`${fuel} (${fuelTypeCounts[String(fuel)] || 0})`}
                       </option>
                     ))}
                   </select>
@@ -782,10 +888,10 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
                     value={formData.seats}
                     onChange={handleInputChange}
                   >
-                    <option value="">{`Any seats (${availableSeats.length})`}</option>
+                    <option value="">{`Any seats (${totalSeatVehicles})`}</option>
                     {availableSeats.map((seat) => (
                       <option key={seat} value={seat}>
-                        {seat} Seats
+                        {`${seat} Seats (${seatCounts[String(seat)] || 0})`}
                       </option>
                     ))}
                   </select>
