@@ -98,74 +98,76 @@ const RefineSearchDrawer = ({ isOpen, onClose }) => {
             return acc;
           }, {});
 
-        const getParamsForFacet = (excludedField = null) => {
-          const params = new URLSearchParams();
+        const params = new URLSearchParams();
+        if (currentVehicleType === 'cars') {
+          params.append('type', 'cars');
+        } else if (currentVehicleType === 'vans') {
+          params.append('type', 'vans');
+        }
+        if (formData.make) params.append('make', formData.make);
+        if (formData.model) params.append('model', formData.model);
 
-          if (currentVehicleType === 'cars') {
-            params.append('type', 'cars');
-          } else if (currentVehicleType === 'vans') {
-            params.append('type', 'vans');
-          }
-
-          if (formData.make) params.append('make', formData.make);
-          if (formData.model) params.append('model', formData.model);
-          if (excludedField !== 'body' && formData.body) params.append('body_type', formData.body);
-          if (excludedField !== 'doors' && formData.doors) params.append('doors', formData.doors);
-          if (excludedField !== 'body_colour' && formData.body_colour) {
-            params.append('color', formData.body_colour);
-          }
-          if (excludedField !== 'gearbox' && formData.gearbox) {
-            params.append('transmission', formData.gearbox);
-          }
-          if (excludedField !== 'fuel_type' && formData.fuel_type) {
-            params.append('fuel_type', formData.fuel_type);
-          }
-          if (excludedField !== 'seats' && formData.seats) params.append('seats', formData.seats);
-
-          return params;
-        };
-
-        const fetchFacetVehicles = async (excludedField = null) => {
-          const params = getParamsForFacet(excludedField);
-          const response = await fetch(
-            `${
-              import.meta.env.VITE_API_URL || 'http://localhost:5000'
-            }/api/client/vehicles/filter?${params.toString()}&pageSize=1000`
-          );
-          const result = await response.json();
-          return result.success && result.data ? result.data : [];
-        };
-
-        const [
-          fullyFilteredVehicles,
-          bodyFacetVehicles,
-          doorFacetVehicles,
-          colorFacetVehicles,
-          transmissionFacetVehicles,
-          fuelFacetVehicles,
-          seatFacetVehicles,
-        ] = await Promise.all([
-          fetchFacetVehicles(),
-          fetchFacetVehicles('body'),
-          fetchFacetVehicles('doors'),
-          fetchFacetVehicles('body_colour'),
-          fetchFacetVehicles('gearbox'),
-          fetchFacetVehicles('fuel_type'),
-          fetchFacetVehicles('seats'),
-        ]);
-
-        const bodyStyleMap = buildCountMap(
-          bodyFacetVehicles.map((vehicle) => vehicle.bodyStyle).filter(Boolean)
+        const response = await fetch(
+          `${
+            import.meta.env.VITE_API_URL || 'http://localhost:5000'
+          }/api/client/vehicles/filter?${params.toString()}&pageSize=1000`
         );
-        const doorMap = buildCountMap(doorFacetVehicles.map((vehicle) => vehicle.doors).filter(Boolean));
-        const colorMap = buildCountMap(colorFacetVehicles.map((vehicle) => vehicle.color).filter(Boolean));
+        const result = await response.json();
+        const baseVehicles = result.success && result.data ? result.data : [];
+
+        const selectedFilters = {
+          body: formData.body,
+          doors: formData.doors,
+          body_colour: formData.body_colour,
+          gearbox: formData.gearbox,
+          fuel_type: formData.fuel_type,
+          seats: formData.seats,
+        };
+
+        const fieldGetters = {
+          body: (vehicle) => vehicle.bodyStyle,
+          doors: (vehicle) => vehicle.doors,
+          body_colour: (vehicle) => vehicle.color,
+          gearbox: (vehicle) => vehicle.transmission,
+          fuel_type: (vehicle) => vehicle.fuelType,
+          seats: (vehicle) => vehicle.seats,
+        };
+
+        const applySelectedFilters = (vehicles, excludedField = null) =>
+          vehicles.filter((vehicle) => {
+            return Object.entries(selectedFilters).every(([field, selectedValue]) => {
+              if (!selectedValue || field === excludedField) return true;
+              const vehicleValue = fieldGetters[field](vehicle);
+              if (vehicleValue === undefined || vehicleValue === null || vehicleValue === '') {
+                return false;
+              }
+              return String(vehicleValue) === String(selectedValue);
+            });
+          });
+
+        const fullyFilteredVehicles = applySelectedFilters(baseVehicles);
+        const bodyStyleMap = buildCountMap(
+          applySelectedFilters(baseVehicles, 'body').map((vehicle) => vehicle.bodyStyle).filter(Boolean)
+        );
+        const doorMap = buildCountMap(
+          applySelectedFilters(baseVehicles, 'doors').map((vehicle) => vehicle.doors).filter(Boolean)
+        );
+        const colorMap = buildCountMap(
+          applySelectedFilters(baseVehicles, 'body_colour').map((vehicle) => vehicle.color).filter(Boolean)
+        );
         const transmissionMap = buildCountMap(
-          transmissionFacetVehicles.map((vehicle) => vehicle.transmission).filter(Boolean)
+          applySelectedFilters(baseVehicles, 'gearbox')
+            .map((vehicle) => vehicle.transmission)
+            .filter(Boolean)
         );
         const fuelTypeMap = buildCountMap(
-          fuelFacetVehicles.map((vehicle) => vehicle.fuelType).filter(Boolean)
+          applySelectedFilters(baseVehicles, 'fuel_type')
+            .map((vehicle) => vehicle.fuelType)
+            .filter(Boolean)
         );
-        const seatMap = buildCountMap(seatFacetVehicles.map((vehicle) => vehicle.seats).filter(Boolean));
+        const seatMap = buildCountMap(
+          applySelectedFilters(baseVehicles, 'seats').map((vehicle) => vehicle.seats).filter(Boolean)
+        );
 
         setAvailableBodyStyles(Object.keys(bodyStyleMap).sort());
         setAvailableDoors(Object.keys(doorMap).sort());
