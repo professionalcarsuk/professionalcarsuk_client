@@ -17,10 +17,21 @@ const Search = () => {
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const VEHICLES_PER_PAGE = 12;
+
+  useEffect(() => {
+    const animationFrame = window.requestAnimationFrame(() => {
+      setIsResultsVisible(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   
 
@@ -560,7 +571,7 @@ const Search = () => {
             </div>
           </div>
         </div>
-        <div id="results">
+        <div id="results" className={`results-load-in ${isResultsVisible ? 'is-visible' : ''}`}>
           <div className="wrapper">
             <div className="container">
               <input type="hidden" id="button_class_hidden" value="button green full" />
@@ -936,7 +947,7 @@ const Search = () => {
           </div>
         </div>
       </div>
-      <div id="results">
+      <div id="results" className={`results-load-in ${isResultsVisible ? 'is-visible' : ''}`}>
         <div className="wrapper">
           <div className="container">
             <input type="hidden" id="button_class_hidden" value="button green full" />

@@ -1,4 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900,100i,200i,300i,400i,500i,600i,700i,800i,900i&display=swap');
+
+#results.results-load-in {
+  opacity: 0;
+  transform: translateY(70px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+#results.results-load-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #results.results-load-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ClickIcons font-face intentionally provided from globals.css to avoid
    duplicate declarations across page/component styles. */
 body {

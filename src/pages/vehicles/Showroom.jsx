@@ -19,6 +19,7 @@ const Showroom = () => {
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isRefineSearchOpen, setIsRefineSearchOpen] = useState(false);
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
 
   const sortOptions = [
     { value: 'h', label: 'Price (high to low)' },
@@ -54,6 +55,16 @@ const Showroom = () => {
     dispatch(fetchRecentVehicles());
     setCurrentPage(1); // Reset to first page when navigating
   }, [brand, dispatch]);
+
+  useEffect(() => {
+    const animationFrame = window.requestAnimationFrame(() => {
+      setIsResultsVisible(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
 
   const getCurrentSortLabel = () => {
     const option = sortOptions.find((opt) => opt.value === sortOption);
@@ -459,7 +470,7 @@ const Showroom = () => {
             </div>
           </div>
         </div>
-        <div id="results">
+        <div id="results" className={`results-load-in ${isResultsVisible ? 'is-visible' : ''}`}>
           <div className="wrapper">
             <div className="container">
               <input type="hidden" id="button_class_hidden" value="button green full" />
@@ -890,7 +901,7 @@ const Showroom = () => {
           </div>
         </div>
       </div>
-      <div id="results">
+      <div id="results" className={`results-load-in ${isResultsVisible ? 'is-visible' : ''}`}>
         <div className="wrapper">
           <div className="container">
             <input type="hidden" id="button_class_hidden" value="button green full" />
