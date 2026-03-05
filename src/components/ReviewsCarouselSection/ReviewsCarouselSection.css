@@ -24,11 +24,17 @@
   position: relative;
   --tile-width: calc((100% - 48px) / 5);
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 10px;
   background: #f9fafb;
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-x;
 }
 
 .reviews-carousel-section__track {
@@ -36,11 +42,10 @@
   flex-direction: row;
   gap: 12px;
   width: max-content;
-  animation: reviews-horizontal-scroll 45s linear infinite;
 }
 
-.reviews-carousel-section__viewport:hover .reviews-carousel-section__track {
-  animation-play-state: paused;
+.reviews-carousel-section__viewport.is-dragging {
+  cursor: grabbing;
 }
 
 .reviews-carousel-section__card {
@@ -89,14 +94,8 @@
   color: #374151;
 }
 
-@keyframes reviews-horizontal-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(-50%);
-  }
+.reviews-carousel-section__viewport::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useSiteSettings } from "../../contexts/SiteSettingsContext";
 import "./ReviewsCarouselSection.css";
 
@@ -49,12 +49,65 @@ const getReviewUrl = (review, reviewSettings) => {
 
 const ReviewsCarouselSection = () => {
   const { settings } = useSiteSettings();
+  const viewportRef = useRef(null);
+  const isDownRef = useRef(false);
+  const startXRef = useRef(0);
+  const startScrollLeftRef = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const reviews = settings?.review?.reviews?.length
-    ? settings.review.reviews.slice(0, 10)
-    : fallbackReviews;
+  const reviews = useMemo(
+    () =>
+      settings?.review?.reviews?.length
+        ? settings.review.reviews.slice(0, 10)
+        : fallbackReviews,
+    [settings]
+  );
 
-  const carouselReviews = reviews.length > 1 ? [...reviews, ...reviews] : reviews;
+  const carouselReviews = useMemo(
+    () => (reviews.length > 1 ? [...reviews, ...reviews] : reviews),
+    [reviews]
+  );
+
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || reviews.length <= 1) return undefined;
+
+    const stepPx = 1;
+    const intervalMs = 22;
+
+    const timer = setInterval(() => {
+      if (!viewport || isDownRef.current) return;
+      viewport.scrollLeft += stepPx;
+
+      const halfWidth = viewport.scrollWidth / 2;
+      if (viewport.scrollLeft >= halfWidth) {
+        viewport.scrollLeft -= halfWidth;
+      }
+    }, intervalMs);
+
+    return () => clearInterval(timer);
+  }, [reviews.length]);
+
+  const handlePointerDown = (clientX) => {
+    const viewport = viewportRef.current;
+    if (!viewport) return;
+    isDownRef.current = true;
+    setIsDragging(true);
+    startXRef.current = clientX;
+    startScrollLeftRef.current = viewport.scrollLeft;
+  };
+
+  const handlePointerMove = (clientX) => {
+    const viewport = viewportRef.current;
+    if (!viewport || !isDownRef.current) return;
+    const delta = clientX - startXRef.current;
+    viewport.scrollLeft = startScrollLeftRef.current - delta;
+  };
+
+  const handlePointerUp = () => {
+    isDownRef.current = false;
+    setIsDragging(false);
+  };
 
   return (
     <div className="row-block html6 reviews-carousel-section">
@@ -66,7 +119,17 @@ const ReviewsCarouselSection = () => {
                 <div className="reviews-carousel-section__heading-div">
                   <h2 className="reviews-carousel-section__heading">Customer Reviews</h2>
                 </div>
-                <div className="reviews-carousel-section__viewport">
+                <div
+                  ref={viewportRef}
+                  className={`reviews-carousel-section__viewport ${isDragging ? "is-dragging" : ""}`}
+                  onMouseDown={(e) => handlePointerDown(e.pageX)}
+                  onMouseMove={(e) => handlePointerMove(e.pageX)}
+                  onMouseUp={handlePointerUp}
+                  onMouseLeave={handlePointerUp}
+                  onTouchStart={(e) => handlePointerDown(e.touches[0].pageX)}
+                  onTouchMove={(e) => handlePointerMove(e.touches[0].pageX)}
+                  onTouchEnd={handlePointerUp}
+                >
                   <div className="reviews-carousel-section__track">
                     {carouselReviews.map((review, index) => (
                       <a
