@@ -5,6 +5,11 @@
   z-index: 1;
 }
 
+/* Tighten spacing when Partners follows the reviews carousel. */
+.reviews-carousel-section + .row-block.html6 {
+  padding-top: 12px;
+}
+
 .wrapper {
   display: block;
   padding: 0 10px;

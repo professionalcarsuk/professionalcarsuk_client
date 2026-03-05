@@ -3,6 +3,7 @@ import {
   Hero,
   FeaturedVehicles,
   PurchaseSection,
+  ReviewsCarouselSection,
   PartnersSection,
   WarrantySection,
   TypesSection,
@@ -15,6 +16,7 @@ const Home = () => {
       <Hero />
       <FeaturedVehicles />
       <PurchaseSection />
+      <ReviewsCarouselSection />
       <PartnersSection />
       <WarrantySection />
       <TypesSection />

@@ -3,6 +3,7 @@ export { default as Navbar } from "./Navbar/Navbar";
 export { default as Hero } from "./Hero/Hero";
 export { default as FeaturedVehicles } from "./FeaturedVehicles/FeaturedVehicles";
 export { default as PurchaseSection } from "./PurchaseSection/PurchaseSection";
+export { default as ReviewsCarouselSection } from "./ReviewsCarouselSection/ReviewsCarouselSection";
 export { default as PartnersSection } from "./PartnersSection/PartnersSection";
 export { default as WarrantySection } from "./WarrantySection/WarrantySection";
 export { default as FixedBannerBottom } from "./FixedBannerBottom/FixedBannerBottom";
