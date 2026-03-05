@@ -9,9 +9,43 @@ const PageSidebar = () => {
 
   const phone = settings?.phone || "07788929755";
   const email = settings?.email || "professionalcarsltd@gmail.com";
-  const reviewText = settings?.review?.text || "The dealers were very helpful and the vehicle was being cleaned when I arrived. The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it. The vehicle itself drives very well and is in showroom condition. No problems with it so far. Would recommend the company.";
-  const reviewAuthor = settings?.review?.author || "R. Fielding";
-  const reviewLink = settings?.review?.linkUrl || "https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305";
+  const fallbackReviews = [
+    {
+      title: "Great Experience",
+      text: "The dealers were very helpful and the vehicle was being cleaned when I arrived. The salesman wasn't 'pushy' and they were very flexible about delivering the car when I bought it. The vehicle itself drives very well and is in showroom condition. No problems with it so far. Would recommend the company.",
+      author: "R. Fielding",
+      date: "",
+      source: "Autotrader",
+      stars: 5,
+    },
+  ];
+  const reviews = settings?.review?.reviews?.length
+    ? settings.review.reviews
+    : fallbackReviews;
+  const topReviews = reviews.slice(0, 2);
+  const googleLabel = settings?.review?.googleLabel || "See More on Google";
+  const googleUrl =
+    settings?.review?.googleUrl ||
+    "https://www.google.com/search?q=Professional+Cars+Limited+reviews";
+  const autotraderLabel = settings?.review?.autotraderLabel || "See More on Autotrader";
+  const autotraderUrl =
+    settings?.review?.autotraderUrl ||
+    "https://www.autotrader.co.uk/dealers/buckinghamshire/aylesbury/professional-cars-ltd-10001305";
+  const renderStars = (rating) => {
+    const stars = Math.max(1, Math.min(5, Number(rating) || 0));
+    if (!stars) return "";
+    return `${"★".repeat(stars)}${"☆".repeat(5 - stars)}`;
+  };
+  const formatReviewDate = (dateValue) => {
+    if (!dateValue) return "";
+    const parsed = new Date(dateValue);
+    if (Number.isNaN(parsed.getTime())) return "";
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "2-digit",
+    }).format(parsed);
+  };
   const [searchForm, setSearchForm] = useState({
     make: "",
     model: "",
@@ -346,20 +380,53 @@ const PageSidebar = () => {
             <span aria-hidden="true" className="icon icon-comments"></span> What
             They Say
           </h3>
-          <blockquote>
-            <div className="quote">
-              <div className="pad-15">{reviewText}</div>
-            </div>
-            <cite>{reviewAuthor}</cite>
-          </blockquote>
-          <a
-            href={reviewLink}
-            className="btn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View Our Trustpilot
-          </a>
+          {topReviews.map((review, index) => (
+            <React.Fragment key={`${review.author || "review"}-${index}`}>
+              <blockquote>
+                <div className="quote">
+                  <cite style={{ display: "block", padding: "12px 15px 0" }}>
+                    {review.author}
+                    {review.date ? ` | ${formatReviewDate(review.date)}` : ""}
+                    {review.source ? ` | ${review.source}` : ""}
+                    {review.stars ? " | " : ""}
+                    {review.stars ? (
+                      <span style={{ color: "#fbbc04" }}>{renderStars(review.stars)}</span>
+                    ) : null}
+                  </cite>
+                  {review.title ? (
+                    <div className="pad-15" style={{ fontSize: "1.25rem", fontWeight: 600, paddingBottom: 0 }}>
+                      {review.title}
+                    </div>
+                  ) : null}
+                  <div className="pad-15">{review.text}</div>
+                </div>
+              </blockquote>
+              {index < topReviews.length - 1 ? (
+                <div
+                  aria-hidden="true"
+                  style={{
+                    width: "100%",
+                    height: "1px",
+                    backgroundColor: "#d9d9d9",
+                    margin: "12px 0 16px",
+                  }}
+                />
+              ) : null}
+            </React.Fragment>
+          ))}
+          <div className="flex flex-col gap-2 w-full" style={{ marginTop: "18px" }}>
+            <a href={googleUrl} className="btn" target="_blank" rel="noopener noreferrer">
+              {googleLabel}
+            </a>
+            <a
+              href={autotraderUrl}
+              className="btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {autotraderLabel}
+            </a>
+          </div>
         </div>
       </div>
       <div className="sidebar-widget widget partners tablet-hidden">
