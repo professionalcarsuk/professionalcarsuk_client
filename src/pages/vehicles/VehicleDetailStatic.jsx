@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import FavoriteButton from '../../components/FavoriteButton';
 import '../../components/VehicleDetail-accordion.css';
@@ -8,13 +8,12 @@ import '../../components/VehicleDetail-gallery.css';
 import '../../components/VehicleDetail-layout.css';
 import '../../components/VehicleDetail-sidebar.css';
 import { useSeo } from '../../hooks/useSeo';
-import { fetchVehicleById, loadFavorites, selectCurrentVehicle } from '../../store/vehicleSlice';
+import { fetchVehicleById, loadFavorites } from '../../store/vehicleSlice';
 
 const VehicleDetail = () => {
-  const { brand, vehicleId } = useParams();
+  const { vehicleId } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
-  const vehicleFromRedux = useSelector(selectCurrentVehicle);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -118,7 +117,6 @@ const VehicleDetail = () => {
       const container = document.querySelector('.rsThumbsContainer');
       if (container) {
         const containerWidth = container.offsetWidth;
-        const visibleThumbnails = Math.floor(containerWidth / thumbnailWidth);
         const scrollPosition = index * thumbnailWidth;
 
         // Calculate if the thumbnail is visible
@@ -194,16 +192,24 @@ const VehicleDetail = () => {
     if (!isImageCarouselOpen) return undefined;
 
     const handleKeyDown = (event) => {
+      const images = vehicle?.images || ['/images/default-vehicle.jpg'];
+      const imageUrls = images
+        .map((img) => (typeof img === 'string' ? img : img.url))
+        .filter((url) => url && url !== '/images/default-vehicle.jpg');
+      const modalImages = imageUrls.length > 0 ? imageUrls : ['/images/default-vehicle.jpg'];
+
       if (event.key === 'Escape') {
         closeImageCarousel();
       }
 
       if (event.key === 'ArrowRight') {
-        nextImage();
+        setCurrentImageIndex((prev) => (prev + 1) % modalImages.length);
+        setUserInteracted(true);
       }
 
       if (event.key === 'ArrowLeft') {
-        prevImage();
+        setCurrentImageIndex((prev) => (prev - 1 + modalImages.length) % modalImages.length);
+        setUserInteracted(true);
       }
     };
 
@@ -212,7 +218,7 @@ const VehicleDetail = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isImageCarouselOpen]);
+  }, [isImageCarouselOpen, vehicle]);
 
   useEffect(() => {
     if (!isImageCarouselOpen) return undefined;

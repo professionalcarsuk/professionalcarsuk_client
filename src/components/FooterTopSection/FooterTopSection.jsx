@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectUniqueBrands, selectVanBrands } from "../../store/vehicleSlice";
+import { selectUniqueBrands } from "../../store/vehicleSlice";
 import "./FooterTopSection.css";
 
 const FooterTopSection = () => {
   const brands = useSelector(selectUniqueBrands);
-  const vanBrands = useSelector(selectVanBrands);
 
   // Fallback showroom list (same as previous static list) when brands are not yet available
   const showroomFallback = [

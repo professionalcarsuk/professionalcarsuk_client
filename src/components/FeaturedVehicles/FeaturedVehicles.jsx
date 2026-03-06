@@ -6,7 +6,7 @@ import './FeaturedVehicles.css';
 
 const FeaturedVehicles = () => {
   const dispatch = useDispatch();
-  const allVehicles = useSelector(selectVehicleItems) || [];
+  const allVehicles = useSelector(selectVehicleItems);
 
   // Number of vehicles to show initially and how many to add when loading more
   const [displayCount, setDisplayCount] = useState(12);
@@ -28,7 +28,6 @@ const FeaturedVehicles = () => {
   const [itemMargin, setItemMargin] = useState(20);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
-  const [currentTranslate, setCurrentTranslate] = useState(0);
   const containerRef = useRef(null);
   const autoSlideRef = useRef(null);
 
@@ -99,12 +98,11 @@ const FeaturedVehicles = () => {
     }, 3000);
 
     return () => clearInterval(autoSlideRef.current);
-  }, [vehicles.length, itemsPerView, isDragging]);
+  }, [vehicles.length, itemsPerView, isDragging, allVehicles.length]);
 
   // sync translate when index changes
   useEffect(() => {
     const base = currentIndex * (itemWidth + itemMargin);
-    setCurrentTranslate(base);
     if (containerRef.current && !isDragging) {
       containerRef.current.style.transition = 'transform 0.5s ease-in-out';
       containerRef.current.style.transform = `translateX(-${base}px)`;
@@ -124,7 +122,6 @@ const FeaturedVehicles = () => {
     const deltaX = pageX - startX;
     const base = currentIndex * (itemWidth + itemMargin);
     const next = base - deltaX;
-    setCurrentTranslate(next);
     if (containerRef.current) containerRef.current.style.transform = `translateX(-${next}px)`;
   };
 
@@ -182,7 +179,7 @@ const FeaturedVehicles = () => {
 
     obs.observe(containerRef.current);
     return () => obs.disconnect();
-  }, [containerRef.current, allVehicles.length]);
+  }, [allVehicles.length]);
 
   return (
     <div className="row-block car-carousel">

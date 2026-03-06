@@ -35,4 +35,5 @@ export const SiteSettingsProvider = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useSiteSettings = () => useContext(SiteSettingsContext);

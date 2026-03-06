@@ -178,7 +178,7 @@ const PageSidebar = () => {
     } else if (searchForm.make) {
       updatePriceRanges(searchForm.make, null);
     }
-  }, [searchForm.model]);
+  }, [searchForm.make, searchForm.model]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

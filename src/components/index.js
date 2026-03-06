@@ -10,4 +10,3 @@ export { default as FixedBannerBottom } from "./FixedBannerBottom/FixedBannerBot
 export { default as TypesSection } from "./TypesSection/TypesSection";
 export { default as FooterTopSection } from "./FooterTopSection/FooterTopSection";
 export { default as CookieConsentBanner } from "./CookieConsentBanner/CookieConsentBanner";
-export { default as DataStorageTest } from "./DataStorageTest/DataStorageTest";

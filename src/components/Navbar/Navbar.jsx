@@ -7,9 +7,6 @@ import './Navbar.css';
 
 const Navbar = () => {
   const [showroomBrands, setShowroomBrands] = useState([]);
-  const [vanBrands, setVanBrands] = useState([]);
-  const [loadingShowroomBrands, setLoadingShowroomBrands] = useState(true);
-  const [loadingVanBrands, setLoadingVanBrands] = useState(true);
 
   // Mobile menu and search states
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,33 +65,10 @@ const Navbar = () => {
         }
       } catch (error) {
         console.error('Error fetching showroom brands:', error);
-      } finally {
-        setLoadingShowroomBrands(false);
       }
     };
 
     fetchShowroomBrands();
-  }, []);
-
-  // Fetch van brands
-  useEffect(() => {
-    const fetchVanBrands = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/client/brands?type=vans`
-        );
-        const result = await response.json();
-        if (result.success) {
-          setVanBrands(result.data.map((brand) => brand.name));
-        }
-      } catch (error) {
-        console.error('Error fetching van brands:', error);
-      } finally {
-        setLoadingVanBrands(false);
-      }
-    };
-
-    fetchVanBrands();
   }, []);
 
   // Fetch brands for mobile search based on selected vehicle type
@@ -173,7 +147,6 @@ const Navbar = () => {
 
   // Determine if parent menus should be marked active based on current path
   const isShowroomActive = pathname.startsWith('/used-cars') || pathname.startsWith('/used/cars');
-  const isVansActive = pathname.startsWith('/used-vans') || pathname.startsWith('/used/vans');
   const isServicesActive = ['/sellcar', '/part-exchange', '/finance', '/complaints'].some(
     (p) => pathname.startsWith(p)
   );

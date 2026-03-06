@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import PageWithSidebarLayout from "../../layouts/PageWithSidebarLayout";
 import { useSiteSettings } from "../../contexts/SiteSettingsContext";
-import { useCmsPage } from "../../hooks/useCmsPage";
 import {
   updateFormField,
   submitContactForm,
@@ -55,7 +54,7 @@ const Contact = () => {
 
     // For telephone field, only allow digits, spaces, hyphens, plus signs, and parentheses
     if (name === "telephone") {
-      const filteredValue = value.replace(/[^\d\s\-\+\(\)]/g, "");
+      const filteredValue = value.replace(/[^\d\s\-+()]/g, "");
       dispatch(updateFormField({ field: name, value: filteredValue }));
     } else {
       dispatch(updateFormField({ field: name, value }));
@@ -109,7 +108,7 @@ const Contact = () => {
 
     // Validate telephone if provided (should be numeric)
     if (formData.telephone && formData.telephone.trim()) {
-      const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+      const phoneRegex = /^[\d\s\-+()]+$/;
       if (!phoneRegex.test(formData.telephone.trim())) {
         toast.error("Please enter a valid telephone number");
         return;
@@ -129,10 +128,6 @@ const Contact = () => {
     };
 
     dispatch(submitContactForm(submissionData));
-  };
-
-  const handleReset = () => {
-    dispatch(resetForm());
   };
 
   return (

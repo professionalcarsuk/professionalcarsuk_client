@@ -3,6 +3,33 @@ import { useNavigate } from "react-router-dom";
 import { useSiteSettings } from "../../contexts/SiteSettingsContext";
 import "./Hero.css";
 
+const DEFAULT_SLIDES = [
+  {
+    id: 1,
+    image:
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop&crop=center",
+    alt: "Luxury Car 1",
+  },
+  {
+    id: 2,
+    image:
+      "https://images.unsplash.com/photo-1714348938110-d3692bc3716a?w=1920&h=1080&fit=crop&crop=center",
+    alt: "Luxury Car 2",
+  },
+  {
+    id: 3,
+    image:
+      "https://images.unsplash.com/photo-1677339059244-8c6cefec8415?w=1920&h=1080&fit=crop&crop=center",
+    alt: "Luxury Car 3",
+  },
+  {
+    id: 4,
+    image:
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1920&h=1080&fit=crop&crop=center",
+    alt: "Luxury Car 4",
+  },
+];
+
 const Hero = () => {
   const navigate = useNavigate();
   const { settings } = useSiteSettings();
@@ -28,33 +55,6 @@ const Hero = () => {
     financeMax: 2000,
   });
 
-  const defaultSlides = [
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop&crop=center",
-      alt: "Luxury Car 1",
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1714348938110-d3692bc3716a?w=1920&h=1080&fit=crop&crop=center",
-      alt: "Luxury Car 2",
-    },
-    {
-      id: 3,
-      image:
-        "https://images.unsplash.com/photo-1677339059244-8c6cefec8415?w=1920&h=1080&fit=crop&crop=center",
-      alt: "Luxury Car 3",
-    },
-    {
-      id: 4,
-      image:
-        "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1920&h=1080&fit=crop&crop=center",
-      alt: "Luxury Car 4",
-    },
-  ];
-
   const slides = useMemo(() => {
     if (settings?.hero?.slides?.length) {
       return settings.hero.slides.map((slide, index) => ({
@@ -63,8 +63,8 @@ const Hero = () => {
         alt: slide.title || `Slide ${index + 1}`,
       }));
     }
-    return defaultSlides;
-  }, [settings, defaultSlides]);
+    return DEFAULT_SLIDES;
+  }, [settings]);
 
   const heroTitle = settings?.hero?.title || "Professional Cars";
   const heroSubtitle =
@@ -155,7 +155,7 @@ const Hero = () => {
     } else if (searchForm.make) {
       updatePriceRanges(searchForm.make, null);
     }
-  }, [searchForm.model]);
+  }, [searchForm.make, searchForm.model]);
 
   // Function to update price ranges based on available vehicles
   const updatePriceRanges = async (brandId, modelId) => {
@@ -277,12 +277,6 @@ const Hero = () => {
 
     // Navigate to search page with parameters
     navigate(`/search?${params.toString()}`);
-  };
-
-  // Helper function to get brand name by ID
-  const getBrandName = (brandId) => {
-    const brand = brands.find((b) => b._id === brandId);
-    return brand ? brand.name : "";
   };
 
   const formatBrandLabel = (brand) => {

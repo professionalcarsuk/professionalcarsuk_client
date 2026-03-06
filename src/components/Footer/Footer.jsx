@@ -1,7 +1,6 @@
 import "./Footer.css";
 import { Link } from "react-router-dom";
 import { useSiteSettings } from "../../contexts/SiteSettingsContext";
-import clickDealerLogo from "./images/click_dealer_logo.1749717714.png";
 
 const Footer = ({ noMargin = false }) => {
   const { settings } = useSiteSettings();

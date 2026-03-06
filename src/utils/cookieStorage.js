@@ -80,7 +80,7 @@ export const CookieStorage = {
     if (cookie) {
       try {
         return JSON.parse(decodeURIComponent(cookie.split("=")[1]));
-      } catch (e) {
+      } catch {
         return null;
       }
     }
@@ -101,7 +101,7 @@ export const CookieStorage = {
     if (cookie) {
       try {
         return JSON.parse(decodeURIComponent(cookie.split("=")[1]));
-      } catch (e) {
+      } catch {
         return null;
       }
     }

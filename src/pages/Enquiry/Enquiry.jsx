@@ -71,16 +71,7 @@ const Enquiry = () => {
     if (name === 'telephone') {
       const filteredValue = value.replace(/[^\d\s\-+()]/g, '');
       dispatch(updateFormField({ field: name, value: filteredValue }));
-      // Live UK phone validation
-      if (filteredValue.trim()) {
-        const ukPhoneRegex =
-          /^(\+44|0044)\s?7\d{3}\s?\d{6}$|^(\+44|0044)\s?\d{4}\s?\d{6}$|^(\+44|0044)\s?\d{3}\s?\d{7}$|^(\+44|0044)\s?\d{2}\s?\d{8}$|^(\+44|0044)\s?\d{1}\s?\d{9}$/;
-        // if (!ukPhoneRegex.test(filteredValue.replace(/[-\s]/g, ''))) {
-        //   setPhoneError('Please enter a valid UK telephone number with country code (+44)');
-        // } else {
-        //   setPhoneError('');
-        // }
-      } else {
+      if (!filteredValue.trim()) {
         setPhoneError('');
       }
     } else if (name === 'name') {
@@ -176,13 +167,7 @@ const Enquiry = () => {
 
     // UK phone number validation (with country code)
     if (formData.telephone && formData.telephone.trim()) {
-      // Accepts +44 followed by 10 digits, optional spaces/hyphens, or 0044
-      const ukPhoneRegex =
-        /^(\+44|0044)\s?7\d{3}\s?\d{6}$|^(\+44|0044)\s?\d{4}\s?\d{6}$|^(\+44|0044)\s?\d{3}\s?\d{7}$|^(\+44|0044)\s?\d{2}\s?\d{8}$|^(\+44|0044)\s?\d{1}\s?\d{9}$/;
-      // if (!ukPhoneRegex.test(formData.telephone.replace(/[-\s]/g, ''))) {
-      //   toast.error('Please enter a valid UK telephone number with country code (+44)');
-      //   return;
-      // }
+      // Kept permissive phone format validation from Contact page behavior.
     }
 
     const submissionData = {
