@@ -19,17 +19,18 @@ const FeaturedVehicles = () => {
   // The vehicles we actually render (slice of fetched vehicles)
   const vehicles = allVehicles.slice(0, displayCount);
 
-  // Log raw payload for debugging
-  useEffect(() => {}, [allVehicles]);
-
   const [currentIndex, setCurrentIndex] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(4);
   const [itemWidth, setItemWidth] = useState(320);
   const [itemMargin, setItemMargin] = useState(20);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
   const containerRef = useRef(null);
   const autoSlideRef = useRef(null);
+  const activePointerIdRef = useRef(null);
+  const dragStartXRef = useRef(0);
+  const dragStartTranslateRef = useRef(0);
+  const currentTranslateRef = useRef(0);
+  const suppressClickRef = useRef(false);
 
   // Update items per view and dimensions based on screen size
   useEffect(() => {
@@ -83,6 +84,17 @@ const FeaturedVehicles = () => {
     });
   };
 
+  const step = itemWidth + itemMargin;
+
+  const getMaxTranslate = () => Math.max(0, (vehicles.length - itemsPerView) * step);
+
+  const setTranslate = (translate, withTransition) => {
+    if (!containerRef.current) return;
+    currentTranslateRef.current = translate;
+    containerRef.current.style.transition = withTransition ? 'transform 0.5s ease-in-out' : 'none';
+    containerRef.current.style.transform = `translateX(-${translate}px)`;
+  };
+
   // Auto-slide functionality (pauses while dragging)
   useEffect(() => {
     if (isDragging) return;
@@ -102,55 +114,54 @@ const FeaturedVehicles = () => {
 
   // sync translate when index changes
   useEffect(() => {
-    const base = currentIndex * (itemWidth + itemMargin);
+    const base = currentIndex * step;
     if (containerRef.current && !isDragging) {
-      containerRef.current.style.transition = 'transform 0.5s ease-in-out';
-      containerRef.current.style.transform = `translateX(-${base}px)`;
+      setTranslate(base, true);
     }
-  }, [currentIndex, itemWidth, itemMargin, isDragging]);
+  }, [currentIndex, step, isDragging]);
 
-  // pointer/touch handlers
-  const pointerDown = (pageX) => {
+  // Pointer handlers (mouse + touch + pen)
+  const pointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
     setIsDragging(true);
-    setStartX(pageX);
+    activePointerIdRef.current = e.pointerId;
+    dragStartXRef.current = e.pageX;
+    dragStartTranslateRef.current = currentIndex * step;
+    currentTranslateRef.current = dragStartTranslateRef.current;
+    suppressClickRef.current = false;
     if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-    if (containerRef.current) containerRef.current.style.transition = 'none';
+    setTranslate(dragStartTranslateRef.current, false);
   };
 
-  const pointerMove = (pageX) => {
+  const pointerMove = (e) => {
     if (!isDragging) return;
-    const deltaX = pageX - startX;
-    const base = currentIndex * (itemWidth + itemMargin);
-    const next = base - deltaX;
-    if (containerRef.current) containerRef.current.style.transform = `translateX(-${next}px)`;
+    if (activePointerIdRef.current !== null && e.pointerId !== activePointerIdRef.current) return;
+    const deltaX = e.pageX - dragStartXRef.current;
+    if (Math.abs(deltaX) > 6) suppressClickRef.current = true;
+
+    const raw = dragStartTranslateRef.current - deltaX;
+    const clamped = Math.max(0, Math.min(raw, getMaxTranslate()));
+    setTranslate(clamped, false);
   };
 
-  const pointerUp = (pageX) => {
+  const pointerUp = (e) => {
     if (!isDragging) return;
+    if (activePointerIdRef.current !== null && e.pointerId !== activePointerIdRef.current) return;
     setIsDragging(false);
-    const deltaX = pageX - startX;
-    const threshold = 50;
-    if (deltaX > threshold) {
-      goPrev();
-    } else if (deltaX < -threshold) {
-      goNext();
-    } else {
-      const base = currentIndex * (itemWidth + itemMargin);
-      if (containerRef.current) {
-        containerRef.current.style.transition = 'transform 0.5s ease-in-out';
-        containerRef.current.style.transform = `translateX(-${base}px)`;
-      }
-    }
-    // restart auto slide after a short delay
-    setTimeout(() => {
-      if (autoSlideRef.current) clearInterval(autoSlideRef.current);
-      autoSlideRef.current = setInterval(() => {
-        setCurrentIndex((prevIndex) => {
-          const maxIndex = Math.max(0, vehicles.length - itemsPerView);
-          return prevIndex >= maxIndex ? 0 : prevIndex + 1;
-        });
-      }, 3000);
-    }, 800);
+
+    activePointerIdRef.current = null;
+
+    const maxIndex = Math.max(0, vehicles.length - itemsPerView);
+    const rawIndex = Math.floor(currentTranslateRef.current / step);
+    const clampedIndex = Math.max(0, Math.min(rawIndex, maxIndex));
+    setCurrentIndex(clampedIndex);
+    setTranslate(clampedIndex * step, true);
+  };
+
+  const handleTileClick = (e) => {
+    if (!suppressClickRef.current) return;
+    e.preventDefault();
+    suppressClickRef.current = false;
   };
 
   // Intersection observer for infinite-load: attach to containerRef's parent to watch when we approach the end
@@ -188,21 +199,18 @@ const FeaturedVehicles = () => {
           <div id="hmpg-picks-carousel" className="touchcarousel clear-fix">
             <em className="row-block__heading center">Ones To Watch</em>
             <div
-              className="touchcarousel-wrapper grab-cursor"
-              onMouseDown={(e) => pointerDown(e.pageX)}
-              onMouseMove={(e) => pointerMove(e.pageX)}
-              onMouseUp={(e) => pointerUp(e.pageX)}
-              onMouseLeave={(e) => isDragging && pointerUp(e.pageX)}
-              onTouchStart={(e) => pointerDown(e.touches[0].pageX)}
-              onTouchMove={(e) => pointerMove(e.touches[0].pageX)}
-              onTouchEnd={(e) => pointerUp(e.changedTouches[0].pageX)}
+              className={`touchcarousel-wrapper grab-cursor ${isDragging ? 'dragging' : ''}`}
+              onPointerDown={pointerDown}
+              onPointerMove={pointerMove}
+              onPointerUp={pointerUp}
+              onPointerCancel={pointerUp}
             >
               <ul
                 ref={containerRef}
                 className="touchcarousel-container"
                 style={{
                   // transform: `translateX(-${currentTranslate}px)`,
-                  transform: `translateX(-${currentIndex * (itemWidth + itemMargin)}px)`,
+                  transform: `translateX(-${currentIndex * step}px)`,
                   transition: isDragging ? 'none' : 'transform 0.5s ease-in-out',
                 }}
               >
@@ -255,11 +263,14 @@ const FeaturedVehicles = () => {
                       <Link
                         to={`/vehicle/${brandSlug}/${vehicleId}`}
                         title={`Used ${title} for sale`}
+                        onDragStart={(e) => e.preventDefault()}
+                        onClick={handleTileClick}
                       >
                         <img
                           className="home-carousel-image"
                           alt={`${title} ${variant}`}
                           src={image}
+                          draggable={false}
                         />
                         <div className="carousel-text">
                           <div className="carousel-info__price-block">

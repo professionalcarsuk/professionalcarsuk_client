@@ -51,8 +51,10 @@ const ReviewsCarouselSection = () => {
   const { settings } = useSiteSettings();
   const viewportRef = useRef(null);
   const isDownRef = useRef(false);
+  const activePointerIdRef = useRef(null);
   const startXRef = useRef(0);
   const startScrollLeftRef = useRef(0);
+  const suppressClickRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
 
   const reviews = useMemo(
@@ -88,25 +90,43 @@ const ReviewsCarouselSection = () => {
     return () => clearInterval(timer);
   }, [reviews.length]);
 
-  const handlePointerDown = (clientX) => {
+  const handlePointerDown = (e) => {
     const viewport = viewportRef.current;
     if (!viewport) return;
+    if (e.button !== undefined && e.button !== 0) return;
+
     isDownRef.current = true;
     setIsDragging(true);
-    startXRef.current = clientX;
+    activePointerIdRef.current = e.pointerId;
+    startXRef.current = e.pageX;
     startScrollLeftRef.current = viewport.scrollLeft;
+    suppressClickRef.current = false;
+
   };
 
-  const handlePointerMove = (clientX) => {
+  const handlePointerMove = (e) => {
     const viewport = viewportRef.current;
     if (!viewport || !isDownRef.current) return;
-    const delta = clientX - startXRef.current;
+    if (activePointerIdRef.current !== null && e.pointerId !== activePointerIdRef.current) return;
+
+    const delta = e.pageX - startXRef.current;
+    if (Math.abs(delta) > 6) suppressClickRef.current = true;
     viewport.scrollLeft = startScrollLeftRef.current - delta;
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (e) => {
+    if (activePointerIdRef.current !== null && e.pointerId !== activePointerIdRef.current) return;
+
     isDownRef.current = false;
     setIsDragging(false);
+
+    activePointerIdRef.current = null;
+  };
+
+  const handleCardClick = (e) => {
+    if (!suppressClickRef.current) return;
+    e.preventDefault();
+    suppressClickRef.current = false;
   };
 
   return (
@@ -122,13 +142,10 @@ const ReviewsCarouselSection = () => {
                 <div
                   ref={viewportRef}
                   className={`reviews-carousel-section__viewport ${isDragging ? "is-dragging" : ""}`}
-                  onMouseDown={(e) => handlePointerDown(e.pageX)}
-                  onMouseMove={(e) => handlePointerMove(e.pageX)}
-                  onMouseUp={handlePointerUp}
-                  onMouseLeave={handlePointerUp}
-                  onTouchStart={(e) => handlePointerDown(e.touches[0].pageX)}
-                  onTouchMove={(e) => handlePointerMove(e.touches[0].pageX)}
-                  onTouchEnd={handlePointerUp}
+                  onPointerDown={handlePointerDown}
+                  onPointerMove={handlePointerMove}
+                  onPointerUp={handlePointerUp}
+                  onPointerCancel={handlePointerUp}
                 >
                   <div className="reviews-carousel-section__track">
                     {carouselReviews.map((review, index) => (
@@ -138,6 +155,7 @@ const ReviewsCarouselSection = () => {
                         href={getReviewUrl(review, settings?.review)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={handleCardClick}
                       >
                         <p className="reviews-carousel-section__meta">
                           {review.author || "Verified customer"}

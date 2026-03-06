@@ -33,8 +33,9 @@
   padding: 10px;
   background: #f9fafb;
   cursor: grab;
+  -webkit-user-select: none;
   user-select: none;
-  touch-action: pan-x;
+  touch-action: pan-y;
 }
 
 .reviews-carousel-section__track {
@@ -59,6 +60,7 @@
   text-decoration: none;
   padding: 10px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  -webkit-user-drag: none;
 }
 
 .reviews-carousel-section__card:hover {
