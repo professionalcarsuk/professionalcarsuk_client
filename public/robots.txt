@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://professionalcars.co.uk/sitemap.xml

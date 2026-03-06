@@ -7,6 +7,7 @@ import '../../components/VehicleDetail-components.css';
 import '../../components/VehicleDetail-gallery.css';
 import '../../components/VehicleDetail-layout.css';
 import '../../components/VehicleDetail-sidebar.css';
+import { useSeo } from '../../hooks/useSeo';
 import { fetchVehicleById, loadFavorites, selectCurrentVehicle } from '../../store/vehicleSlice';
 
 const VehicleDetail = () => {
@@ -24,6 +25,32 @@ const VehicleDetail = () => {
   const [userInteracted, setUserInteracted] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [isImageCarouselOpen, setIsImageCarouselOpen] = useState(false);
+
+  const vehicleTitle =
+    vehicle?.title ||
+    vehicle?.formData?.title ||
+    [vehicle?.brand, vehicle?.model].filter(Boolean).join(' ') ||
+    'Used Car';
+  const vehiclePrice =
+    typeof vehicle?.price !== 'undefined' && vehicle?.price !== null
+      ? `£${Number(vehicle.price).toLocaleString()}`
+      : '';
+  const vehicleMetaDescription = [
+    vehicleTitle,
+    vehicle?.year ? `${vehicle.year}` : '',
+    vehicle?.mileage ? `${vehicle.mileage} miles` : '',
+    vehiclePrice,
+    'Available at Professional Cars with finance and part exchange options.',
+  ]
+    .filter(Boolean)
+    .join(' | ');
+
+  useSeo({
+    title: `${vehicleTitle} | Professional Cars`,
+    description: vehicleMetaDescription,
+    canonicalPath: location.pathname,
+    noindex: false,
+  });
 
   // Find the vehicle by ID
   useEffect(() => {
