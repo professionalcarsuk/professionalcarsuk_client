@@ -11,12 +11,42 @@ import {
 } from "../../store/contactSlice";
 import "./Contact.css";
 
+const DAY_ALIASES = {
+  sun: 0,
+  sunday: 0,
+  mon: 1,
+  monday: 1,
+  tue: 2,
+  tues: 2,
+  tuesday: 2,
+  wed: 3,
+  wednesday: 3,
+  thu: 4,
+  thur: 4,
+  thurs: 4,
+  thursday: 4,
+  fri: 5,
+  friday: 5,
+  sat: 6,
+  saturday: 6,
+};
+
+const isTodayOpeningDay = (dayValue, todayIndex) => {
+  const normalizedDay = String(dayValue || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\./g, "");
+
+  return DAY_ALIASES[normalizedDay] === todayIndex;
+};
+
 const Contact = () => {
   const dispatch = useDispatch();
   const { formData, isSubmitting, submitSuccess, submitError } = useSelector(
     (state) => state.contact
   );
   const { settings } = useSiteSettings();
+  const currentDayIndex = new Date().getDay();
  
 
   // Get contact info from CMS or fallback to settings
@@ -239,7 +269,14 @@ const Contact = () => {
                     </h3>
                     <ul className="row open-times">
                       {openTimes.map((timeEntry, index) => (
-                        <li key={index} className="twelvecol">
+                        <li
+                          key={index}
+                          className={`twelvecol ${
+                            isTodayOpeningDay(timeEntry.day, currentDayIndex)
+                              ? "today"
+                              : ""
+                          }`.trim()}
+                        >
                           <div className="open-day">
                             <span
                               aria-hidden="true"

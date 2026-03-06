@@ -863,6 +863,16 @@ ul li {
   border-bottom: 1px solid #f5f5f5;
 }
 
+.open-times li.today {
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #d9d9d9;
+  font-weight: 600;
+}
+
+.open-times li.today .icon-calendar {
+  color: #8a8a8a;
+}
+
 .bank-holiday-not-set {
   display: none !important;
 }

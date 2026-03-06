@@ -2,8 +2,38 @@ import "./Footer.css";
 import { Link } from "react-router-dom";
 import { useSiteSettings } from "../../contexts/SiteSettingsContext";
 
+const DAY_ALIASES = {
+  sun: 0,
+  sunday: 0,
+  mon: 1,
+  monday: 1,
+  tue: 2,
+  tues: 2,
+  tuesday: 2,
+  wed: 3,
+  wednesday: 3,
+  thu: 4,
+  thur: 4,
+  thurs: 4,
+  thursday: 4,
+  fri: 5,
+  friday: 5,
+  sat: 6,
+  saturday: 6,
+};
+
+const isTodayOpeningDay = (dayValue, todayIndex) => {
+  const normalizedDay = String(dayValue || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\./g, "");
+
+  return DAY_ALIASES[normalizedDay] === todayIndex;
+};
+
 const Footer = ({ noMargin = false }) => {
   const { settings } = useSiteSettings();
+  const currentDayIndex = new Date().getDay();
 
   const companyName = settings?.companyName || "Professional Cars Limited";
   const phone = settings?.phone || "07788929755";
@@ -131,7 +161,11 @@ const Footer = ({ noMargin = false }) => {
                   return (
                     <li
                       key={`${item.day || "day"}-${index}`}
-                      className={`footer__open-times--${dayKey}`}
+                      className={`footer__open-times--${dayKey} ${
+                        isTodayOpeningDay(item.day, currentDayIndex)
+                          ? "footer__open-times--today"
+                          : ""
+                      }`.trim()}
                     >
                       <div className="open-day">
                         <span

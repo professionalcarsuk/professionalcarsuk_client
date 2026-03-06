@@ -280,6 +280,18 @@ ul li {
   clear: both;
 }
 
+.footer__open-times li.footer__open-times--today {
+  background: rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: 400;
+  padding: 2px 0;
+}
+
+.footer__open-times li.footer__open-times--today .icon-calendar {
+  color: #cfcfcf;
+}
+
 .bank-holiday-not-set {
   display: none !important;
 }
